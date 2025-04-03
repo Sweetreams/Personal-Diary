@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+//поместить в env
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:qwe@localhost:5432/diplom?schema=public"
+}
+
+model User {
+  id             Int     @id @default(autoincrement())
+  email          String  @unique
+  login          String  @unique
+  bcryptpassword String
+  name           String?
+  imgURL         String?
+  role           ROLE    @default(user)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Post Post[]
+}
+
+model Post {
+  id      Int    @id @default(autoincrement())
+  user    User   @relation(fields: [id_user], references: [id])
+  id_user Int
+  title   String
+  desc    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  TagsAndPost TagsAndPost[]
+}
+
+model Tags {
+  id  Int    @id @default(autoincrement())
+  tag String
+
+  TagsAndPost TagsAndPost[]
+}
+
+model TagsAndPost {
+  id      Int  @id @default(autoincrement())
+  tags    Tags @relation(fields: [id_tags], references: [id])
+  post    Post @relation(fields: [id_post], references: [id])
+  id_tags Int
+  id_post Int
+}
+
+enum ROLE {
+  user
+  admin
+}
