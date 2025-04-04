@@ -1,11 +1,11 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearchPostgres"]
 }
 
-//поместить в env
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:qwe@localhost:5432/diplom?schema=public"
+  url      = env("DATABASE_URL")
 }
 
 model User {

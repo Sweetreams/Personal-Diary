@@ -7,6 +7,8 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { getUrlPhoto, uploadPhoto } from "../utils/supabaseHepler.js";
 import { jwtVerefite } from "../middleware/jwtVerefite.js";
+import { cacheMiddleware } from "../middleware/cacheMiddleware.js";
+import { redis } from "../utils/redis.js";
 
 const router = Router();
 const userService = new User();
@@ -91,17 +93,27 @@ router.get("/loginUser", async (req, res) => {
     });
 });
 
-router.get("/profileUser", jwtVerefite, async (req, res) => {
+router.get("/profileUser", jwtVerefite, cacheMiddleware, async (req, res) => {
     try {
         const user = await userService.getUserID(req.dataFromMiddlewareJwtVerefite);
+        const redisData = await redis.set(req.originalUrl, JSON.stringify(user), { ex: 60 });
+
         if (!user.length) return res.status(400).json({
             httpState: HTTPState.ERROR,
             message: "Пользователя не существует"
         });
-        return res.status(200).json({
-            httpState: HTTPState.SUCCESS,
-            data: user
-        });
+        
+        if (redisData == "OK") {
+            return res.status(200).json({
+                httpState: HTTPState.SUCCESS,
+                data: user
+            });
+        } else {
+            return res.status(200).json({
+                httpState: HTTPState.SUCCESS,
+                data: redisData
+            });
+        }
     } catch (err) {
         return res.status(400).json({
             httpState: HTTPState.ERROR,

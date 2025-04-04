@@ -29,6 +29,10 @@ export class Post {
         });
     };
 
+    postSearch = async (text) => {
+        return this.prisma.$queryRaw`select * from public."Post" where to_tsvector('russian', "desc") || to_tsvector('russian', "title") @@ to_tsquery('russian', ${text + ":*"})`;
+    };
+
     createPost = async (id, data) => {
         return await this.prisma.$transaction(async (prisma) => {
             const post = await prisma.post.create({

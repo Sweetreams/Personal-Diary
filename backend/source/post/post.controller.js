@@ -2,13 +2,43 @@ import { Router } from "express";
 import { Post } from "./post.service.js";
 import { jwtVerefite } from "../middleware/jwtVerefite.js";
 import { HTTPState } from "../utils/HTTPState.js";
+import { cacheMiddleware } from "../middleware/cacheMiddleware.js";
+import { redis } from "../utils/redis.js";
 
 const router = Router();
 const postService = new Post();
 
-router.get("/getPosts", jwtVerefite, async (req, res) => {
+router.get("/searchPost", async (req, res) => {
     try {
-        res.status(200).json(await postService.getPosts(req.dataFromMiddlewareJwtVerefite));
+        const search = await postService.postSearch(req.body.text);
+        if (search.length == 0) {
+            return res.status(204).json({
+                httpState: HTTPState.SUCCESS,
+                message: "Ничего не найдено"
+            });
+        }
+        return res.status(200).json(search);
+    } catch (err) {
+        return res.status(400).json({
+            httpState: HTTPState.ERROR,
+            message: {
+                errorName: err.name,
+                errorMessage: "Не удалось создать пост"
+            }
+        });
+    }
+});
+
+router.get("/getPosts", jwtVerefite, cacheMiddleware, async (req, res) => {
+    try {
+        const data = await postService.getPosts(req.dataFromMiddlewareJwtVerefite);
+        const redisData = await redis.set(req.originalUrl, JSON.stringify(data), { ex: 60 });
+        if (redisData == "OK") {
+            res.status(200).json(data);
+        } else {
+            res.status(200).json(redisData);
+        }
+
     } catch {
         res.status(400).json({
             httpState: HTTPState.ERROR,
@@ -17,9 +47,15 @@ router.get("/getPosts", jwtVerefite, async (req, res) => {
     }
 });
 
-router.get("/getPost", jwtVerefite, async (req, res) => {
+router.get("/getPost", jwtVerefite, cacheMiddleware, async (req, res) => {
     try {
-        res.status(200).json(await postService.getPost(req.dataFromMiddlewareJwtVerefite, req.body.id_post));
+        const data = await postService.getPost(req.dataFromMiddlewareJwtVerefite, req.body.id_post);
+        const redisData = await redis.set(req.originalUrl, JSON.stringify(data), { ex: 60 });
+        if (redisData == "OK") {
+            res.status(200).json(data);
+        } else {
+            res.status(200).json(redisData);
+        }
     } catch {
         res.status(400).json({
             httpState: HTTPState.ERROR,
@@ -46,7 +82,7 @@ router.post("/createPost", jwtVerefite, async (req, res) => {
     }
 });
 
-router.put("/changePost", jwtVerefite, async(req, res) => {
+router.put("/changePost", jwtVerefite, async (req, res) => {
     try {
         await postService.changePost(req.dataFromMiddlewareJwtVerefite, req.body);
         res.status(200).json({
@@ -62,7 +98,7 @@ router.put("/changePost", jwtVerefite, async(req, res) => {
             }
         });
     }
-    
+
 });
 
 router.delete("/deletePost", jwtVerefite, async (req, res) => {
