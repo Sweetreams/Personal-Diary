@@ -49,15 +49,21 @@ router.get("/getPosts", jwtVerefite, cacheMiddleware, async (req, res) => {
 
 router.get("/getPost", jwtVerefite, cacheMiddleware, async (req, res) => {
     try {
-        const data = await postService.getPost(req.dataFromMiddlewareJwtVerefite, req.body.id_post);
-        const redisData = await redis.set(req.originalUrl, JSON.stringify(data), { ex: 60 });
-        if (redisData == "OK") {
-            res.status(200).json(data);
-        } else {
-            res.status(200).json(redisData);
+        const redisData = await redis.get(req.originalUrl + req.body.id_post);
+        if (redisData === null){
+            const data = await postService.getPost(req.dataFromMiddlewareJwtVerefite, req.body.id_post);
+            if (data.length == 0 && redisData === null) {
+                return res.status(204).json({
+                    httpState: HTTPState.SUCCESS,
+                    message: "Ничего не найдено"
+                });
+            }
+            return res.status(200).json(data);
         }
+        return res.status(200).json(redisData);
+
     } catch {
-        res.status(400).json({
+        return res.status(400).json({
             httpState: HTTPState.ERROR,
             message: "Ошибка получения данных"
         });
