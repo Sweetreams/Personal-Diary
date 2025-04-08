@@ -30,7 +30,7 @@ export class Post {
     };
 
     postSearch = async (text) => {
-        return this.prisma.$queryRaw`select * from public."Post" where to_tsvector('russian', "desc") || to_tsvector('russian', "title") @@ to_tsquery('russian', ${text + ":*"})`;
+        return this.prisma.$queryRaw`select * from public."Post" where to_tsvector("desc") || to_tsvector("title") @@ to_tsquery(${text + ":*"})`;
     };
 
     createPost = async (id, data) => {
@@ -94,17 +94,17 @@ export class Post {
         });
     };
 
-    deletePost = async (id, id_user) => {
-        this.prisma.$transaction(async (prisma) => {
+    deletePost = async (id_post, id_user) => {
+        return await this.prisma.$transaction(async (prisma) => {
             await prisma.tagsAndPost.deleteMany({
                 where: {
-                    id_post: Number(id)
+                    id_post: Number(id_post)
                 }
             });
 
-            await prisma.post.deleteMany({
+            return await prisma.post.deleteMany({
                 where: {
-                    id: Number(id),
+                    id: Number(id_post),
                     id_user: Number(id_user)
                 }
             });

@@ -7,8 +7,6 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { getUrlPhoto, uploadPhoto } from "../utils/supabaseHepler.js";
 import { jwtVerefite } from "../middleware/jwtVerefite.js";
-import { cacheMiddleware } from "../middleware/cacheMiddleware.js";
-import { redis } from "../utils/redis.js";
 
 const router = Router();
 const userService = new User();
@@ -19,7 +17,7 @@ router.post("/createUser", async (req, res) => {
     try {
         await userCreateSchema.validate(req.body);
     } catch (error) {
-        res.status(400).json({
+        return res.status(400).json({
             httpState: HTTPState.ERROR,
             message: {
                 errorName: error.name,
@@ -49,7 +47,7 @@ router.post("/createUser", async (req, res) => {
                 });
 
             } catch {
-                res.status(400).json({
+                return res.status(400).json({
                     httpState: HTTPState.ERROR,
                     message: {
                         errorMessage: "Произошла ошибка!",
@@ -63,57 +61,66 @@ router.post("/createUser", async (req, res) => {
 
 router.get("/loginUser", async (req, res) => {
     try {
-        await userLoginSchema.validate(req.body);
-    } catch (error) {
-        res.status(400).json({
-            httpState: HTTPState.ERROR,
-            message: {
-                errorName: error.name,
-                errorPath: error.path,
-                errorMessage: error.errors,
-            }
-        });
-    }
-    const user = await userService.getUserLogin(req.body.login);
-    if (!user.length) return res.status(400).json({
-        httpState: HTTPState.ERROR,
-        message: "Пользователь не существует!"
-    });
-    const match = await bcrypt.compare(req.body.password, user[0].bcryptpassword);
-    if (!match) return res.status(400).json({
-        httpState: HTTPState.ERROR,
-        message: "Неверный пароль!"
-    });
-    const token = jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 30), id: user[0].id, role: user[0].role }, process.env.SECRETKEYJWT);
-    return res.status(200).json({
-        httpState: HTTPState.SUCCESS,
-        token: token,
-        expToken: Math.floor(Date.now() / 1000) + (60 * 30),
-        message: "Вы успешно вошли в аккаунт!"
-    });
-});
-
-router.get("/profileUser", jwtVerefite, cacheMiddleware, async (req, res) => {
-    try {
-        const user = await userService.getUserID(req.dataFromMiddlewareJwtVerefite);
-        const redisData = await redis.set(req.originalUrl, JSON.stringify(user), { ex: 60 });
+        try {
+            await userLoginSchema.validate(req.body);
+        } catch (error) {
+            return res.status(400).json({
+                httpState: HTTPState.ERROR,
+                message: {
+                    errorName: error.name,
+                    errorPath: error.path,
+                    errorMessage: error.errors,
+                }
+            });
+        }
+        const user = await userService.getUserLogin(req.body.login);
 
         if (!user.length) return res.status(400).json({
             httpState: HTTPState.ERROR,
-            message: "Пользователя не существует"
+            message: "Пользователь не существует!"
         });
-        
-        if (redisData == "OK") {
-            return res.status(200).json({
-                httpState: HTTPState.SUCCESS,
-                data: user
-            });
-        } else {
-            return res.status(200).json({
-                httpState: HTTPState.SUCCESS,
-                data: redisData
+        const match = await bcrypt.compare(req.body.password, user[0].bcryptpassword);
+
+        if (!match) return res.status(400).json({
+            httpState: HTTPState.ERROR,
+            message: "Неверный пароль!"
+        });
+
+        const token = jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 30), id: user[0].id, role: user[0].role }, process.env.SECRETKEYJWT);
+
+        return res.status(200).json({
+            httpState: HTTPState.SUCCESS,
+            token: token,
+            expToken: Math.floor(Date.now() / 1000) + (60 * 30),
+            message: "Вы успешно вошли в аккаунт!"
+        });
+
+    } catch (err) {
+        return res.status(400).json({
+            httpState: HTTPState.ERROR,
+            message: {
+                errorName: err.name,
+                errorMessage: "Произошла ошибка!",
+            }
+        });
+    }
+});
+
+router.get("/profileUser", jwtVerefite, async (req, res) => {
+    try {
+        const user = await userService.getUserID(req.dataFromMiddlewareJwtVerefite);
+
+        if (!user.length) {
+            return res.status(400).json({
+                httpState: HTTPState.ERROR,
+                message: "Пользователя не существует"
             });
         }
+
+        return res.status(200).json({
+            httpState: HTTPState.SUCCESS,
+            data: user
+        });
     } catch (err) {
         return res.status(400).json({
             httpState: HTTPState.ERROR,

@@ -2,8 +2,7 @@ import { Router } from "express";
 import { Post } from "./post.service.js";
 import { jwtVerefite } from "../middleware/jwtVerefite.js";
 import { HTTPState } from "../utils/HTTPState.js";
-import { cacheMiddleware } from "../middleware/cacheMiddleware.js";
-import { redis } from "../utils/redis.js";
+import { changePostSchema, createPostSchema, deletePostSchema } from "../utils/validator/schemaValidation.js";
 
 const router = Router();
 const postService = new Post();
@@ -28,40 +27,28 @@ router.get("/searchPost", async (req, res) => {
         });
     }
 });
-
-router.get("/getPosts", jwtVerefite, cacheMiddleware, async (req, res) => {
+router.get("/getPosts", jwtVerefite, async (req, res) => {
     try {
         const data = await postService.getPosts(req.dataFromMiddlewareJwtVerefite);
-        const redisData = await redis.set(req.originalUrl, JSON.stringify(data), { ex: 60 });
-        if (redisData == "OK") {
-            res.status(200).json(data);
-        } else {
-            res.status(200).json(redisData);
-        }
-
+        return res.status(200).json(data);
     } catch {
-        res.status(400).json({
+        return res.status(400).json({
             httpState: HTTPState.ERROR,
             message: "Ошибка получения данных"
         });
     }
 });
 
-router.get("/getPost", jwtVerefite, cacheMiddleware, async (req, res) => {
+router.get("/getPost", jwtVerefite, async (req, res) => {
     try {
-        const redisData = await redis.get(req.originalUrl + req.body.id_post);
-        if (redisData === null){
-            const data = await postService.getPost(req.dataFromMiddlewareJwtVerefite, req.body.id_post);
-            if (data.length == 0 && redisData === null) {
-                return res.status(204).json({
-                    httpState: HTTPState.SUCCESS,
-                    message: "Ничего не найдено"
-                });
-            }
-            return res.status(200).json(data);
+        const data = await postService.getPost(req.dataFromMiddlewareJwtVerefite, req.body.id_post);
+        if (data.length == 0) {
+            return res.status(204).json({
+                httpState: HTTPState.SUCCESS,
+                message: "Ничего не найдено"
+            });
         }
-        return res.status(200).json(redisData);
-
+        return res.status(200).json(data);
     } catch {
         return res.status(400).json({
             httpState: HTTPState.ERROR,
@@ -72,7 +59,20 @@ router.get("/getPost", jwtVerefite, cacheMiddleware, async (req, res) => {
 
 router.post("/createPost", jwtVerefite, async (req, res) => {
     try {
+        try {
+            await createPostSchema.validate(req.body);
+        } catch (err) {
+            return res.status(400).json({
+                httpState: HTTPState.ERROR,
+                message: {
+                    errorName: err.name,
+                    errorPath: err.path,
+                    errorMessage: "Ошибка валидации! Проверьте все поля на наличие ошибок",
+                }
+            });
+        }
         await postService.createPost(req.dataFromMiddlewareJwtVerefite, req.body);
+
         res.status(200).json({
             httpState: HTTPState.SUCCESS,
             message: "Пост создан"
@@ -82,7 +82,7 @@ router.post("/createPost", jwtVerefite, async (req, res) => {
             httpState: HTTPState.ERROR,
             message: {
                 errorName: err.name,
-                errorMessage: "Не удалось создать пост"
+                errorMessage: "Произошла ошибка"
             }
         });
     }
@@ -90,13 +90,27 @@ router.post("/createPost", jwtVerefite, async (req, res) => {
 
 router.put("/changePost", jwtVerefite, async (req, res) => {
     try {
+        try {
+            await changePostSchema.validate(req.body);
+        } catch (err) {
+            return res.status(400).json({
+                httpState: HTTPState.ERROR,
+                message: {
+                    errorName: err.name,
+                    errorPath: err.path,
+                    errorMessage: "Ошибка валидации! Проверьте все поля на наличие ошибок",
+                }
+            });
+        }
+
         await postService.changePost(req.dataFromMiddlewareJwtVerefite, req.body);
-        res.status(200).json({
+
+        return res.status(200).json({
             httpState: HTTPState.SUCCESS,
             message: "Обновлён"
         });
     } catch (err) {
-        res.status(400).json({
+        return res.status(400).json({
             httpState: HTTPState.ERROR,
             message: {
                 errorName: err.name,
@@ -109,19 +123,43 @@ router.put("/changePost", jwtVerefite, async (req, res) => {
 
 router.delete("/deletePost", jwtVerefite, async (req, res) => {
     try {
-        await postService.deletePost(req.body.id, req.dataFromMiddlewareJwtVerefite);
-        res.status(200).json({
-            httpState: HTTPState.SUCCESS,
-            message: "Пост удалён"
-        });
+        try {
+            await deletePostSchema.validate(req.body);
+        } catch (err) {
+            return res.status(400).json({
+                httpState: HTTPState.ERROR,
+                message: {
+                    errorName: err.name,
+                    errorPath: err.path,
+                    errorMessage: "Ошибка валидации! Проверьте все поля на наличие ошибок",
+                }
+            });
+        }
+
+        const deletePost = await postService.deletePost(req.body.id, req.dataFromMiddlewareJwtVerefite);
+
+        if (deletePost.count == 1) {
+            return res.status(200).json({
+                httpState: HTTPState.SUCCESS,
+                message: "Пост удалён"
+            });
+        } else {
+            return res.status(400).json({
+                httpState: HTTPState.ERROR,
+                message: {
+                    errorName: err.name,
+                    errorMessage: "Пост не удалён",
+                    err: err
+                }
+            });
+        }
 
     } catch (err) {
-        res.status(400).json({
+        return res.status(400).json({
             httpState: HTTPState.ERROR,
             message: {
                 errorName: err.name,
                 errorMessage: "Произошла ошибка!",
-                err: err
             }
         });
     }
