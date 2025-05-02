@@ -1,0 +1,92 @@
+.containerSetting{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 74px;
+    margin-bottom: 16px;
+    margin-left: 22px;
+}
+
+.containerSetting-collapse{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 74px;
+    margin-left: 22px;
+    margin-right: 22px;
+}
+
+.anticon{
+    justify-content: center;
+}
+
+.containerImg{
+    min-width: 200px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.containerImg a{
+    height: 38px;
+}
+
+.containerImg-collapse{
+    width: 80px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.containerSearchField{
+    width: 100%;
+    padding-top: 25px;
+    padding-left: 22px;
+    padding-right: 22px;
+    padding-bottom: 15px;
+}
+
+.containerSearchField button{
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.containerSearchField-collapse{
+    padding-top: 25px;
+    padding-left: 22px;
+    padding-right: 22px;
+    padding-bottom: 13px;
+}
+
+.containerButtonField{
+    padding-left: 21px;
+    padding-right: 21px;
+    padding-bottom: 25px;
+}
+
+.containerButtonField-collapse{
+    padding-left: 21px;
+    padding-right: 21px;
+    padding-bottom: 15px;
+}
+
+.anticon-setting, .anticon-menu-fold {
+    font-size: 27px;
+    width: 27px;
+    height: 27px;
+    color: var(--color-c7c7);
+}
+
+.searchField-collapse{
+    border-radius: 30px;
+    width: 33px;
+    height: 33px;
+}
+
+.buttonField-collapse{
+    border-radius: 30px;
+    width: 33px;
+    height: 33px;
+}

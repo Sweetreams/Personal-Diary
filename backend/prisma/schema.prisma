@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearchPostgres"]
 }
 
@@ -25,7 +25,7 @@ model User {
 
 model Post {
   id      Int    @id @default(autoincrement())
-  user    User   @relation(fields: [id_user], references: [id])
+  user    User   @relation(fields: [id_user], references: [id], onDelete: Cascade)
   id_user Int
   title   String
   desc    String
@@ -45,10 +45,15 @@ model Tags {
 
 model TagsAndPost {
   id      Int  @id @default(autoincrement())
-  tags    Tags @relation(fields: [id_tags], references: [id])
-  post    Post @relation(fields: [id_post], references: [id])
+  tags    Tags @relation(fields: [id_tags], references: [id], onDelete: Cascade)
+  post    Post @relation(fields: [id_post], references: [id], onDelete: Cascade)
   id_tags Int
   id_post Int
+}
+
+model MailToken {
+  email String @unique
+  token String @unique
 }
 
 enum ROLE {

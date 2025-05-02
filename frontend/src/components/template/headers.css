@@ -1,0 +1,25 @@
+.headers{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.headersContainer{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+}
+
+.headersContainerImg{
+    width: 47px;
+    height: 47px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.headersContainerDropDownOut{
+    color: #FF3131;
+}

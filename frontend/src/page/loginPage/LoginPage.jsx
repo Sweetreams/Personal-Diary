@@ -1,12 +1,54 @@
-import React from 'react'
-import { Button, Checkbox, ConfigProvider, Form, Input, Spin, Typography } from 'antd'
-import ImageContainer from '../../components/ImageContainer'
+import React, { useCallback, useState } from 'react'
+import { Button, Checkbox, ConfigProvider, Form, Input, notification, Spin, Typography } from 'antd'
+import ImageContainer from '../../components/imageContainer/ImageContainer'
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
 import "../../globalStyles/colorStyle.css"
 import "./loginStyle.css"
-import FormComponent from '../../components/Form/FormComponent'
+
 const LoginPage = () => {
+    const [loading, setLoading] = useState(false)
+    const [api, contextHolder] = notification.useNotification();
+    const navigate = useNavigate()
+
+    const loginRequest = useCallback((req) => {
+        setLoading(true)
+        axios({
+            method: "post",
+            url: "http://localhost:8000/user/loginUser",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            withCredentials: true,
+            data: req,
+        })
+            .then((data) => {
+                let message = data.data.message
+                api.success({
+                    message: "Успешно!",
+                    description: message,
+                    showProgress: true,
+                });
+                navigate("/main", {replace: true})
+            })
+            .catch((err) => {
+                api.error({
+                    message: "Ошибка!",
+                    description: err.response.data.message.errorMessage,
+                    showProgress: true,
+                });
+            }).finally(() => {
+                setLoading(false)
+            })
+    }, [api, navigate])
+
+    const onFinish = (values) => {
+        loginRequest({ login: values.login, password: values.password })
+    }
+
     return (
         <>
+            {contextHolder}
             <ConfigProvider
                 theme={{
                     token: {
@@ -27,7 +69,6 @@ const LoginPage = () => {
                             controlHeight: "36px"
                         },
                         Input: {
-                            paddingInline: "8px",
                             paddingBlock: "8px",
                             colorBorder: "var(--color-f8f8)",
                             hoverBorderColor: "var(--color-f8f8)",
@@ -36,13 +77,54 @@ const LoginPage = () => {
                     },
                 }}
             >
-                <div className="conteinerLeftRight" style={{ display: 'flex', justifyContent: 'space-around' }}>
+                <div className="containerLeftRight">
                     <ImageContainer />
-                    <div className="containerRight" style={{ width: '50%', display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center' }}>
-                        <div className="secondContainerRight" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                            <Typography.Title className='titleSecondContainer' style={{ fontWeight: 400, fontSize: 38, marginBottom: "20px" }}>Авторизация</Typography.Title>
+                    <div className="containerRight">
+                        <div className="secondContainerRight">
                             <div className="formContainer" >
-                                <FormComponent/>
+                                <Typography.Title className='titleSecondContainer' >Авторизация</Typography.Title>
+                                <Spin spinning={loading}>
+                                    <Form
+                                        variant='filled'
+                                        layout="vertical"
+                                        className="formAuth"
+
+                                        onFinish={(values) => onFinish(values)}
+                                    >
+                                        <Form.Item
+                                            name="login"
+                                            label="Логин"
+                                            className="loginField"
+                                        >
+                                            <Input placeholder="Логин..." />
+                                        </Form.Item>
+
+                                        <Form.Item
+                                            name="password"
+                                            label="Пароль"
+                                            className="passwordField"
+                                        >
+                                            <Input.Password placeholder="Пароль..." />
+                                        </Form.Item>
+
+                                        <Form.Item
+                                            valuePropName="checkbox"
+                                            className="checkboxField"
+                                        >
+                                            <Checkbox>Запомнить меня?</Checkbox>
+                                        </Form.Item>
+                                        <p className="descAcc">У меня нет аккаунта, <a className="link_typeClass" href="/registration">зарегистрироваться?</a></p>
+
+                                        <a className="link_typeClass" href="/recoveryPassword">Забыл пароль?</a>
+
+                                        <Form.Item
+                                            name="button"
+                                            className="buttonField"
+                                        >
+                                            <Button className="buttonSend" htmlType="submit">Войти</Button>
+                                        </Form.Item>
+                                    </Form>
+                                </Spin>
                             </div>
                         </div>
                     </div>

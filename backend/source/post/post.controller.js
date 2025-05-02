@@ -7,9 +7,9 @@ import { changePostSchema, createPostSchema, deletePostSchema } from "../utils/v
 const router = Router();
 const postService = new Post();
 
-router.get("/searchPost", async (req, res) => {
+router.post("/searchPost", jwtVerefite, async (req, res) => {
     try {
-        const search = await postService.postSearch(req.body.text);
+        const search = await postService.postSearch(req.body.text, req.dataFromMiddlewareJwtVerefite);
         if (search.length == 0) {
             return res.status(204).json({
                 httpState: HTTPState.SUCCESS,
@@ -27,9 +27,27 @@ router.get("/searchPost", async (req, res) => {
         });
     }
 });
-router.get("/getPosts", jwtVerefite, async (req, res) => {
+
+router.get("/getPostsDate", jwtVerefite, async(req,res) => {
     try {
-        const data = await postService.getPosts(req.dataFromMiddlewareJwtVerefite);
+        const PostsDate = await postService.getPostsDate(req.dataFromMiddlewareJwtVerefite);
+        if (!PostsDate) throw new Error("Ошибка");
+        return res.status(200).json(PostsDate);
+    } catch {
+        return res.status(400).json({
+            httpState: HTTPState.ERROR,
+            message: "Ошибка получения данных"
+        });
+    }
+});
+
+router.get("/getPosts/:date", jwtVerefite, async (req, res) => {
+    try {
+        const year = `${req.params.date[0]}${req.params.date[1]}${req.params.date[2]}${req.params.date[3]}`;
+        const mount = `${req.params.date[4]}${req.params.date[5]}`;
+        const day = `${req.params.date[6]}${req.params.date[7]}`;
+        
+        const data = await postService.getPostsonDate(`${year}-${mount}-${day}`, req.dataFromMiddlewareJwtVerefite);
         return res.status(200).json(data);
     } catch {
         return res.status(400).json({
@@ -39,7 +57,7 @@ router.get("/getPosts", jwtVerefite, async (req, res) => {
     }
 });
 
-router.get("/getPost", jwtVerefite, async (req, res) => {
+router.post("/getPost", jwtVerefite, async (req, res) => {
     try {
         const data = await postService.getPost(req.dataFromMiddlewareJwtVerefite, req.body.id_post);
         if (data.length == 0) {
@@ -73,12 +91,12 @@ router.post("/createPost", jwtVerefite, async (req, res) => {
         }
         await postService.createPost(req.dataFromMiddlewareJwtVerefite, req.body);
 
-        res.status(200).json({
+        return res.status(200).json({
             httpState: HTTPState.SUCCESS,
             message: "Пост создан"
         });
     } catch (err) {
-        res.status(400).json({
+        return res.status(400).json({
             httpState: HTTPState.ERROR,
             message: {
                 errorName: err.name,

@@ -5,9 +5,9 @@ export class User {
     prisma = prisma;
 
     getUser(login, bcryptpassword, email) {
-        
+
         return this.prisma.user.findMany({
-            where:{
+            where: {
                 login: login,
                 email: email,
                 bcryptpassword: bcryptpassword
@@ -15,7 +15,7 @@ export class User {
         });
     }
 
-    getUserID(id){
+    getUserID(id) {
         return this.prisma.user.findMany({
             where: {
                 id: Number(id)
@@ -31,7 +31,7 @@ export class User {
         });
     }
 
-    getUserLogin(login){
+    getUserLogin(login) {
         return this.prisma.user.findMany({
             where: {
                 login: login
@@ -45,14 +45,39 @@ export class User {
         });
     }
 
-    editingUser(id, data){
+    editingUser(id, data) {
         return this.prisma.user.update({
-            where: { id: Number(id)},
+            where: { id: Number(id) },
             data: {
                 ...data
             }
         });
     }
+
+    editingPasswordUser = async (data) => {
+        const login = data.login;
+        const email = data.email;
+        const password = data.bcryptpassword;
+        return await this.prisma.$transaction(async (prisma) => {
+            const user = await prisma.user.findMany({
+                where: {
+                    login: login,
+                    email: email
+                }
+            });
+            const userId = user[0].id;
+            return this.prisma.user.update({
+                where: {
+                    id: Number(userId),
+                    login: login,
+                    email: email
+                },
+                data: {
+                    bcryptpassword: password
+                }
+            });
+        });
+    };
 
     deleteUser(id) {
         return this.prisma.user.delete({
@@ -60,7 +85,19 @@ export class User {
                 id: Number(id)
             }
         });
+        // return this.prisma.$transaction(async(prisma) => {
+        //     return prisma.post.deleteMany({
+        //         where: {
+        //             id_user: Number(id)
+        //         }
+        //     });
+
+            
+            
+        //     return user;
+        // });
+
     }
-    
+
 
 }

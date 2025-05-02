@@ -21,6 +21,12 @@ export const changeUserSchema = object({
     name: string()
 });
 
+export const changePasswordSchema = object({
+    login: string(),
+    password: string().min(8, "Минимальная длина пароля 8 символов").max(16, "Максимальная длина пароля 16 символов"),
+    email: string().email("mail не действителен")
+});
+
 //Post Validator
 
 export const createPostSchema = object({
@@ -37,5 +43,5 @@ export const changePostSchema = object({
 });
 
 export const deletePostSchema = object({
-    id_post: number().required()
+    id: number().required()
 });

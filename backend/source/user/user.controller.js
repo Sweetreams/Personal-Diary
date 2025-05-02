@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { User } from "./user.service.js";
-import { changeUserSchema, userCreateSchema, userLoginSchema } from "../utils/validator/schemaValidation.js";
+import { changePasswordSchema, changeUserSchema, userCreateSchema, userLoginSchema } from "../utils/validator/schemaValidation.js";
 import { HTTPState } from "../utils/HTTPState.js";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
@@ -38,15 +38,17 @@ router.post("/createUser", async (req, res) => {
                     imgURL: await getUrlPhoto("/noteuser.png")
                 });
                 const token = jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 30), id: user.id, role: user.role }, process.env.SECRETKEYJWT);
+                res.cookie("token", token, {
+                    maxAge: Math.floor(Date.now() / 1000) + (60 * 30),
+                    httpOnly: true,
+                    sameSite: "strict"
+                });
 
                 return res.status(200).json({
                     httpState: HTTPState.SUCCESS,
-                    token: token,
-                    expToken: Math.floor(Date.now() / 1000) + (60 * 30),
-                    message: "Вы успешно зарегистрировались"
+                    message: "Вы успешно создали аккаунт!"
                 });
-
-            } catch {
+            } catch (err) {
                 return res.status(400).json({
                     httpState: HTTPState.ERROR,
                     message: {
@@ -59,17 +61,17 @@ router.post("/createUser", async (req, res) => {
 
 });
 
-router.get("/loginUser", async (req, res) => {
+router.post("/loginUser", async (req, res) => {
     try {
         try {
             await userLoginSchema.validate(req.body);
-        } catch (error) {
+        } catch (err) {
             return res.status(400).json({
                 httpState: HTTPState.ERROR,
                 message: {
-                    errorName: error.name,
-                    errorPath: error.path,
-                    errorMessage: error.errors,
+                    errorName: err.name,
+                    errorPath: err.path,
+                    errorMessage: err.errors,
                 }
             });
         }
@@ -77,21 +79,33 @@ router.get("/loginUser", async (req, res) => {
 
         if (!user.length) return res.status(400).json({
             httpState: HTTPState.ERROR,
-            message: "Пользователь не существует!"
+            message: {
+                errorName: "userService",
+                errorPath: "userService",
+                errorMessage: "Пользователь не существует!"
+            }
         });
         const match = await bcrypt.compare(req.body.password, user[0].bcryptpassword);
 
         if (!match) return res.status(400).json({
             httpState: HTTPState.ERROR,
-            message: "Неверный пароль!"
+            message: {
+                errorName: "userService",
+                errorPath: "userService",
+                errorMessage: "Неверный пароль!"
+            }
         });
 
         const token = jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 30), id: user[0].id, role: user[0].role }, process.env.SECRETKEYJWT);
 
+        res.cookie("token", token, {
+            maxAge: Math.floor(Date.now() / 1000) + (60 * 30),
+            httpOnly: true,
+            sameSite: "strict"
+        });
+
         return res.status(200).json({
             httpState: HTTPState.SUCCESS,
-            token: token,
-            expToken: Math.floor(Date.now() / 1000) + (60 * 30),
             message: "Вы успешно вошли в аккаунт!"
         });
 
@@ -100,6 +114,7 @@ router.get("/loginUser", async (req, res) => {
             httpState: HTTPState.ERROR,
             message: {
                 errorName: err.name,
+                errorPath: error.path,
                 errorMessage: "Произошла ошибка!",
             }
         });
@@ -157,6 +172,54 @@ router.put("/changeUser", jwtVerefite, async (req, res) => {
             }
         });
     }
+});
+
+router.put("/changePasswordUser", async (req, res) => {
+    try {
+        try {
+            await changePasswordSchema.validate(req.body);
+        } catch (err) {
+            return res.status(400).json({
+                httpState: HTTPState.ERROR,
+                message: {
+                    errorName: err.name,
+                    errorPath: err.path,
+                    errorMessage: err.errors,
+                }
+            });
+        }
+
+        const password = await bcrypt.hash(req.body.password, 10);
+
+        const userPasswordChange = await userService.editingPasswordUser({
+            login: req.body.login,
+            bcryptpassword: password,
+            email: req.body.email
+        });
+
+        if (!userPasswordChange) {
+            return res.status(400).json({
+                httpState: HTTPState.ERROR,
+                message: {
+                    errorName: err.name,
+                    errorMessage: "Не удалось обновить пароль"
+                }
+            });
+        }
+
+        return res.status(200).json({
+            httpState: HTTPState.SUCCESS,
+            message: "Данные успешно обновлены!"
+        });
+    } catch (err) {
+        return res.status(400).json({
+            httpState: HTTPState.ERROR,
+            message: {
+                errorName: err.name,
+                errorMessage: "Произошла ошибка!"
+            }
+        });
+    }
 
 });
 
@@ -164,15 +227,32 @@ router.delete("/deleteUser", jwtVerefite, async (req, res) => {
     try {
         const user = await userService.deleteUser(req.dataFromMiddlewareJwtVerefite);
         if (user.count == 0) {
-            return res.status(200).json({
+            return res.status(400).json({
                 httpState: HTTPState.ERROR,
                 message: "Аккаунт не был удалён"
             });
         }
+        res.clearCookie("token");
         return res.status(200).json({
             httpState: HTTPState.ERROR,
             message: "Аккаунт успешно удалён!"
         });
+    } catch (err) {
+        console.log(err);
+        return res.status(401).json({
+            httpState: HTTPState.ERROR,
+            message: {
+                errorName: err.name,
+                errorMessage: err.message
+            }
+        });
+    }
+});
+
+router.get(("/logout"), (req, res) => {
+    try {
+        res.clearCookie("token");
+        return res.status(200).json("user logout");
     } catch (err) {
         return res.status(401).json({
             httpState: HTTPState.ERROR,
@@ -182,6 +262,7 @@ router.delete("/deleteUser", jwtVerefite, async (req, res) => {
             }
         });
     }
+
 });
 
 export const userRouter = router;

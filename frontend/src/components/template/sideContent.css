@@ -1,0 +1,14 @@
+.ant-list-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.listDate-collapse {
+    display: none;
+}
+
+:where(.css-dev-only-do-not-override-1d4w9r2).ant-list{
+    font-size: 16px;
+}

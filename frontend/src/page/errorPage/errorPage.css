@@ -1,0 +1,39 @@
+
+body{
+    width: 100%;
+    height: 100%;
+}
+
+#root{
+    width: 100%;
+    height: 100%;
+}
+
+.container{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.containerText{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.textHeader{
+    font-size: 4vw;
+    padding-bottom: 4vw;
+}
+
+.textDesc{
+    font-size: 1.5vw;
+    padding-bottom: 1vw;
+}
+
+.textStatusError{
+    font-size: 1vw;
+    color: var(--color-c7c7)
+}

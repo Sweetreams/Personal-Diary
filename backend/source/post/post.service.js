@@ -5,18 +5,38 @@ const prisma = new PrismaClient();
 export class Post {
     prisma = prisma;
 
-    getPosts = async (id) => {
+    getPostsDate = async (id) => {
+        return this.prisma.$queryRaw`SELECT DISTINCT "updatedAt"::date FROM public."Post" WHERE "id_user" = ${id} ORDER BY "updatedAt" DESC`;
+    };
+
+    getPostsonDate = async (date, id) => {
+        const dateCurrent = new Date(date);
+        const dateNextDay = new Date(dateCurrent);
+        dateNextDay.setDate(dateCurrent.getDate() + 1);
         return this.prisma.post.findMany({
-            where: {
-                id_user: Number(id)
+            orderBy: {
+                updatedAt: "desc"
             },
-            include: {
+            where: {
+                id_user: Number(id),
+                updatedAt: {
+                    gte: dateCurrent,
+                    lt: dateNextDay
+                }
+            },
+            select: {
+                id: true,
+                title: true,
+                desc: true,
+                createdAt: true,
+                updatedAt: true,
                 TagsAndPost: {
-                    include: {
+                    select: {
                         tags: true
                     }
                 },
             }
+
         });
     };
 
@@ -26,11 +46,31 @@ export class Post {
                 id_user: Number(id_user),
                 id: Number(id_post)
             },
+            select: {
+                id: true,
+                title: true,
+                desc: true,
+                createdAt: true,
+                updatedAt: true,
+                TagsAndPost: {
+                    select: {
+                        tags: true
+                    }
+                },
+            }
         });
     };
 
-    postSearch = async (text) => {
-        return this.prisma.$queryRaw`select * from public."Post" where to_tsvector("desc") || to_tsvector("title") @@ to_tsquery(${text + ":*"})`;
+    postSearch = async (text, user_id) => {
+        let textSearch = "";
+        if (text < 0) {
+            throw new Error("Ошибка");
+        } else {
+            textSearch = text + ":*";
+            return this.prisma.$queryRaw`select * from public."Post" where id_user = ${user_id} and to_tsvector('simple', "desc") || to_tsvector('simple', "title") @@ to_tsquery(${textSearch})`;
+        }
+
+
     };
 
     createPost = async (id, data) => {

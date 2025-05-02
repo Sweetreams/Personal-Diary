@@ -1,0 +1,117 @@
+.link_typeClass {
+    margin-bottom: 15px;
+    color: rgb(51, 51, 51);
+    text-decoration: underline;
+}
+
+.ant-checkbox-label {
+    padding-top: 4px;
+}
+
+.titleSecondContainer {
+    font-weight: 400 !important;
+    font-size: 38px; 
+    margin-bottom: 20px !important
+}
+
+.secondContainerRight {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.formAuth {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start
+}
+
+.buttonField{
+    margin-bottom: 0;
+}
+
+.link_typeClass:hover {
+    color: var(--color-8585);
+    text-decoration: underline;
+}
+
+.containerLeftRight {
+    display: flex;
+    justify-content: space-around
+}
+
+.submitButton {
+    width: 100%;
+    display: flex;
+    justify-content: left
+}
+
+.loginField,
+.passwordField,
+.checkboxField,
+.emailField{
+    width: 25vw;
+    margin-bottom: 20px;
+}
+
+.containerRight {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center
+}
+
+.descAcc{
+    margin-bottom: 5px;
+}
+
+.buttonSend {
+    min-width: 150px;
+    width: 10vw;
+}
+
+@media (width < 768px) {
+
+    .loginField, .passwordField, .emailField {
+        width: 40vw;
+    }
+
+    .containerLeftRight {
+
+        display: flex;
+        width: 100%;
+        position: absolute;
+        flex-wrap: nowrap;
+        flex-direction: row-reverse;
+        align-items: center;
+    }
+
+    .containerLeft {
+        width: 100% !important;
+    }
+
+    .containerRight {
+        width: 100% !important;
+        height: 540px;
+        background: white;
+        position: absolute;
+        z-index: 3;
+    }
+
+    .secondContainerRight {
+        align-items: center;
+    }
+
+    .buttonField_div {
+        width: 100%;
+        display: flex;
+        justify-content: center
+    }
+}

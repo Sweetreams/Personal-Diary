@@ -2,4 +2,17 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "TT Commons";
+}
+
+html{
+    width: 100%;
+    height: max-content;
+    font-family: "TT Commons";
+    color: var(--color-3333)
+}
+
+.ant-typography{
+    font-family: TT Commons;
+    font-size: 16px;
 }

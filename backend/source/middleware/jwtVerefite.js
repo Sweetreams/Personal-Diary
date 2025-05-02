@@ -6,18 +6,22 @@ dotenv.config();
 
 export const jwtVerefite = (req, res, next) => {
     try {
-        jwt.verify(req.headers.authorization, process.env.SECRETKEYJWT, (err, decode) => {
+        const tokenRegExp = req.headers.cookie.match(/=([^\n]+)/);
+        const cookie = tokenRegExp?.[1];
+        
+        if (!cookie) throw new Error("cookies error");
+
+        jwt.verify(cookie, process.env.SECRETKEYJWT, (err, decode) => {
             if (!err) {
                 req.dataFromMiddlewareJwtVerefite = decode.id;
                 req.dataFromMiddlewareUserRole = decode.role;
-                
                 next();
             }
             else return res.status(401).json({
                 httpState: HTTPState.ERROR,
                 message: {
                     errorName: err.name,
-                    errorMessage: err.message
+                    errorMessage: "Пользователь не авторизован!"
                 }
             });
         });
@@ -26,7 +30,7 @@ export const jwtVerefite = (req, res, next) => {
             httpState: HTTPState.ERROR,
             message: {
                 errorName: err.name,
-                errorMessage: err.message
+                errorMessage: "Произошла ошибка!"
             }
         });
     }

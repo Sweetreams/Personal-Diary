@@ -1,11 +1,12 @@
+import { Typography } from "antd";
 import { Pattern } from "./Pattern";
 import { Rule } from "./Rule";
 
 const defaultRules: Rule[] = [
     new Rule("header",
         [
-            new Pattern(/^#{1,1}\s([^\n]+)/gm, `<h1>$1</h1>`),
-            new Pattern(/^#{2,2}\s([^\n]+)/gm, `<h2>$1</h2>`),
+            new Pattern(/^#{1,1}\s([^\n]+)/gm, `<Typography.Title>$1</Typography.Title>`),
+            new Pattern(/^#{2,2}\s([^\n]+)/gm, `<Typography.Title level={2}>$1</Typography.Title>`),
             new Pattern(/^#{3,3}\s([^\n]+)/gm, `<h3>$1</h3>`),
             new Pattern(/^#{4,4}\s([^\n]+)/gm, `<h4>$1</h4>`),
             new Pattern(/^#{5,5}\s([^\n]+)/gm, `<h5>$1</h5>`),
@@ -58,7 +59,6 @@ export class RMark {
         this.rules.forEach((rule) => {
             result = rule.apply(result)
         })
-        console.log(result)
         return result
     }
 }
