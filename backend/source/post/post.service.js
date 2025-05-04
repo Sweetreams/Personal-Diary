@@ -6,7 +6,7 @@ export class Post {
     prisma = prisma;
 
     getPostsDate = async (id) => {
-        return this.prisma.$queryRaw`SELECT DISTINCT "updatedAt"::date FROM public."Post" WHERE "id_user" = ${id} ORDER BY "updatedAt" DESC`;
+        return this.prisma.$queryRaw`SELECT DISTINCT "createdAt"::date FROM public."Post" WHERE "id_user" = ${id} ORDER BY "createdAt" DESC`;
     };
 
     getPostsonDate = async (date, id) => {
@@ -15,11 +15,11 @@ export class Post {
         dateNextDay.setDate(dateCurrent.getDate() + 1);
         return this.prisma.post.findMany({
             orderBy: {
-                updatedAt: "desc"
+                createdAt: "desc"
             },
             where: {
                 id_user: Number(id),
-                updatedAt: {
+                createdAt: {
                     gte: dateCurrent,
                     lt: dateNextDay
                 }
@@ -30,6 +30,7 @@ export class Post {
                 desc: true,
                 createdAt: true,
                 updatedAt: true,
+                emotions: true,
                 TagsAndPost: {
                     select: {
                         tags: true
@@ -37,6 +38,27 @@ export class Post {
                 },
             }
 
+        });
+    };
+
+    getAllPost = async (id_user) => {
+        return this.prisma.post.findMany({
+            where: {
+                id_user: Number(id_user)
+            },
+            select: {
+                id: true,
+                title: true,
+                desc: true,
+                createdAt: true,
+                updatedAt: true,
+                emotions: true,
+                TagsAndPost: {
+                    select: {
+                        tags: true
+                    }
+                },
+            }
         });
     };
 
@@ -95,6 +117,18 @@ export class Post {
                         throw new Error("Ошибка присвоения");
                     }
                 }
+            }
+        });
+    };
+
+    changePostEmotions = async(id, data) => {
+        return await this.prisma.post.update({
+            where: {
+                id_user: Number(id),
+                id: Number(data.id_post)
+            },
+            data: {
+                emotions: data.emotions
             }
         });
     };

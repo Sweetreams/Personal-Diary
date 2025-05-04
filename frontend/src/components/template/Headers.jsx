@@ -1,6 +1,6 @@
 import { MenuFoldOutlined, SearchOutlined } from '@ant-design/icons'
 import { Dropdown, Input, notification, Select, Typography } from "antd"
-import React, { useContext, useState } from 'react'
+import React, { useContext} from 'react'
 import "./headers.css"
 import ProfileContext from '../context/ProfileContext'
 import axios from "axios"
@@ -42,9 +42,9 @@ const Headers = ({ isCollapse }) => {
     {
       key: '1',
       label: (
-        <Typography.Text href="/profilePage" className="headersContainerDropDownProfile">
+        <Typography.Link href="/profilePage" className="headersContainerDropDownProfile">
           Профиль
-        </Typography.Text>
+        </Typography.Link>
       ),
     },
     {

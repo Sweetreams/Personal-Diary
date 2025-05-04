@@ -11,7 +11,7 @@ import ListSideContent from '../customList/listSideContent'
  * @param {boolean} collapse 
  * @returns {object}
  */
-const SideContent = () => {
+const SideContent = ({collapse}) => {
     const [content, setContent] = useState([])
     const [loading, setLoading] = useState(false)
     useEffect(() => {
@@ -41,7 +41,7 @@ const SideContent = () => {
      */
     const dataProcessing = (data) => {
         return data.map((el) => {
-            let [, year, month, day] = el.updatedAt.match(/^(\d{4})-(\d{2})-(\d{2})/)
+            let [, year, month, day] = el.createdAt.match(/^(\d{4})-(\d{2})-(\d{2})/)
             return [year, month, day]
         })
     }
@@ -50,7 +50,7 @@ const SideContent = () => {
 
     return (
         <Spin spinning={loading}>
-            <div style={{display: "flex", flexDirection: "column", alignItems: "center", gap: 10, fontSize: 16}}>
+            <div style={{display: collapse ? "none" : "flex", flexDirection: "column", alignItems: "center", gap: 10, fontSize: 16}}>
                 <ListSideContent props={dataAfterProcessing} />
             </div>
         </Spin>

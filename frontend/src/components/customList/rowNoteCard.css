@@ -1,0 +1,8 @@
+.rowNoteCard{
+    margin-bottom: 20px;
+    margin-left: 30px;
+}
+
+.rowNoteCard:last-child{
+    margin-bottom: 0px;
+}

@@ -4,6 +4,7 @@ import axios from "axios"
 import { dateProcessing, dateTimeProcessing } from '../../utils/dateConvertor'
 import { RMark } from '../../utils/markdown/render'
 import DOMPurify from 'dompurify';
+import { marked } from 'marked'
 
 const axiosRequest = async (values) => {
   return axios({
@@ -104,9 +105,9 @@ const CreateNewPost = () => {
                   </Form.Item>
                 </Splitter.Panel>
                 <Splitter.Panel defaultSize="50%" min="30%" max="70%">
-                  <Form.Item
+                <Form.Item
                   label="Предпросмотр">
-                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(new RMark().render(textAreaText)) }}></div>
+                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(textAreaText)) }}></div>
                   </Form.Item>
                 </Splitter.Panel>
               </Splitter>

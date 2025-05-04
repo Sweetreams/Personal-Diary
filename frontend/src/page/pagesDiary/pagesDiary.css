@@ -23,7 +23,7 @@
     font-size: 16px;
 }
 
-.listItemNoteDateTitleContainer{
+.listItemNoteDateTitleContainer {
     display: flex;
     align-items: center;
 }
@@ -48,14 +48,51 @@
 
 .noteDateTitle {
     font-size: 24px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
-.listItemNoteDateIconIcon{
+.listItemNoteDateIconIcon {
     display: flex;
     color: #333333;
 }
 
-.listItemNoteDateIconIcon:hover{
+.listItemNoteDateIconIcon:hover {
     color: #595959;
+}
+
+.ant-card-body img {
+    width: 50%;
+}
+
+.ant-card-body ul {
+    padding-left: 30px;
+}
+
+.ant-card-body ol {
+    padding-left: 30px;
+}
+
+table {
+    width: 100%;
+    border-radius: 5px;
+    table-layout: fixed;
+    border-spacing: 0px;
+}
+
+thead {
+    background-color: rgba(251, 238, 206, 0.7);
+}
+
+tbody>tr:nth-of-type(even) {
+    background-color: rgba(234, 238, 202, 0.3);
+}
+
+th {
+
+    text-align: start;
+}
+
+th,
+td {
+    padding: 10px;
 }

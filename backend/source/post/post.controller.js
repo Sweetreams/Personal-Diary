@@ -28,7 +28,7 @@ router.post("/searchPost", jwtVerefite, async (req, res) => {
     }
 });
 
-router.get("/getPostsDate", jwtVerefite, async(req,res) => {
+router.get("/getPostsDate", jwtVerefite, async (req, res) => {
     try {
         const PostsDate = await postService.getPostsDate(req.dataFromMiddlewareJwtVerefite);
         if (!PostsDate) throw new Error("Ошибка");
@@ -46,7 +46,7 @@ router.get("/getPosts/:date", jwtVerefite, async (req, res) => {
         const year = `${req.params.date[0]}${req.params.date[1]}${req.params.date[2]}${req.params.date[3]}`;
         const mount = `${req.params.date[4]}${req.params.date[5]}`;
         const day = `${req.params.date[6]}${req.params.date[7]}`;
-        
+
         const data = await postService.getPostsonDate(`${year}-${mount}-${day}`, req.dataFromMiddlewareJwtVerefite);
         return res.status(200).json(data);
     } catch {
@@ -67,6 +67,24 @@ router.post("/getPost", jwtVerefite, async (req, res) => {
             });
         }
         return res.status(200).json(data);
+    } catch {
+        return res.status(400).json({
+            httpState: HTTPState.ERROR,
+            message: "Ошибка получения данных"
+        });
+    }
+});
+
+router.get("/getAllPost", jwtVerefite, async (req, res) => {
+    try {
+        const allPost = await postService.getAllPost(req.dataFromMiddlewareJwtVerefite);
+        if (allPost.length == 0) {
+            return res.status(204).json({
+                httpState: HTTPState.SUCCESS,
+                message: "Ничего не найдено"
+            });
+        }
+        return res.status(200).json(allPost);
     } catch {
         return res.status(400).json({
             httpState: HTTPState.ERROR,
@@ -101,6 +119,25 @@ router.post("/createPost", jwtVerefite, async (req, res) => {
             message: {
                 errorName: err.name,
                 errorMessage: "Произошла ошибка"
+            }
+        });
+    }
+});
+
+router.put("/changePostEmotions", jwtVerefite, async(req, res) => {
+    try {
+        await postService.changePostEmotions(req.dataFromMiddlewareJwtVerefite, req.body);
+
+        return res.status(200).json({
+            httpState: HTTPState.SUCCESS,
+            message: "Обновлён"
+        });
+    } catch (err) {
+        return res.status(400).json({
+            httpState: HTTPState.ERROR,
+            message: {
+                errorName: err.name,
+                errorMessage: "Не удалось Обновить пост"
             }
         });
     }

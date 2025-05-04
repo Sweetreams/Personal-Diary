@@ -187,7 +187,7 @@ body {
 
 .section-heading h4 em {
   font-style: normal;
-  color: #4b8ef1;
+  color: #333;
 }
 
 .section-heading img {
@@ -248,17 +248,18 @@ body {
   text-transform: capitalize;
   font-size: 15px;
   background: rgb(19,175,240);
-  background: linear-gradient(105deg, rgba(91,104,235,1) 0%, rgba(40,225,253,1) 100%);
+  background: linear-gradient(90deg, #FBEECE 0%, #EAEECA 100%);
   border-radius: 23px;
   font-weight: 500 !important;
   letter-spacing: 0.3px !important;
-  transition: all .5s;
+  /* transition: all 2s ease-out; */
 }
 
 .gradient-button a:hover {
   color: #fff !important;
   background: rgb(19,175,240);
-  background: linear-gradient(105deg, rgba(91,104,235,1) 0%, rgba(40,225,253,1) 100%);
+  background: linear-gradient(270deg, #FBEECE 0%, #EAEECA 100%);
+  transition: all 0.5s ease-out;
 }
 
 .border-button a {
@@ -950,7 +951,7 @@ Banner Style
 }
 
 .main-banner .left-content .white-button a {
-  background-color: #4b8ef1;
+  background-color: #333333;
   color: #fff !important;
 }
 
@@ -984,7 +985,7 @@ Services Style
   left: 0;
   bottom: -300px;
   width: 261px;
-  height: 368px;
+  height: 400px;
   z-index: 0;
 }
 
@@ -1011,6 +1012,7 @@ Services Style
 
 .service-item {
   position: relative;
+  min-height: 319px;
   z-index: 1;
   padding: 30px;
   box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
@@ -1045,7 +1047,7 @@ Services Style
 .service-item:hover h4,
 .service-item:hover p,
 .service-item:hover .text-button a {
-  color: #fff;
+  color: #333333;
 }
 
 .first-service .icon {
@@ -1082,7 +1084,7 @@ Services Style
 }
 
 .service-item:hover {
-  background-image: url(../images/service-bg.jpg);
+  background-image: url(../images/service-bg.png);
   background-position: right top;
   background-repeat: no-repeat;
   background-size: cover;
@@ -1988,7 +1990,7 @@ responsive
     margin-right: 0;
   }
   .main-banner .left-content .white-button a {
-    background-color: #4b8ef1;
+    background-color: #6191d8;
     color: #fff !important;
   }
   form#contact {

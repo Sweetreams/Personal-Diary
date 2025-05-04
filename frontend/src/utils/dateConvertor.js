@@ -17,8 +17,9 @@ export const dateTimeProcessingForRequest = (data) => {
     try {
       const time = new Date(data.updatedAt)
       const hours = time.getHours()
-      const minutes = time.getMinutes()
-      return (hours + ":" + minutes)
+      const minutes = time.getMinutes() 
+      const minutesCurrect = minutes < 10 ? "0" + minutes : minutes
+      return (hours + ":" + minutesCurrect)
     } catch {
       throw new Error("Произошла ошибка");
     }
@@ -27,17 +28,13 @@ export const dateTimeProcessingForRequest = (data) => {
 export const dateProcessing = (date) => {
     try {
         const year = date.getFullYear()
-        const currentMonth = date.getMonth() + 1
+        const currentMonth = date.getMonth() + 1 
+        const mountCurrect = currentMonth < 10 ? "0" + currentMonth : currentMonth
+
         const day = date.getDate()
-        let month = ""
+        const dayCurrect = day < 10 ? "0" + day : day
 
-        if (currentMonth < 10) {
-            month = "0" + Number(currentMonth)
-        } else {
-            month = Number(currentMonth)
-        }
-
-        return day + "." + month + "." + year
+        return dayCurrect + "." + mountCurrect + "." + year
     } catch {
         throw new Error("Произошла ошибка");
     }

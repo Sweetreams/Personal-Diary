@@ -24,11 +24,12 @@ model User {
 }
 
 model Post {
-  id      Int    @id @default(autoincrement())
-  user    User   @relation(fields: [id_user], references: [id], onDelete: Cascade)
-  id_user Int
-  title   String
-  desc    String
+  id       Int      @id @default(autoincrement())
+  user     User     @relation(fields: [id_user], references: [id], onDelete: Cascade)
+  id_user  Int
+  title    String
+  desc     String
+  emotions EMOTIONS?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -59,4 +60,15 @@ model MailToken {
 enum ROLE {
   user
   admin
+}
+
+enum EMOTIONS {
+  happiness //Радость
+  anticipation //Предвкушение
+  sadness //Грусть
+  anger //Гнев
+  excitement //Волнение
+  boredom //Скука
+  embarrassment //Смущение
+  other //Другое
 }

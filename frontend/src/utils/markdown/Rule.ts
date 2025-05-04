@@ -9,7 +9,6 @@ export class Rule {
     }
 
     apply(raw: string): string {
-      // console.log(raw)
         return this.patterns.reduce(
           (result, pattern) => pattern.apply(result),
           raw

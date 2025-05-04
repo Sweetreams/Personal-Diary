@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Form, Input, Select, Splitter } from 'antd'
+import { Button, Col, Form, Input, Row, Select, Splitter } from 'antd'
 import axiosCache from "../../utils/axios.js"
 import { useParams } from 'react-router-dom'
 import DOMPurify from 'dompurify';
 import { RMark } from '../../utils/markdown/render.js';
 import axios from "axios"
+import { marked } from 'marked';
 
 const axiosRequest = async (values) => {
     return axios({
-      method: "put",
-      url: "http://localhost:8000/post/changePost",
-      withCredentials: true,
-      data: values
+        method: "put",
+        url: "http://localhost:8000/post/changePost",
+        withCredentials: true,
+        data: values
     }).then((req) => {
-      return req
+        return req
     }).catch((req) => {
-      return req.response
+        return req.response
     })
-  }
+}
 
 const EditingNewDiary = () => {
     const [dataFromResponse, setDataFromResponse] = useState([])
@@ -30,14 +31,14 @@ const EditingNewDiary = () => {
         const tagsId = []
         const valuesTags = values.tags
 
-        for(let i = 0; i < valuesTags.length; i++){
-            for(let j = 0; j < tags.length; j ++){
-                if(valuesTags[i] === tags[j].value){
+        for (let i = 0; i < valuesTags.length; i++) {
+            for (let j = 0; j < tags.length; j++) {
+                if (valuesTags[i] === tags[j].value) {
                     tagsId.push(tags[j].key)
                 }
             }
         }
-        axiosRequest({id_post: params.id, title: values.title, tags: tagsId, desc: values.desc})
+        axiosRequest({ id_post: params.id, title: values.title, tags: tagsId, desc: values.desc })
     }
 
     useEffect(() => {
@@ -47,13 +48,13 @@ const EditingNewDiary = () => {
             method: "get",
             url: "http://localhost:8000/tag/tagGet",
             withCredentials: true,
-          }).then((req) => {
+        }).then((req) => {
             let tag = []
             req.data.map((el) => {
-              tag.push({ label: el.tag, value: el.tag, key: el.id })
+                tag.push({ label: el.tag, value: el.tag, key: el.id })
             })
             setTags(tag)
-          })
+        })
 
         axiosCache({
             method: "post",
@@ -82,9 +83,9 @@ const EditingNewDiary = () => {
 
     return (
         <>
-            
+
             <div className="listItemNote">
-                
+
                 <div className="diaryFieldEditing">
                     <Form
                         form={form}
@@ -95,20 +96,29 @@ const EditingNewDiary = () => {
                             ["tags"]: dataFromResponse?.tags,
                             ["desc"]: dataFromResponse?.desc
                         }}>
-                        <Form.Item
-                            name="title"
-                            label="Заголовок"
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            name="tags"
-                            label="Тэги">
-                            <Select
-                                mode="multiple"
-                                options={tags}
-                            />
-                        </Form.Item>
+                        <Row>
+                            <Col span={12}>
+                                <Form.Item
+                                    name="title"
+                                    label="Заголовок"
+                                >
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                            <Col span={8}></Col>
+                            <Col span={4}>
+                                <Form.Item
+                                    name="tags"
+                                    label="Тэги">
+                                    <Select
+                                        mode="multiple"
+                                        options={tags}
+                                    />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+
+
 
                         <Splitter lazy>
                             <Splitter.Panel defaultSize="50%" min="30%" max="70%">
@@ -116,13 +126,17 @@ const EditingNewDiary = () => {
                                     name="desc"
                                     label="Описание">
                                     <Input.TextArea
-                                    onChange={(text) => setTextAreaText(text.target.value)}
+                                        onChange={(text) => setTextAreaText(text.target.value)}
+                                        
                                         style={{ minHeight: "600px" }} />
                                 </Form.Item>
                             </Splitter.Panel>
                             <Splitter.Panel defaultSize="50%" min="30%" max="70%">
-                        
-                                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(new RMark().render(textAreaText))}}></div>
+                                <Form.Item
+                                    label="Предпросмотр">
+                                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(textAreaText)) }}></div>
+                                </Form.Item>
+
                             </Splitter.Panel>
                         </Splitter>
 

@@ -47,10 +47,10 @@ const ProfilePage = () => {
   }
 
   return (
-    <div style={{ width: "100%", height: "100%" }}>
+    <div className="container d-flex" style={{flexDirection: "column"}}>
       <div style={{ background: "linear-gradient(135deg, #E9EDC9, #FAEDCD)", width: "100%", height: "20%", borderRadius: "30px 30px 0px 0px" }}>
       </div>
-      <div style={{ background: "#FFFFFF", width: "100%", height: "80%", padding: "30px 70px 0px 70px" }}>
+      <div style={{ background: "#FFFFFF", width: "100%", height: "100%", padding: "30px 70px 0px 70px" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "40px" }}>
             <img style={{ width: "200px", height: "200px", borderRadius: "50%", objectFit: "cover" }} src={profileData.imgURL} alt="" />
