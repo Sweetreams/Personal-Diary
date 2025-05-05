@@ -1,6 +1,6 @@
 import { MenuFoldOutlined, SearchOutlined } from '@ant-design/icons'
 import { Dropdown, Input, notification, Select, Typography } from "antd"
-import React, { useContext} from 'react'
+import React, { useContext } from 'react'
 import "./headers.css"
 import ProfileContext from '../context/ProfileContext'
 import axios from "axios"
@@ -12,6 +12,16 @@ const Headers = ({ isCollapse }) => {
   const userImg = profileData.imgURL;
   const [api, contextHolder] = notification.useNotification()
   const navigate = useNavigate()
+  const itemAdmin = profileData.role === "admin" ?
+  {
+    key: '3',
+    label: (
+      <Typography.Link href="/statistica" className="headersContainerDropDownProfile">
+        Статистика
+      </Typography.Link>
+    ),
+  }
+  : null
 
   const logOutRequest = () => {
     axios({
@@ -55,8 +65,9 @@ const Headers = ({ isCollapse }) => {
         </Link>
       ),
     },
+    itemAdmin,
     {
-      key: '3',
+      key: '4',
       label: (
         <Typography.Text className="headersContainerDropDownOut" onClick={() => { logOutRequest() }}>
           Выйти

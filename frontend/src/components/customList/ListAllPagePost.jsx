@@ -1,5 +1,5 @@
 import { Card, Dropdown, notification, Tooltip, Typography } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DOMPurify from "dompurify"
 import { dateTimeProcessingForRequest } from '../../utils/dateConvertor'
 import "./rowNoteCard.css"
@@ -11,6 +11,11 @@ import { marked } from "marked"
 import "./ListAllPagePost.scss"
 
 const emotion = {
+    none: {
+        img: "https://acrhdqsdoirdrusfeweb.supabase.co/storage/v1/object/public/emotions//none.png",
+        desc: "Убрать",
+        engName: "none"
+    },
     happiness: {
         img: "https://acrhdqsdoirdrusfeweb.supabase.co/storage/v1/object/public/emotions//happiness.png",
         desc: "Радость",
@@ -70,8 +75,12 @@ const ListAllPagePost = ({ data }) => {
     const navigate = useNavigate()
     const [api, contextHolder] = notification.useNotification()
     const [open, isOpen] = useState(false)
-    const [emotionSelect, setEmotionSelect] = useState("")
+    const [emotionSelect, setEmotionSelect] = useState({})
+    const [dataList, setDataList] = useState(data)
+
     const onDelete = (values) => {
+        
+
         axios({
             method: "delete",
             url: "http://localhost:8000/post/deletePost",
@@ -82,14 +91,13 @@ const ListAllPagePost = ({ data }) => {
         })
             .then((req) => {
                 if (req.status === 200) {
+                    setDataList(dataList.filter(post => post.id !== values))
                     api.success({
                         message: "Успешно",
                         description: "Пост успешно удалён!",
                         showProgress: true,
                     })
                 }
-
-                navigate(0)
             })
             .catch((req) => {
                 api.error({
@@ -101,14 +109,20 @@ const ListAllPagePost = ({ data }) => {
     }
 
     const emotionClick = (key, id_post) => {
-        setEmotionSelect(emotion[key.engName].img)
-        axiosRequest({ id_post : id_post, emotions: key.engName})
+        setEmotionSelect(prev => ({
+            ...prev,
+            [id_post]: emotion[key.engName].img
+        }))
+        axiosRequest({ id_post: id_post, emotions: key.engName })
     }
 
-    return data.map((el) => {
+    return dataList.map((el) => {
         const dateCurrent = dateTimeProcessingForRequest(el)
         const emotions = el.emotions
         const currentEmotion = emotion[emotions] != undefined ? emotion[emotions]["img"] : emotion[emotions]
+
+        const displayedEmotion = emotionSelect[el.id] || currentEmotion;
+
         return (
             <div key={Math.floor(Math.random(el) * 1000)} className="rowNoteCard">
                 {contextHolder}
@@ -132,11 +146,16 @@ const ListAllPagePost = ({ data }) => {
                     <div className="dropdown" key={el.id}>
                         <button
                             className="dropdown__face"
-                            onClick={() => isOpen(!open)}
+                            onClick={() => {
+                                isOpen((prev) => ({
+                                    ...prev,
+                                    [el.id]: !prev[el.id]
+                                }))
+                            }}
                         >
-                            <img style={{ width: 25 }} src={currentEmotion ? currentEmotion : emotionSelect} className="dropdown__text" />
+                            <img style={{ width: 25 }} src={displayedEmotion || emotionSelect} className="dropdown__text" />
                         </button>
-                        <ul className={`dropdown__items ${open ? 'dropdown__items--open' : ''}`}>
+                        <ul className={`dropdown__items ${open[el.id] ? 'dropdown__items--open' : ''}`}>
                             {[emotion].map((ell) => {
                                 return Object.values(ell).map((elll, index) => {
                                     return (

@@ -238,7 +238,6 @@ router.delete("/deleteUser", jwtVerefite, async (req, res) => {
             message: "Аккаунт успешно удалён!"
         });
     } catch (err) {
-        console.log(err);
         return res.status(401).json({
             httpState: HTTPState.ERROR,
             message: {

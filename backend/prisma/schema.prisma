@@ -29,7 +29,7 @@ model Post {
   id_user  Int
   title    String
   desc     String
-  emotions EMOTIONS?
+  emotions EMOTIONS? @default(none)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -63,6 +63,7 @@ enum ROLE {
 }
 
 enum EMOTIONS {
+  none //Отсутсвие явное
   happiness //Радость
   anticipation //Предвкушение
   sadness //Грусть

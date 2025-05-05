@@ -13,57 +13,67 @@ import CreateNewPost from './page/createNewPost/CreateNewPost.jsx';
 import EditingNewDiary from './page/editingPageDiary/EditingNewDiary.jsx';
 import ProfilePage from './page/profilePage/ProfilePage.jsx';
 import SettingPage from './page/settingPage/SettingPage.jsx';
+import StatisticPage from './page/statisticPage/StatisticPage.jsx';
 import App from "./App.jsx"
+import SecurityAdminPage from './page/securityPage/SecurityAdminPage.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Template/>,
-    errorElement: <ErrorPage/>,
+    element: <Template />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/main",
-        element: <App/>
+        element: <App />
       },
       {
         path: "/pagesdiary/:date",
-        element: <PagesDiary/>
+        element: <PagesDiary />
       },
       {
         path: "/createPost",
-        element: <CreateNewPost/>,
+        element: <CreateNewPost />,
       },
       {
         path: "/profilePage",
-        element: <ProfilePage/>,
+        element: <ProfilePage />,
       },
       {
         path: "/settingPage",
-        element: <SettingPage/>,
+        element: <SettingPage />,
       },
       {
         path: "/editingPost/:id",
-        element: <EditingNewDiary/>,
+        element: <EditingNewDiary />,
       },
+      {
+        path: "/statistica",
+        element: (
+          <SecurityAdminPage>
+            <StatisticPage />
+          </SecurityAdminPage>
+        ),
+      }
     ]
   },
   {
     path: "/login",
-    element: <LoginPage/>,
+    element: <LoginPage />,
   },
   {
     path: "/recoveryPassword",
-    element: <PasswordRecoveryPage/>,
+    element: <PasswordRecoveryPage />,
   },
   {
     path: "/registration",
-    element: <RegistrationPage/>,
+    element: <RegistrationPage />,
   },
-  
+
 ])
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   </StrictMode>,
 )
