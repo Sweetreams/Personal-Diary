@@ -1,0 +1,7 @@
+
+@media (width < 900px) {
+    .profileImg{
+        width: 7em !important;
+        height: 7em !important;
+    }
+}

@@ -7,7 +7,7 @@ const dateProccesing = (date) => {
         + String(date.getDate() < 10 ? "0" + date.getDate() : date.getDate())
 }
 
-const ListSearch = ({ props }, cancel) => {
+const ListSearch = ({ props, cancel }) => {
     return props.map((item, index) => {
         return (
         <Typography.Link style={{fontFamily: "TT Commons"}} key={index} onClick={(v) => cancel(v)} href={"http://localhost:5173/pagesdiary/" + dateProccesing(new Date(item.updatedAt)) + "#post_" + item.id}>

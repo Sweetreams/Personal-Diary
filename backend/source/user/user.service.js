@@ -85,19 +85,5 @@ export class User {
                 id: Number(id)
             }
         });
-        // return this.prisma.$transaction(async(prisma) => {
-        //     return prisma.post.deleteMany({
-        //         where: {
-        //             id_user: Number(id)
-        //         }
-        //     });
-
-            
-            
-        //     return user;
-        // });
-
     }
-
-
 }

@@ -2,8 +2,9 @@ import React from 'react'
 
 const ListTags = ({props}) => {
     return props.map((el => {
+      console.log(el)
         return (
-            <div key={Math.floor(Math.random() * 1000)} style={{
+            <div key={el.id + 100000} style={{
               background: el.tags.id === 1
               ? "#FEFFC9"
               : el.tags.id === 2 ? "#FFC9C9"

@@ -1,5 +1,5 @@
 import { Card, Dropdown, notification, Tooltip, Typography } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import DOMPurify from "dompurify"
 import { dateTimeProcessingForRequest } from '../../utils/dateConvertor'
 import "./rowNoteCard.css"
@@ -9,54 +9,7 @@ import axios from 'axios'
 import ListTags from "./ListTags.jsx"
 import { marked } from "marked"
 import "./ListAllPagePost.scss"
-
-const emotion = {
-    none: {
-        img: "https://acrhdqsdoirdrusfeweb.supabase.co/storage/v1/object/public/emotions//none.png",
-        desc: "Убрать",
-        engName: "none"
-    },
-    happiness: {
-        img: "https://acrhdqsdoirdrusfeweb.supabase.co/storage/v1/object/public/emotions//happiness.png",
-        desc: "Радость",
-        engName: "happiness"
-    },
-    anticipation: {
-        img: "https://acrhdqsdoirdrusfeweb.supabase.co/storage/v1/object/public/emotions//anticipation.png",
-        desc: "Предвкушение",
-        engName: "anticipation"
-    },
-    sadness: {
-        img: "https://acrhdqsdoirdrusfeweb.supabase.co/storage/v1/object/public/emotions//sadness.png",
-        desc: "Грусть",
-        engName: "sadness"
-    },
-    anger: {
-        img: "https://acrhdqsdoirdrusfeweb.supabase.co/storage/v1/object/public/emotions//anger.png",
-        desc: "Злость",
-        engName: "anger"
-    },
-    excitement: {
-        img: "https://acrhdqsdoirdrusfeweb.supabase.co/storage/v1/object/public/emotions//excitement.png",
-        desc: "Волнение",
-        engName: "excitement"
-    },
-    boredom: {
-        img: "https://acrhdqsdoirdrusfeweb.supabase.co/storage/v1/object/public/emotions//boredom.png",
-        desc: "Скука",
-        engName: "boredom"
-    },
-    embarrassment: {
-        img: "https://acrhdqsdoirdrusfeweb.supabase.co/storage/v1/object/public/emotions//embarrassment.png",
-        desc: "Смущение",
-        engName: "embarrassment"
-    },
-    other: {
-        img: "https://acrhdqsdoirdrusfeweb.supabase.co/storage/v1/object/public/emotions//other.png",
-        desc: "Другое",
-        engName: "other"
-    },
-}
+import { emotion } from '../../utils/emotion.js'
 
 const axiosRequest = async (values) => {
     return axios({
@@ -120,11 +73,10 @@ const ListAllPagePost = ({ data }) => {
         const dateCurrent = dateTimeProcessingForRequest(el)
         const emotions = el.emotions
         const currentEmotion = emotion[emotions] != undefined ? emotion[emotions]["img"] : emotion[emotions]
-
         const displayedEmotion = emotionSelect[el.id] || currentEmotion;
 
         return (
-            <div key={Math.floor(Math.random(el) * 1000)} className="rowNoteCard">
+            <div key={el.id + 100} className="rowNoteCard">
                 {contextHolder}
                 <div className="row" style={{ display: "flex", flexDirection: "row", gap: 20, marginBottom: 10 }}>
                     <div className="listItemNoteDateTitleContainer">
@@ -141,7 +93,7 @@ const ListAllPagePost = ({ data }) => {
                     </div >
                 </div>
                 <Card style={{ wordBreak: "break-all", position: "relative" }}>
-                    <Typography.Title level={2}>{el.title}</Typography.Title>
+                    <Typography.Title level={4}>{el.title}</Typography.Title>
                     <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(el.desc)) }} />
                     <div className="dropdown" key={el.id}>
                         <button
@@ -159,7 +111,7 @@ const ListAllPagePost = ({ data }) => {
                             {[emotion].map((ell) => {
                                 return Object.values(ell).map((elll, index) => {
                                     return (
-                                        <Tooltip key={Math.floor(Math.random() * 100000)} title={elll.desc}>
+                                        <Tooltip key={index + 1000} title={elll.desc}>
                                             <li key={index} style={{ display: "flex" }} onClick={() => {
                                                 emotionClick(elll, el.id)
                                             }}>

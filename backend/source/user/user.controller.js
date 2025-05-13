@@ -16,13 +16,13 @@ dotenv.config();
 router.post("/createUser", async (req, res) => {
     try {
         await userCreateSchema.validate(req.body);
-    } catch (error) {
+    } catch (err) {
         return res.status(400).json({
             httpState: HTTPState.ERROR,
             message: {
-                errorName: error.name,
-                errorPath: error.path,
-                errorMessage: error.errors,
+                errorName: err.name,
+                errorPath: err.path,
+                errorMessage: err.errors,
             }
         });
     }
@@ -48,7 +48,7 @@ router.post("/createUser", async (req, res) => {
                     httpState: HTTPState.SUCCESS,
                     message: "Вы успешно создали аккаунт!"
                 });
-            } catch (err) {
+            } catch {
                 return res.status(400).json({
                     httpState: HTTPState.ERROR,
                     message: {

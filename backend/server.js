@@ -7,6 +7,7 @@ import { mailRouter } from "./source/mail/mail.controller.js";
 import { tagRouter } from "./source/tag/tag.controller.js";
 import helmet from "helmet";
 import cors from "cors";
+import { statisticRouter } from "./source/statistic/statistic.controller.js";
 
 export const app = express();
 const prisma = new PrismaClient();
@@ -34,6 +35,8 @@ async function main() {
     app.use("/mail", mailRouter);
 
     app.use("/tag", tagRouter);
+
+    app.use("/stat", statisticRouter);
 
     app.listen(8000, () => {
         console.log("8000");
