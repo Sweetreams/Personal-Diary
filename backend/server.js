@@ -16,7 +16,7 @@ async function main() {
     app.use(express.json({ limit: "5mb" }));
 
     app.use(cors({
-        origin: "http://localhost:5173",
+        origin: "*",
         methods: "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS",
         credentials: true,
         allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "cache-control", "Authorization", "pragma", "expires"],

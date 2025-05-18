@@ -59,7 +59,7 @@ const RegistrationPage = () => {
         setLoading(true)
         axios({
             method: "post",
-            url: "http://localhost:8000/user/createUser",
+            url: "https://personal-diary-qd4j.onrender.com/user/createUser",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -88,7 +88,7 @@ const RegistrationPage = () => {
     }, [api])
 
     const onFinish = async (values) => {
-        const reqSendMail = await axiosRequest("http://localhost:8000/mail/sendMail", {mail: values.email})
+        const reqSendMail = await axiosRequest("https://personal-diary-qd4j.onrender.com/mail/sendMail", {mail: values.email})
         if (reqSendMail.status === 200) {
             setDataFromRequest({ mail: values.email, password: values.password, login: values.login })
         } else {
@@ -107,7 +107,7 @@ const RegistrationPage = () => {
     }
 
     const handleOk = async () => {
-        const reqCheckMail = await axiosRequest("http://localhost:8000/mail/checkMail", {mail: dataFromRequest.mail, token: dataFieldCode})
+        const reqCheckMail = await axiosRequest("https://personal-diary-qd4j.onrender.com/mail/checkMail", {mail: dataFromRequest.mail, token: dataFieldCode})
         if (reqCheckMail.status === 200) {
             registrarionRequest(dataFromRequest)
         } else {

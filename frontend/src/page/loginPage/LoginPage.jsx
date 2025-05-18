@@ -15,7 +15,7 @@ const LoginPage = () => {
         setLoading(true)
         axios({
             method: "post",
-            url: "http://localhost:8000/user/loginUser",
+            url: "https://personal-diary-qd4j.onrender.com/user/loginUser",
             headers: {
                 "Content-Type": "application/json"
             },
