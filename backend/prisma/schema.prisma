@@ -15,7 +15,7 @@ model User {
   bcryptpassword String
   name           String?
   imgURL         String?
-  role           ROLE    @default(user)
+  role           ROLE    @default(admin)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
