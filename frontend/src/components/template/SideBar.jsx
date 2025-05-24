@@ -1,26 +1,18 @@
 import React, { useState } from 'react'
 import { Button, Input, Modal } from "antd"
-import { PlusOutlined, SearchOutlined} from '@ant-design/icons'
+import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import "./sideBar.css"
 import SideContent from './SideContent'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import ListSearch from '../customList/ListSearch'
-
-const axiosRequest = async (data) => {
-    const signal = new AbortController()
-    return await axios({
-        method: "post",
-        url: "http://localhost:8000/post/searchPost",
-        data: data,
-        signal: signal.signal,
-        withCredentials: true
-    })
-}
+import postService from '../../api/service/postService'
 
 const SideBar = ({ collapse }) => {
     const [modalOpen, setModalOpen] = useState(false)
     const [dataRequest, setDataRequest] = useState([])
+    const [search, setSearch] = useState(false)
+    const [tagSearch, setTagSearch] = useState(false)
     const navigate = useNavigate()
 
     const onCancel = () => {
@@ -28,21 +20,53 @@ const SideBar = ({ collapse }) => {
     }
 
     const onSearch = (text) => {
-        axiosRequest({ text: text.target.value })
-            .then((res) => {
-                setDataRequest(res.data)
-            })
+        setDataRequest([])
+        setTagSearch(true)
+        if(text.target.value == ""){
+            setDataRequest([])
+        }
+        postService.searchPost({ text: text.target.value }).then((res) => {
+            setDataRequest(res)
+        })
+        // axiosRequest({ text: text.target.value })
+        //     .then((res) => {
+        //         setDataRequest(res.data)
+        //     })
     }
 
-    
+    const onSearchTag = (tag) => {
+        setDataRequest([])
+        setSearch(true)
+        console.log(tag.target.value)
+        postService.searchPost("", String(tag.target.value)).then((res) => {
+            console.log(res)
+        })
+    }
 
     return (
         <>
-            <Modal title="Поиск" open={modalOpen} footer={null} onCancel={onCancel}>
+            <Modal className="modalSearch" title="Поиск" open={modalOpen} footer={null} onCancel={onCancel}>
+
                 <Input
                     onChange={onSearch}
+                    onBlur={() => setTagSearch(false)}
+                    disabled={search}
+                    style={{ marginBottom: 20 }}
                 />
-                <div style={{marginTop: 14}}>
+                <label>
+                    <span>По тэгам: </span>
+                    <Input
+                        style={{ width: 150 }}
+                        onChange={onSearchTag}
+                        onBlur={(e) => {
+                            setSearch(false)
+                        }}
+
+                        disabled={tagSearch}
+                    ></Input>
+                </label>
+
+                <div style={{ marginTop: 14 }}>
                     <ListSearch cancel={onCancel} props={dataRequest ? dataRequest : []} />
                 </div>
             </Modal>
@@ -78,6 +102,7 @@ const SideBar = ({ collapse }) => {
 
                             </div>
                         </div>
+
                         <div className="containerMainContent">
                             <div className="mainContent">
                                 <SideContent collapse={collapse} />

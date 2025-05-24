@@ -1,20 +1,69 @@
-.containerLeft{
+.containerLeft {
+    position: relative;
     width: 50%
 }
 
-.containerImage{
-    background: linear-gradient(130deg,#FBEECE, #EAEECA);
+.opacityBackgroundGradient {
+    background: linear-gradient(260deg, #FBEECE, #EAEECA);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100%;
+    z-index: 1;
+    animation-duration: 3s;
+    animation-name: animationBackground;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease;
+}
+
+.containerImage {
+    background: linear-gradient(130deg, #FBEECE, #EAEECA);
     height: 100vh;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative
+    position: relative;
+
 }
 
-.imageSun{
-    height: 50vh;
-    width: 50vh;
+.imageSun {
     position: absolute;
-    z-index: 2
+    z-index: 2;
+    animation-name: animationSun;
+    animation-duration: 10s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes animationBackground {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes animationSun {
+    from {
+        height: 50vh;
+        width: 50vh;
+    }
+
+    to {
+        height: 50vh;
+        width: 50vh;
+    }
+
+    50% {
+        height: 40vh;
+        width: 40vh;
+    }
 }

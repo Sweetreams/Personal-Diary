@@ -1,28 +1,59 @@
-
-.containerTemplate{
+.containerTemplate {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: row;
 }
 
-.containerHeaders, .headers{
+.containerHeaders,
+.headers {
     height: 64px;
     background-color: var(--color-white);
 }
 
-.containerOutlet{
+.containerOutlet {
     display: flex;
     flex-direction: column;
     flex: auto;
     background-color: var(--color-f8f8);
 }
 
-.contentOutlet{
+.contentOutlet {
     margin: 20px 20px 0px;
     flex: 1 1 auto;
 }
 
 .ant-layout-header {
     line-height: 1.5;
-  }
+}
+
+.modalNotNew>div>.ant-modal-content>.ant-modal-body {
+    margin-bottom: 0px;
+}
+
+.ant-modal-content {
+    overflow: hidden;
+}
+
+.modalBodyNotNew {
+    position: relative;
+    z-index: 3;
+}
+
+.modalImageNotNewLineModal {
+    width: 300px;
+    opacity: 0.3;
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    z-index: 2;
+}
+
+.modalImageNotNewLineModalDown{
+    width: 200px;
+    opacity: 0.2;
+    position: absolute;
+    right: 0;
+    bottom: 0px;
+    z-index: 2;
+}

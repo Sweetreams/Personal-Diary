@@ -1,56 +1,39 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { ConfigProvider, List, Spin } from "antd"
+import { useEffect, useMemo, useState } from 'react'
+import { Menu, Spin } from "antd"
 import "./sideContent.css"
-import { Link } from 'react-router-dom'
 import "../../globalStyles/colorStyle.css"
-import axios from "axios"
 import ListSideContent from '../customList/listSideContent'
+import postService from '../../api/service/postService'
+import { dataProcessing } from '../../utils/dataProcessing'
+import ListSideBarTags from '../customList/ListSideBarTags'
 
-/**
- * 
- * @param {boolean} collapse 
- * @returns {object}
- */
-const SideContent = ({collapse}) => {
+const SideContent = ({ collapse }) => {
     const [content, setContent] = useState([])
+    const [tags, setTags] = useState([])
     const [loading, setLoading] = useState(false)
+
     useEffect(() => {
-
-        const dateRequest = () => {
-            axios({
-                method: "get",
-                url: "http://localhost:8000/post/getPostsDate",
-                withCredentials: true
-            })
-                .then((req) => {
-                    setLoading(true)
-                    setContent(req.data)
-                })
-                .catch()
-                .finally(() => {
-                    setLoading(false)
-                })
+        setLoading(true)
+        const fetchData = async () => {
+            const PostsInfo = await postService.getPostsInfo()
+            setContent(PostsInfo.postDate)
+            setTags(PostsInfo.postTage)
+            setLoading(false)
         }
-        return () => dateRequest()
+        fetchData()
     }, [])
-
-    /**
-     * 
-     * @param {object} data 
-     * @returns {object}
-     */
-    const dataProcessing = (data) => {
-        return data.map((el) => {
-            let [, year, month, day] = el.createdAt.match(/^(\d{4})-(\d{2})-(\d{2})/)
-            return [year, month, day]
-        })
-    }
 
     let dataAfterProcessing = useMemo(() => dataProcessing(content), [content])
 
     return (
         <Spin spinning={loading}>
-            <div style={{display: collapse ? "none" : "flex", flexDirection: "column", alignItems: "center", gap: 10, fontSize: 16}}>
+            <div style={{ display: collapse ? "none" : "flex", flexDirection: "column", alignItems: "center", gap: 10, fontSize: 16, padding: "0px 21px 0px 21px" }}>
+                <div style={{position:"relative", display: tags ? "flex" : "none", flexDirection: "row", flexWrap: "wrap", columnGap: 5, rowGap: 10, padding: "10px 0px 10px 0px", maxWidth: "100%" }}>
+                    <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: 1, background: "#d9d9d9" }}></div>
+                    <ListSideBarTags props={tags} />
+                    <div style={{ position: "absolute", bottom: 0, left: 0, width: "100%", height: 1, background: "#d9d9d9" }}></div>
+                </div>
+
                 <ListSideContent props={dataAfterProcessing} />
             </div>
         </Spin>

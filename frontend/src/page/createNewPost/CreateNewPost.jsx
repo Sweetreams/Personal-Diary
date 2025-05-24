@@ -30,6 +30,7 @@ const CreateNewPost = () => {
   const [textAreaText, setTextAreaText] = useState("")
 
   useEffect(() => {
+    document.title = "Создание поста"
     axios({
       method: "get",
       url: "http://localhost:8000/tag/tagGet",
@@ -105,8 +106,8 @@ const CreateNewPost = () => {
                   </Form.Item>
                 </Splitter.Panel>
                 <Splitter.Panel defaultSize="50%" min="30%" max="70%">
-                <Form.Item
-                  label="Предпросмотр">
+                  <Form.Item
+                    label="Предпросмотр">
                     <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(textAreaText)) }}></div>
                   </Form.Item>
                 </Splitter.Panel>

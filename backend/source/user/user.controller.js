@@ -76,7 +76,6 @@ router.post("/loginUser", async (req, res) => {
             });
         }
         const user = await userService.getUserLogin(req.body.login);
-
         if (!user.length) return res.status(400).json({
             httpState: HTTPState.ERROR,
             message: {
@@ -110,12 +109,38 @@ router.post("/loginUser", async (req, res) => {
         });
 
     } catch (err) {
+        
         return res.status(400).json({
             httpState: HTTPState.ERROR,
             message: {
                 errorName: err.name,
-                errorPath: error.path,
+                errorPath: err.path,
                 errorMessage: "Произошла ошибка!",
+            }
+        });
+    }
+});
+
+router.post("/emailCheck", async (req, res) => {
+    try {
+        const user = await userService.getUserMail(req.body.mail);
+        if (!user) {
+            return res.status(200).json({
+                httpState: HTTPState.SUCCESS,
+                data: "успешно"
+            });
+        }
+        return res.status(400).json({
+            httpState: HTTPState.ERROR,
+            message: {
+                errorMessage: "Mail уже используется",
+            }
+        });
+    } catch {
+        return res.status(400).json({
+            httpState: HTTPState.ERROR,
+            message: {
+                errorMessage: "Произошла ошибка",
             }
         });
     }

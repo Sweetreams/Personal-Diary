@@ -1,5 +1,5 @@
 import './App.css'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import axiosCache from './utils/axios'
 import NoteEmpty from './components/component/NoteEmpty'
 import ListAllPage from './components/customList/ListAllPage'
@@ -17,6 +17,8 @@ const App = () => {
   const [dataRequest, setDataRequest] = useState([])
   const [statusRequest, setStatusRequest] = useState(0)
   useEffect(() => {
+      document.title = "SoulTrack - " + "посты"
+
     const controller = new AbortController()
     axiosRequest(controller)
       .then((data) => {
@@ -25,13 +27,10 @@ const App = () => {
       })
       .catch((data) => {
         setDataRequest(data.response)
-        setStatusRequest(data.response.status)
+        setStatusRequest(data.response.status ? data.response.status : "success")
       })
     return () => controller.abort()
   }, [])
-
-
-
 
   return (
     <>

@@ -1,12 +1,18 @@
 import { PrismaClient } from "@prisma/client";
-
+import { Prisma } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class Post {
     prisma = prisma;
 
     getPostsDate = async (id) => {
-        return this.prisma.$queryRaw`SELECT DISTINCT "createdAt"::date FROM public."Post" WHERE "id_user" = ${id} ORDER BY "createdAt" DESC`;
+        const result = await prisma.$transaction(async (prisma) => {
+            const postDate = await prisma.$queryRaw`SELECT DISTINCT "createdAt"::date FROM public."Post" WHERE "id_user" = ${id} ORDER BY "createdAt" DESC`;
+            const postTage = await prisma.$queryRaw`SELECT "Tags".tag, Count("Tags".id)::int as count, "Tags".color From "Post" Join "TagsAndPost" On "Post".id = "TagsAndPost".id_post JOIN "Tags" on "TagsAndPost".id_tags = "Tags".id where "Post".id_user = 1 Group By "Tags".tag, "Tags".color order by count desc limit 5 `;
+            return { postDate, postTage };
+        });
+
+        return result;
     };
 
     getPostsonDate = async (date, id) => {
@@ -91,8 +97,20 @@ export class Post {
             textSearch = text + ":*";
             return this.prisma.$queryRaw`select * from public."Post" where id_user = ${user_id} and to_tsvector('simple', "desc") || to_tsvector('simple', "title") @@ to_tsquery(${textSearch})`;
         }
+    };
 
-
+    postSearchTag = async (text, user_id) => {
+        return this.prisma.$queryRaw`select post.title, post.desc, post."createdAt", JSONB_AGG(
+        DISTINCT JSONB_BUILD_OBJECT(
+            'tag', tag.tag,
+            'color', tag.color
+        )
+    ) AS tags, post.id
+from public."Post" as post
+join public."TagsAndPost" as tagsPost on post.id = tagsPost.id_post
+join public."Tags" as tag on post.id_user = tag.id_user
+where post.id_user = ${Number(user_id)} AND tag.tag IN (${Prisma.join(text)})
+group by post.id`;
     };
 
     createPost = async (id, data) => {
@@ -121,7 +139,7 @@ export class Post {
         });
     };
 
-    changePostEmotions = async(id, data) => {
+    changePostEmotions = async (id, data) => {
         return await this.prisma.post.update({
             where: {
                 id_user: Number(id),

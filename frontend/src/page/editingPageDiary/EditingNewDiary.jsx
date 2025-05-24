@@ -42,6 +42,10 @@ const EditingNewDiary = () => {
     }
 
     useEffect(() => {
+        document.title = "Редактирование поста"
+      }, [])
+
+    useEffect(() => {
         const controller = new AbortController()
 
         axios({

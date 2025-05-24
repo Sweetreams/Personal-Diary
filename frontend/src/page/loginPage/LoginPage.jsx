@@ -1,49 +1,39 @@
-import React, { useCallback, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, Checkbox, ConfigProvider, Form, Input, notification, Spin, Typography } from 'antd'
 import ImageContainer from '../../components/imageContainer/ImageContainer'
-import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import "../../globalStyles/colorStyle.css"
 import "./loginStyle.css"
+import userService from '../../api/service/userService.js'
 
 const LoginPage = () => {
     const [loading, setLoading] = useState(false)
     const [api, contextHolder] = notification.useNotification();
     const navigate = useNavigate()
 
-    const loginRequest = useCallback((req) => {
-        setLoading(true)
-        axios({
-            method: "post",
-            url: "https://personal-diary-qd4j.onrender.com/user/loginUser",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            withCredentials: true,
-            data: req,
-        })
-            .then((data) => {
-                let message = data.data.message
-                api.success({
-                    message: "Успешно!",
-                    description: message,
-                    showProgress: true,
-                });
-                navigate("/main", {replace: true})
-            })
-            .catch((err) => {
-                api.error({
-                    message: "Ошибка!",
-                    description: err.response.data.message.errorMessage,
-                    showProgress: true,
-                });
-            }).finally(() => {
-                setLoading(false)
-            })
-    }, [api, navigate])
+    useEffect(() => {
+        document.title = "Авторизация"
+    }, [])
 
-    const onFinish = (values) => {
-        loginRequest({ login: values.login, password: values.password })
+    const onFinish = async (values) => {
+        setLoading(true)
+        const resultRequest = await userService.loginRequest({ login: values.login, password: values.password })
+        if (resultRequest.httpState == "success") {
+            setLoading(false)
+            api.success({
+                message: "Успешно!",
+                description: resultRequest.apiMessage,
+                showProgress: true,
+            });
+            navigate("/main", { replace: true })
+        } else {
+            setLoading(false)
+            api.error({
+                message: "Ошибка!",
+                description: resultRequest.apiMessage,
+                showProgress: true,
+            });
+        }
     }
 
     return (
@@ -66,7 +56,8 @@ const LoginPage = () => {
                             colorPrimaryHover: "var(--color-3333)",
                             colorBorder: "var(--color-f8f8)",
                             defaultHoverBorderColor: "var(--color-c7c7)",
-                            controlHeight: "36px"
+                            controlHeight: "36px",
+                            colorPrimaryActive: "var(--color-fbee)"
                         },
                         Input: {
                             paddingBlock: "8px",
@@ -95,6 +86,9 @@ const LoginPage = () => {
                                             name="login"
                                             label="Логин"
                                             className="loginField"
+                                            rules={[
+                                                { required: true, message: "Поле обязательно для заполения!" },
+                                                { type: "string", message: "Поле должно быть текстовым" },]}
                                         >
                                             <Input placeholder="Логин..." />
                                         </Form.Item>
@@ -103,6 +97,14 @@ const LoginPage = () => {
                                             name="password"
                                             label="Пароль"
                                             className="passwordField"
+                                            rules={
+                                                [
+                                                    { required: true, message: "Поле обязательно для заполения!" },
+                                                    { type: "string", message: "Поле должно быть текстовым" },
+                                                    { min: 8, message: "Пароль слишком короткий" },
+                                                    { max: 16, message: "Пароль слишком длинный" }
+                                                ]
+                                            }
                                         >
                                             <Input.Password placeholder="Пароль..." />
                                         </Form.Item>

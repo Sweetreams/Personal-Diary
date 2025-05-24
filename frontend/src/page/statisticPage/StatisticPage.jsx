@@ -5,12 +5,17 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from "axios"
 import ListFormEmotionsStatistic from '../../components/customList/ListFormEmotionsStatistic';
-import {Column} from '@ant-design/plots';
+import { Column } from '@ant-design/plots';
 
 const formatter = value => <CountUp end={value} separator="," />;
 
 const StatisticPage = () => {
   const [statistic, setStatistic] = useState(1)
+
+  useEffect(() => {
+    document.title = "Стастистика"
+  }, [])
+
   useEffect(() => {
 
     const controller = new AbortController()
@@ -53,13 +58,13 @@ const StatisticPage = () => {
         <Typography.Title level={3}>Статистика постов</Typography.Title>
       </Row>
       <Row>
-        <Col span={6} style={{minWidth: 150}}>
+        <Col span={6} style={{ minWidth: 150 }}>
           <ListFormEmotionsStatistic emotions={statistic[1]} />
         </Col>
-        <Col span={18} style={{display: "flex", alignItems: "center"}}>
-        <Column
-          {...config}
-        />
+        <Col span={18} style={{ display: "flex", alignItems: "center" }}>
+          <Column
+            {...config}
+          />
         </Col>
 
       </Row>

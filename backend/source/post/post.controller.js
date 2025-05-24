@@ -3,13 +3,24 @@ import { Post } from "./post.service.js";
 import { jwtVerefite } from "../middleware/jwtVerefite.js";
 import { HTTPState } from "../utils/HTTPState.js";
 import { changePostSchema, createPostSchema, deletePostSchema } from "../utils/validator/schemaValidation.js";
+import { Prisma } from "@prisma/client";
 
 const router = Router();
 const postService = new Post();
 
 router.post("/searchPost", jwtVerefite, async (req, res) => {
+
+    let search = "";
     try {
-        const search = await postService.postSearch(req.body.text, req.dataFromMiddlewareJwtVerefite);
+        const tagQuery = req.query.tag;
+
+        if (tagQuery == undefined)
+            search = await postService.postSearch(req.body.text, req.dataFromMiddlewareJwtVerefite);
+        else {
+            const tagQueryRegExp = tagQuery.match(/([^\n]+)/)[1].split(",");
+            search = await postService.postSearchTag(tagQueryRegExp, req.dataFromMiddlewareJwtVerefite);
+        } 
+
         if (search.length == 0) {
             return res.status(204).json({
                 httpState: HTTPState.SUCCESS,
@@ -18,6 +29,7 @@ router.post("/searchPost", jwtVerefite, async (req, res) => {
         }
         return res.status(200).json(search);
     } catch (err) {
+        console.log(err);
         return res.status(400).json({
             httpState: HTTPState.ERROR,
             message: {
@@ -28,10 +40,9 @@ router.post("/searchPost", jwtVerefite, async (req, res) => {
     }
 });
 
-router.get("/getPostsDate", jwtVerefite, async (req, res) => {
+router.get("/getPostsInfo", jwtVerefite, async (req, res) => {
     try {
         const PostsDate = await postService.getPostsDate(req.dataFromMiddlewareJwtVerefite);
-        if (!PostsDate) throw new Error("Ошибка");
         return res.status(200).json(PostsDate);
     } catch {
         return res.status(400).json({
@@ -124,7 +135,7 @@ router.post("/createPost", jwtVerefite, async (req, res) => {
     }
 });
 
-router.put("/changePostEmotions", jwtVerefite, async(req, res) => {
+router.put("/changePostEmotions", jwtVerefite, async (req, res) => {
     try {
         await postService.changePostEmotions(req.dataFromMiddlewareJwtVerefite, req.body);
 

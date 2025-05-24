@@ -16,7 +16,7 @@ async function main() {
     app.use(express.json({ limit: "5mb" }));
 
     app.use(cors({
-        origin: "*",
+        origin: "http://localhost:5173",
         methods: "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS",
         credentials: true,
         allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "cache-control", "Authorization", "pragma", "expires"],
@@ -24,9 +24,9 @@ async function main() {
         maxAge: 86400
     }));
 
-    app.use(errorHandling);
+    // app.use(errorHandling);
     
-    app.use(helmet());
+    // app.use(helmet());
 
     app.use("/user", userRouter);
 

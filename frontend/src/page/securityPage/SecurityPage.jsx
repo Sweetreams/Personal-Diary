@@ -14,7 +14,7 @@ const SecurityPage = ({ children }) => {
 
     const authResponse = () => axios({
       method: "get",
-      url: "https://personal-diary-qd4j.onrender.com/user/profileUser",
+      url: "http://localhost:8000/user/profileUser",
       headers: {
         "Content-Type": "application/json"
       },

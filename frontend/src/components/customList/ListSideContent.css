@@ -1,0 +1,15 @@
+.menuWithScrollbar {
+    max-height: 400px !important;
+    min-height: 200px !important;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-eaee) var(--color-white);
+}
+
+li[role="menuitem"]{
+    padding: 0px 24px 0px 34px !important;
+}
+
+ul.ant-menu{
+    border: 0px !important;
+}

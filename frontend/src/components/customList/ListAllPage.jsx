@@ -1,5 +1,4 @@
 import { Card, Typography } from 'antd'
-import React from 'react'
 import { dataTransformer } from '../../utils/dataTransformer'
 import ListAllPagePost from './ListAllPagePost'
 
@@ -7,7 +6,7 @@ import ListAllPagePost from './ListAllPagePost'
 const ListAllPage = ({ data }) => {
     return dataTransformer(data).map((el, index) => {
         return (
-            <div key={el.id + index} className="row" style={{ marginBottom: 40 }}>
+            <div key={index} className="row" style={{ marginBottom: 40 }}>
                 <Typography.Text className="noteDateTitle">{el[0]}</Typography.Text>
                 <ListAllPagePost data={el[1]} />
             </div>

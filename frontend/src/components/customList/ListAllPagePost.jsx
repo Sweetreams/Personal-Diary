@@ -1,5 +1,5 @@
-import { Card, Dropdown, notification, Tooltip, Typography } from 'antd'
-import React, { useState } from 'react'
+import { Card, notification, Tooltip, Typography } from 'antd'
+import { useEffect, useState } from 'react'
 import DOMPurify from "dompurify"
 import { dateTimeProcessingForRequest } from '../../utils/dateConvertor'
 import "./rowNoteCard.css"
@@ -31,9 +31,12 @@ const ListAllPagePost = ({ data }) => {
     const [emotionSelect, setEmotionSelect] = useState({})
     const [dataList, setDataList] = useState(data)
 
-    const onDelete = (values) => {
-        
+    useEffect(() => {
+        setDataList(data)
+    }, [data])
 
+
+    const onDelete = (values) => {
         axios({
             method: "delete",
             url: "http://localhost:8000/post/deletePost",
@@ -74,7 +77,6 @@ const ListAllPagePost = ({ data }) => {
         const emotions = el.emotions
         const currentEmotion = emotion[emotions] != undefined ? emotion[emotions]["img"] : emotion[emotions]
         const displayedEmotion = emotionSelect[el.id] || currentEmotion;
-
         return (
             <div key={el.id + 100} className="rowNoteCard">
                 {contextHolder}
@@ -91,6 +93,7 @@ const ListAllPagePost = ({ data }) => {
                     <div className="listItemNoteDateTagsList">
                         <ListTags props={el.TagsAndPost} />
                     </div >
+                    
                 </div>
                 <Card style={{ wordBreak: "break-all", position: "relative" }}>
                     <Typography.Title level={4}>{el.title}</Typography.Title>

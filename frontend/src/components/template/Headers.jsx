@@ -12,16 +12,16 @@ const Headers = ({ isCollapse }) => {
   const userImg = profileData.imgURL;
   const [api, contextHolder] = notification.useNotification()
   const navigate = useNavigate()
-  const itemAdmin = profileData.role === "admin" ?
-  {
-    key: '3',
-    label: (
-      <Typography.Link href="/statistica" className="headersContainerDropDownProfile">
-        Статистика
-      </Typography.Link>
-    ),
-  }
-  : null
+  const itemAdmin = profileData.role === "user" ?
+    {
+      key: '3',
+      label: (
+        <Typography.Link href="/statistica" className="headersContainerDropDownProfile">
+          Статистика
+        </Typography.Link>
+      ),
+    }
+    : null
 
   const logOutRequest = () => {
     axios({
@@ -69,7 +69,9 @@ const Headers = ({ isCollapse }) => {
     {
       key: '4',
       label: (
-        <Typography.Text className="headersContainerDropDownOut" onClick={() => { logOutRequest() }}>
+        <Typography.Text className="headersContainerDropDownOut" onClick={() => {
+          logOutRequest()
+        }}>
           Выйти
         </Typography.Text>
       ),

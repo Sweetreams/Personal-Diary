@@ -1,0 +1,40 @@
+.card {
+    position: relative;
+    width: 600px;
+    height: 190px;
+    display: flex;
+    flex-direction: row;
+    background: linear-gradient(220deg, #000716, #001C5A);
+    border-radius: 35px;
+}
+
+.card_sun {
+    position: relative;
+    width: 600px;
+    height: 190px;
+    display: flex;
+    flex-direction: row;
+    background-image: radial-gradient(farthest-corner at -300px 100px, #FFFD6A, #70A9FF);
+    border-radius: 35px;
+}
+
+.card-image {
+    padding-left: 35px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.card-body {
+    position: absolute;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    right: 0px;
+    bottom: -7px;
+    width: 371px;
+    height: 204px;
+    border-radius: 35px;
+    padding: 35px;
+}

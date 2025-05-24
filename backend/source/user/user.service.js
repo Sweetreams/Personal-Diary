@@ -31,6 +31,12 @@ export class User {
         });
     }
 
+    getUserMail(email) {
+        return this.prisma.user.findUnique({
+            where: {email: email}
+        });
+    }
+
     getUserLogin(login) {
         return this.prisma.user.findMany({
             where: {

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Form, Input, Upload } from "antd"
 import ProfileContext from '../../components/context/ProfileContext'
 import axios from "axios"
@@ -33,6 +33,10 @@ const ProfilePage = () => {
   const navigate = useNavigate()
   const [form] = useForm()
 
+  useEffect(() => {
+    document.title = "Профиль"
+  }, [])
+
   const onClick = (e) => {
     const textButton = e.target.outerText
     if (textButton === "Сохранить") {
@@ -43,7 +47,7 @@ const ProfilePage = () => {
   }
 
   const deleteUser = () => {
-    navigate(0)
+    navigate("/login")
     axiosRequestDeleteUser()
   }
 
@@ -60,10 +64,10 @@ const ProfilePage = () => {
 
   return (
     <div style={{ flexDirection: "column" }}>
-      <div style={{ background: "linear-gradient(135deg, #E9EDC9, #FAEDCD)", width: "100%", height: "150px", borderRadius: "30px 30px 0px 0px" }}/>
+      <div style={{ background: "linear-gradient(135deg, #E9EDC9, #FAEDCD)", width: "100%", height: "150px", borderRadius: "30px 30px 0px 0px" }} />
       <div style={{ background: "#FFFFFF", width: "100%", height: "100%", padding: "30px 70px 30px 70px", borderRadius: "0px 0px 30px 30px" }}>
         <div className="row" style={{ display: "flex", alignItems: "center", flexWrap: "wrap", justifyContent: "space-between", gap: 15, marginBottom: 50 }}>
-          <div className="col" style={{display: "flex", alignItems: "center", gap: 40, flexWrap: "wrap"}}>
+          <div className="col" style={{ display: "flex", alignItems: "center", gap: 40, flexWrap: "wrap" }}>
             <div className="row">
               <img className="profileImg" style={{ width: "200px", height: "200px", borderRadius: "50%", objectFit: "cover" }} src={profileData.imgURL} alt="" />
             </div>

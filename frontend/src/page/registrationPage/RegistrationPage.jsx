@@ -1,51 +1,11 @@
-import React, { useCallback, useState } from 'react'
-import { Button, Checkbox, ConfigProvider, Form, Input, Modal, notification, Space, Spin, Typography } from 'antd'
+import { useEffect, useState } from 'react'
+import { Button, Checkbox, ConfigProvider, Form, Input, Modal, notification, Spin, Typography } from 'antd'
 import ImageContainer from '../../components/imageContainer/ImageContainer'
 import "../../globalStyles/colorStyle.css"
 import "./registrationPage.css"
-import axios from 'axios'
 import { useNavigate } from "react-router-dom"
-
-const axiosRequest = async(url, data) => {
-    return await axios({
-        method: "post",
-        url: url,
-        data: {...data}
-    }).then((req) => {
-        return req
-    }).catch((req) => {
-        return req.response
-    })
-}
-
-// const axiosSendRequestCodeEmail = async (mail) => {
-//     return await axios({
-//         method: "post",
-//         url: "http://localhost:8000/mail/sendMail",
-//         data: {
-//             mail: mail
-//         }
-//     }).then((req) => {
-//         return req
-//     }).catch((req) => {
-//         return req.response
-//     })
-// }
-
-// const axiosCheckRequestCodeEmail = async (mail, token) => {
-//     return await axios({
-//         method: "post",
-//         url: ,
-//         data: {
-//             mail: mail,
-//             token: token
-//         }
-//     }).then((req) => {
-//         return req
-//     }).catch((req) => {
-//         return req.response
-//     })
-// }
+import userService from '../../api/service/userService'
+import { mailService } from '../../api/service/mailService'
 
 const RegistrationPage = () => {
     const [loading, setLoading] = useState(false)
@@ -55,51 +15,35 @@ const RegistrationPage = () => {
     const [api, contextHolder] = notification.useNotification();
     const navigate = useNavigate()
 
-    const registrarionRequest = useCallback((req) => {
-        setLoading(true)
-        axios({
-            method: "post",
-            url: "https://personal-diary-qd4j.onrender.com/user/createUser",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            withCredentials: true,
-            data: req,
-        })
-            .then((data) => {
-                let message = data.data.message
-                api.success({
-                    message: "Успешно!",
-                    description: message,
-                    showProgress: true,
-                });
-                navigate("/main", { replace: true })
-            })
-            .catch((err) => {
-                api.error({
-                    message: "Ошибка!",
-                    description: err.response.data.message.errorMessage,
-                    showProgress: true,
-                });
-            })
-            .finally(() => {
-                setLoading(false)
-            })
-    }, [api])
+    useEffect(() => {
+        document.title = "Регистрация"
+    }, [])
 
     const onFinish = async (values) => {
-        const reqSendMail = await axiosRequest("https://personal-diary-qd4j.onrender.com/mail/sendMail", {mail: values.email})
-        if (reqSendMail.status === 200) {
+
+        const resultMailUserCheck = await userService.mailUserCheckRequest({ mail: values.email })
+
+        if (resultMailUserCheck.httpState == "error") {
+            api.error({
+                message: "Ошибка!",
+                description: resultMailUserCheck.apiMessage,
+                showProgress: true,
+            });
+            return;
+        }
+
+        const resultSendMail = await mailService.sendMail({ mail: values.email })
+        if (resultSendMail.httpState === "success") {
             setDataFromRequest({ mail: values.email, password: values.password, login: values.login })
         } else {
             api.error({
                 message: "Ошибка!",
-                description: reqSendMail.data.message.errorMessage,
+                description: resultSendMail.apiMessage,
                 showProgress: true,
             });
+            return;
         }
         setIsModalCodeOpen(true)
-
     }
 
     const handleCancel = () => {
@@ -107,17 +51,36 @@ const RegistrationPage = () => {
     }
 
     const handleOk = async () => {
-        const reqCheckMail = await axiosRequest("https://personal-diary-qd4j.onrender.com/mail/checkMail", {mail: dataFromRequest.mail, token: dataFieldCode})
-        if (reqCheckMail.status === 200) {
-            registrarionRequest(dataFromRequest)
+        const resultCheckMail = await mailService.checkMail({ mail: dataFromRequest.mail, token: dataFieldCode })
+        if (resultCheckMail.httpState === "success") {
+            const resultRequest = await userService.registrationRequest(dataFromRequest)
+            if (resultRequest.httpState == "success") {
+                setLoading(false)
+                api.success({
+                    message: "Успешно!",
+                    description: resultRequest.apiMessage,
+                    showProgress: true,
+                });
+                navigate("/main", { replace: true })
+                setIsModalCodeOpen(false)
+                return;
+            } else {
+                setLoading(false)
+                api.error({
+                    message: "Ошибка!",
+                    description: resultRequest.apiMessage,
+                    showProgress: true,
+                });
+                return;
+            }
         } else {
             api.error({
                 message: "Ошибка!",
-                description: reqCheckMail.data.message.errorMessage,
+                description: resultCheckMail.apiMessage,
                 showProgress: true,
             });
+            return;
         }
-        setIsModalCodeOpen(false)
     }
 
     return (
@@ -196,6 +159,12 @@ const RegistrationPage = () => {
                                             name="email"
                                             label="Mail"
                                             className="emailField"
+                                            rules={
+                                                [
+                                                    { required: true, message: "Поле обязательно для заполения!" },
+                                                    { type: "email", message: "Введите валидный E-mail" }
+                                                ]
+                                            }
                                         >
                                             <Input placeholder="Майл..." />
                                         </Form.Item>
@@ -204,6 +173,12 @@ const RegistrationPage = () => {
                                             name="login"
                                             label="Логин"
                                             className="loginField"
+                                            rules={
+                                                [
+                                                    { required: true, message: "Поле обязательно для заполения!" },
+                                                    { type: "string", message: "Поле должно быть текстовым" }
+                                                ]
+                                            }
                                         >
                                             <Input placeholder="Логин..." />
                                         </Form.Item>
@@ -212,6 +187,14 @@ const RegistrationPage = () => {
                                             name="password"
                                             label="Пароль"
                                             className="passwordField"
+                                            rules={
+                                                [
+                                                    { required: true, message: "Поле обязательно для заполения!" },
+                                                    { type: "string", message: "Поле должно быть текстовым" },
+                                                    { min: 8, message: "Пароль слишком короткий" },
+                                                    { max: 16, message: "Пароль слишком длинный" }
+                                                ]
+                                            }
                                         >
                                             <Input.Password placeholder="Пароль..." />
                                         </Form.Item>
