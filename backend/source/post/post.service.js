@@ -8,7 +8,7 @@ export class Post {
     getPostsDate = async (id) => {
         const result = await prisma.$transaction(async (prisma) => {
             const postDate = await prisma.$queryRaw`SELECT DISTINCT "createdAt"::date FROM public."Post" WHERE "id_user" = ${id} ORDER BY "createdAt" DESC`;
-            const postTage = await prisma.$queryRaw`SELECT "Tags".tag, Count("Tags".id)::int as count, "Tags".color From "Post" Join "TagsAndPost" On "Post".id = "TagsAndPost".id_post JOIN "Tags" on "TagsAndPost".id_tags = "Tags".id where "Post".id_user = 1 Group By "Tags".tag, "Tags".color order by count desc limit 5 `;
+            const postTage = await prisma.$queryRaw`SELECT "Tags".tag, Count("Tags".id)::int as count, "Tags".color From "Post" Join "TagsAndPost" On "Post".id = "TagsAndPost".id_post JOIN "Tags" on "TagsAndPost".id_tags = "Tags".id where "Post".id_user = ${id} Group By "Tags".tag, "Tags".color order by count desc limit 5 `;
             return { postDate, postTage };
         });
 
@@ -64,6 +64,9 @@ export class Post {
                         tags: true
                     }
                 },
+            },
+            orderBy: {
+                createdAt: "desc"
             }
         });
     };

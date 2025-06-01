@@ -24,11 +24,10 @@ const SideContent = ({ collapse }) => {
     }, [])
 
     let dataAfterProcessing = useMemo(() => dataProcessing(content), [content])
-
     return (
         <Spin spinning={loading}>
             <div style={{ display: collapse ? "none" : "flex", flexDirection: "column", alignItems: "center", gap: 10, fontSize: 16, padding: "0px 21px 0px 21px" }}>
-                <div style={{position:"relative", display: tags ? "flex" : "none", flexDirection: "row", flexWrap: "wrap", columnGap: 5, rowGap: 10, padding: "10px 0px 10px 0px", maxWidth: "100%" }}>
+                <div style={{position:"relative", display: tags ? "flex" : "none", flexDirection: "row", flexWrap: "wrap", columnGap: 5, rowGap: 10, padding: "10px 0px 10px 0px", width: "100%" }}>
                     <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: 1, background: "#d9d9d9" }}></div>
                     <ListSideBarTags props={tags} />
                     <div style={{ position: "absolute", bottom: 0, left: 0, width: "100%", height: 1, background: "#d9d9d9" }}></div>

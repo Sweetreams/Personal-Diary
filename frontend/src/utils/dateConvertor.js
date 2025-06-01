@@ -2,7 +2,8 @@ export const dateTimeProcessing = (date) => {
     try {
         const hours = date.getHours()
         const minutes = date.getMinutes()
-        return (hours + ":" + minutes)
+        const minutesCurrect = minutes < 10 ? "0" + minutes : minutes
+        return (hours + ":" + minutesCurrect)
     } catch {
         throw new Error("Произошла ошибка");
     }

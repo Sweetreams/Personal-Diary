@@ -11,8 +11,8 @@ const postService = {
             })
     },
 
-    searchPost: async (data, tag) => {
-        return await httpRequest.post(tag ? `/post/searchPost?tag=${tag}` : `/post/searchPost`, data)
+    searchPost: async (data) => {
+        return await httpRequest.post(`/post/searchPost`, data)
             .then((res) => {
                 return res;
             })

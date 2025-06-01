@@ -7,9 +7,14 @@
 
 html{
     width: 100%;
-    height: max-content;
+    height: 100%;
     font-family: "TT Commons";
     color: var(--color-3333)
+}
+
+.ant-layout-has-sider{
+    min-height: 100%;
+    height: max-content;
 }
 
 .ant-typography{

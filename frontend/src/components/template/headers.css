@@ -1,4 +1,4 @@
-.headers{
+.headers {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -6,20 +6,193 @@
     margin-right: 20px;
 }
 
-.headersContainer{
+.headersContainer {
+    width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: 12px;
 }
 
-.headersContainerImg{
+.headersContainerImg {
     width: 47px;
     height: 47px;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.headersContainerDropDownOut{
+.headersContainerDropDownOut {
     color: #FF3131;
+}
+
+.menuOutline {
+    display: none;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+
+.headersContainerLogo {
+    display: none;
+}
+
+.containerButtonFieldMobile {
+    display: none;
+}
+
+@media (width < 576px) {
+
+    .layoutSider {
+        display: none;
+    }
+
+    .layoutSider--open {
+        display: block !important;
+        position: fixed !important;
+        top: 55px !important;
+        height: 100% !important;
+        width: 100% !important;
+        max-width: unset !important;
+        z-index: 1000;
+    }
+
+    .layoutSider,
+    .layoutSider--open {
+        -webkit-transition: 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+        -o-transition: 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+        transition: 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+
+    }
+
+    .containerImg {
+        display: none;
+    }
+
+    .headersContainerLogo {
+        display: block;
+    }
+
+    .menuOutline,
+    .menuOutline--open {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        -webkit-transition: 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+        -o-transition: 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+        transition: 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+
+    }
+
+    .menuOutline--open>.menuOutlineLine:first-child {
+        top: 0px;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    .menuOutline--open>.menuOutlineLine:last-child {
+        top: -2px;
+        -webkit-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+    }
+
+    .menuOutlineLine {
+        background-color: #333;
+        border-radius: 30px;
+        min-width: 33px;
+        height: 2px;
+        -webkit-transition: 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+        -o-transition: 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+        transition: 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+    }
+
+    .menuOutlineLine:first-child {
+        position: relative;
+        top: -4px;
+    }
+
+    .menuOutlineLine:last-child {
+        position: relative;
+        top: 4px;
+    }
+
+    .dropDownProfile,
+    .headersContainerImg,
+    .MenuFoldOutlined {
+        display: none;
+    }
+
+    .header {
+        width: 100%;
+        position: fixed;
+        z-index: 5;
+        justify-content: flex-end !important;
+        background-color: #fff;
+    }
+
+    .modalSearch.ant-modal {
+        width: max-content !important;
+        padding-bottom: 0px;
+    }
+
+    .modalSearch.ant-modal>div {
+        width: max-content;
+    }
+
+    .modalSearch.ant-modal>div>.ant-modal-content {
+        width: 500px;
+        height: 500px;
+    }
+
+    .headersContainer {
+        justify-content: space-between;
+    }
+
+    .ant-layout-content {
+        margin-top: 90px !important;
+    }
+
+    .containerButtonFieldMobile {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 15px;
+        padding: 25px 21px 0px;
+    }
+
+    .buttonFieldLink {
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        position: relative;
+        max-width: 160px;
+        min-height: 32px;
+        padding: 0px 15px 0px 15px !important;
+        border: 1px solid #d9d9d9 !important;
+        box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
+        border-radius: 6px;
+    }
+
+    .buttonFieldLink>span {
+        position: relative;
+        top:3px;
+    }
+    
+    .menuWithScrollbar{
+        min-height: 500px !important;
+    }
+
+    .containerSearchFieldMobile{
+        display: inline;
+        width: 100%;
+        padding: 21px 22px;
+    }
 }

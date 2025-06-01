@@ -1,0 +1,223 @@
+Date : 2025-05-29 17:58:02
+Directory : c:\Users\New\Desktop\Personal Diary
+Total : 127 files,  60841 codes, 6102 comments, 8002 blanks, all 74945 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| JavaScript     |         48 |     28,892 |      5,829 |      6,762 |     41,483 |
+| JSON           |          6 |     21,019 |          0 |          6 |     21,025 |
+| PostCSS        |         22 |      7,689 |        147 |        937 |      8,773 |
+| JavaScript JSX |         30 |      1,958 |         20 |        218 |      2,196 |
+| XML            |         10 |        845 |          0 |          9 |        854 |
+| HTML           |          2 |        178 |         90 |         21 |        289 |
+| TypeScript     |          3 |         86 |          0 |          7 |         93 |
+| Prisma         |          1 |         66 |          0 |         15 |         81 |
+| MS SQL         |          2 |         49 |         16 |         20 |         85 |
+| SCSS           |          1 |         43 |          0 |          6 |         49 |
+| TypeScript JSX |          1 |         15 |          0 |          1 |         16 |
+| Properties     |          1 |          1 |          0 |          0 |          1 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                         | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                            |        127 |     60,841 |      6,102 |      8,002 |     74,945 |
+| . (Files)                                                                                                    |          2 |         43 |          0 |          2 |         45 |
+| backend                                                                                                      |         27 |     13,168 |         21 |        231 |     13,420 |
+| backend (Files)                                                                                              |          6 |     11,770 |          3 |         19 |     11,792 |
+| backend\prisma                                                                                               |          3 |        115 |         16 |         35 |        166 |
+| backend\prisma (Files)                                                                                       |          1 |         66 |          0 |         15 |         81 |
+| backend\prisma\migrations                                                                                    |          2 |         49 |         16 |         20 |         85 |
+| backend\prisma\migrations\20250520091417_init                                                                |          1 |         48 |         15 |         19 |         82 |
+| backend\prisma\migrations\20250520093635_init                                                                |          1 |          1 |          1 |          1 |          3 |
+| backend\source                                                                                               |         18 |      1,283 |          2 |        177 |      1,462 |
+| backend\source\__tests__                                                                                     |          1 |        189 |          0 |         45 |        234 |
+| backend\source\mail                                                                                          |          2 |        132 |          0 |         18 |        150 |
+| backend\source\middleware                                                                                    |          3 |         51 |          0 |          7 |         58 |
+| backend\source\post                                                                                          |          2 |        404 |          0 |         38 |        442 |
+| backend\source\statistic                                                                                     |          2 |         40 |          0 |          8 |         48 |
+| backend\source\tag                                                                                           |          2 |         58 |          0 |          9 |         67 |
+| backend\source\user                                                                                          |          2 |        349 |          0 |         38 |        387 |
+| backend\source\utils                                                                                         |          4 |         60 |          2 |         14 |         76 |
+| backend\source\utils (Files)                                                                                 |          3 |         24 |          0 |          5 |         29 |
+| backend\source\utils\validator                                                                               |          1 |         36 |          2 |          9 |         47 |
+| frontend                                                                                                     |         74 |     12,590 |         36 |        404 |     13,030 |
+| frontend (Files)                                                                                             |          6 |      9,324 |          1 |          7 |      9,332 |
+| frontend\public                                                                                              |          5 |        176 |          0 |          5 |        181 |
+| frontend\src                                                                                                 |         63 |      3,090 |         35 |        392 |      3,517 |
+| frontend\src (Files)                                                                                         |          4 |        133 |          6 |         15 |        154 |
+| frontend\src\api                                                                                             |          4 |         97 |          0 |          9 |        106 |
+| frontend\src\api\config                                                                                      |          1 |         14 |          0 |          3 |         17 |
+| frontend\src\api\service                                                                                     |          3 |         83 |          0 |          6 |         89 |
+| frontend\src\components                                                                                      |         24 |      1,109 |          9 |        158 |      1,276 |
+| frontend\src\components\component                                                                            |          2 |         42 |          0 |          7 |         49 |
+| frontend\src\components\context                                                                              |          2 |          6 |          0 |          4 |         10 |
+| frontend\src\components\customList                                                                           |         10 |        356 |          0 |         44 |        400 |
+| frontend\src\components\imageContainer                                                                       |          2 |         73 |          0 |         11 |         84 |
+| frontend\src\components\template                                                                             |          8 |        632 |          9 |         92 |        733 |
+| frontend\src\globalStyles                                                                                    |          2 |         54 |          0 |          1 |         55 |
+| frontend\src\page                                                                                            |         19 |      1,472 |          5 |        192 |      1,669 |
+| frontend\src\page\createNewPost                                                                              |          1 |        119 |          0 |          8 |        127 |
+| frontend\src\page\editingPageDiary                                                                           |          1 |        138 |          0 |         19 |        157 |
+| frontend\src\page\errorPage                                                                                  |          2 |         49 |          0 |          9 |         58 |
+| frontend\src\page\loginPage                                                                                  |          2 |        133 |          0 |         10 |        143 |
+| frontend\src\page\pagesDiary                                                                                 |          2 |        169 |          0 |         40 |        209 |
+| frontend\src\page\passwordRecoveryPage                                                                       |          2 |        219 |          0 |         25 |        244 |
+| frontend\src\page\profilePage                                                                                |          2 |        120 |          0 |         11 |        131 |
+| frontend\src\page\registrationPage                                                                           |          2 |        302 |          0 |         38 |        340 |
+| frontend\src\page\securityPage                                                                               |          2 |         60 |          0 |         10 |         70 |
+| frontend\src\page\settingPage                                                                                |          2 |         99 |          5 |         10 |        114 |
+| frontend\src\page\statisticPage                                                                              |          1 |         64 |          0 |         12 |         76 |
+| frontend\src\utils                                                                                           |         10 |        225 |         15 |         17 |        257 |
+| frontend\src\utils (Files)                                                                                   |          6 |        124 |         15 |          9 |        148 |
+| frontend\src\utils\markdown                                                                                  |          4 |        101 |          0 |          8 |        109 |
+| templatemo_570_chain_app_dev                                                                                 |         24 |     35,040 |      6,045 |      7,365 |     48,450 |
+| templatemo_570_chain_app_dev (Files)                                                                         |          1 |        165 |         90 |         20 |        275 |
+| templatemo_570_chain_app_dev\assets                                                                          |         16 |     22,870 |      2,819 |      3,825 |     29,514 |
+| templatemo_570_chain_app_dev\assets\css                                                                      |          4 |      6,960 |        146 |        796 |      7,902 |
+| templatemo_570_chain_app_dev\assets\fonts                                                                    |          3 |        597 |          0 |          2 |        599 |
+| templatemo_570_chain_app_dev\assets\images                                                                   |          2 |         72 |          0 |          2 |         74 |
+| templatemo_570_chain_app_dev\assets\js                                                                       |          7 |     15,241 |      2,673 |      3,025 |     20,939 |
+| templatemo_570_chain_app_dev\vendor                                                                          |          7 |     12,005 |      3,136 |      3,520 |     18,661 |
+| templatemo_570_chain_app_dev\vendor\bootstrap                                                                |          3 |          8 |         13 |          0 |         21 |
+| templatemo_570_chain_app_dev\vendor\bootstrap\css                                                            |          1 |          6 |          1 |          0 |          7 |
+| templatemo_570_chain_app_dev\vendor\bootstrap\js                                                             |          2 |          2 |         12 |          0 |         14 |
+| templatemo_570_chain_app_dev\vendor\jquery                                                                   |          4 |     11,997 |      3,123 |      3,520 |     18,640 |
++--------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                                                     | language       | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| c:\Users\New\Desktop\Personal Diary\backend\babel.config.js                                                  | JavaScript     |          5 |          0 |          0 |          5 |
+| c:\Users\New\Desktop\Personal Diary\backend\eslint.config.js                                                 | JavaScript     |         19 |          0 |          4 |         23 |
+| c:\Users\New\Desktop\Personal Diary\backend\jest.config.js                                                   | JavaScript     |          5 |          1 |          1 |          7 |
+| c:\Users\New\Desktop\Personal Diary\backend\package-lock.json                                                | JSON           |     11,660 |          0 |          1 |     11,661 |
+| c:\Users\New\Desktop\Personal Diary\backend\package.json                                                     | JSON           |         43 |          0 |          1 |         44 |
+| c:\Users\New\Desktop\Personal Diary\backend\prisma\migrations\20250520091417_init\migration.sql              | MS SQL         |         48 |         15 |         19 |         82 |
+| c:\Users\New\Desktop\Personal Diary\backend\prisma\migrations\20250520093635_init\migration.sql              | MS SQL         |          1 |          1 |          1 |          3 |
+| c:\Users\New\Desktop\Personal Diary\backend\prisma\schema.prisma                                             | Prisma         |         66 |          0 |         15 |         81 |
+| c:\Users\New\Desktop\Personal Diary\backend\server.js                                                        | JavaScript     |         38 |          2 |         12 |         52 |
+| c:\Users\New\Desktop\Personal Diary\backend\source\__tests__\post.test.js                                    | JavaScript     |        189 |          0 |         45 |        234 |
+| c:\Users\New\Desktop\Personal Diary\backend\source\mail\mail.controller.js                                   | JavaScript     |         90 |          0 |         11 |        101 |
+| c:\Users\New\Desktop\Personal Diary\backend\source\mail\mail.service.js                                      | JavaScript     |         42 |          0 |          7 |         49 |
+| c:\Users\New\Desktop\Personal Diary\backend\source\middleware\adminVerefite.js                               | JavaScript     |          7 |          0 |          2 |          9 |
+| c:\Users\New\Desktop\Personal Diary\backend\source\middleware\errorHandling.js                               | JavaScript     |         11 |          0 |          1 |         12 |
+| c:\Users\New\Desktop\Personal Diary\backend\source\middleware\jwtVerefite.js                                 | JavaScript     |         33 |          0 |          4 |         37 |
+| c:\Users\New\Desktop\Personal Diary\backend\source\post\post.controller.js                                   | JavaScript     |        211 |          0 |         23 |        234 |
+| c:\Users\New\Desktop\Personal Diary\backend\source\post\post.service.js                                      | JavaScript     |        193 |          0 |         15 |        208 |
+| c:\Users\New\Desktop\Personal Diary\backend\source\statistic\statistic.controller.js                         | JavaScript     |         24 |          0 |          5 |         29 |
+| c:\Users\New\Desktop\Personal Diary\backend\source\statistic\statistic.service.js                            | JavaScript     |         16 |          0 |          3 |         19 |
+| c:\Users\New\Desktop\Personal Diary\backend\source\tag\tag.controller.js                                     | JavaScript     |         38 |          0 |          4 |         42 |
+| c:\Users\New\Desktop\Personal Diary\backend\source\tag\tag.service.js                                        | JavaScript     |         20 |          0 |          5 |         25 |
+| c:\Users\New\Desktop\Personal Diary\backend\source\user\user.controller.js                                   | JavaScript     |        264 |          0 |         28 |        292 |
+| c:\Users\New\Desktop\Personal Diary\backend\source\user\user.service.js                                      | JavaScript     |         85 |          0 |         10 |         95 |
+| c:\Users\New\Desktop\Personal Diary\backend\source\utils\HTTPState.js                                        | JavaScript     |          5 |          0 |          0 |          5 |
+| c:\Users\New\Desktop\Personal Diary\backend\source\utils\supabase.js                                         | JavaScript     |          4 |          0 |          2 |          6 |
+| c:\Users\New\Desktop\Personal Diary\backend\source\utils\supabaseHepler.js                                   | JavaScript     |         15 |          0 |          3 |         18 |
+| c:\Users\New\Desktop\Personal Diary\backend\source\utils\validator\schemaValidation.js                       | JavaScript     |         36 |          2 |          9 |         47 |
+| c:\Users\New\Desktop\Personal Diary\frontend\.env                                                            | Properties     |          1 |          0 |          0 |          1 |
+| c:\Users\New\Desktop\Personal Diary\frontend\eslint.config.js                                                | JavaScript     |         32 |          0 |          2 |         34 |
+| c:\Users\New\Desktop\Personal Diary\frontend\index.html                                                      | HTML           |         13 |          0 |          1 |         14 |
+| c:\Users\New\Desktop\Personal Diary\frontend\package-lock.json                                               | JSON           |      9,225 |          0 |          1 |      9,226 |
+| c:\Users\New\Desktop\Personal Diary\frontend\package.json                                                    | JSON           |         48 |          0 |          1 |         49 |
+| c:\Users\New\Desktop\Personal Diary\frontend\public\logo.svg                                                 | XML            |          4 |          0 |          1 |          5 |
+| c:\Users\New\Desktop\Personal Diary\frontend\public\logoSmall.svg                                            | XML            |          4 |          0 |          1 |          5 |
+| c:\Users\New\Desktop\Personal Diary\frontend\public\mooncard.svg                                             | XML            |         80 |          0 |          1 |         81 |
+| c:\Users\New\Desktop\Personal Diary\frontend\public\sun.svg                                                  | XML            |         23 |          0 |          1 |         24 |
+| c:\Users\New\Desktop\Personal Diary\frontend\public\undraw_online_articles.svg                               | XML            |         65 |          0 |          1 |         66 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\App.css                                                     | PostCSS        |          0 |          0 |          1 |          1 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\App.jsx                                                     | JavaScript JSX |         43 |          0 |          6 |         49 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\api\config\axiosRequest.js                                  | JavaScript     |         14 |          0 |          3 |         17 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\api\service\mailService.js                                  | JavaScript     |         21 |          0 |          1 |         22 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\api\service\postService.js                                  | JavaScript     |         22 |          0 |          3 |         25 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\api\service\userService.js                                  | JavaScript     |         40 |          0 |          2 |         42 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\component\ModalNotNew.jsx                        | JavaScript JSX |         28 |          0 |          4 |         32 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\component\NoteEmpty.jsx                          | JavaScript JSX |         14 |          0 |          3 |         17 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\context\OpenMenuContext.jsx                      | JavaScript JSX |          3 |          0 |          2 |          5 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\context\ProfileContext.jsx                       | JavaScript JSX |          3 |          0 |          2 |          5 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\customList\ListAllPage.jsx                       | JavaScript JSX |         14 |          0 |          4 |         18 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\customList\ListAllPagePost.jsx                   | JavaScript JSX |        159 |          0 |         11 |        170 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\customList\ListAllPagePost.scss                  | SCSS           |         43 |          0 |          6 |         49 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\customList\ListFormEmotionsStatistic.jsx         | JavaScript JSX |         19 |          0 |          3 |         22 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\customList\ListSearch.jsx                        | JavaScript JSX |         22 |          0 |          3 |         25 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\customList\ListSideBarTags.jsx                   | JavaScript JSX |         18 |          0 |          2 |         20 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\customList\ListSideContent.css                   | PostCSS        |         16 |          0 |          3 |         19 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\customList\ListSideContent.jsx                   | JavaScript JSX |         48 |          0 |          9 |         57 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\customList\ListTags.jsx                          | JavaScript JSX |         10 |          0 |          2 |         12 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\customList\rowNoteCard.css                       | PostCSS        |          7 |          0 |          1 |          8 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\imageContainer\ImageContainer.jsx                | JavaScript JSX |         14 |          0 |          1 |         15 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\imageContainer\imageContainer.css                | PostCSS        |         59 |          0 |         10 |         69 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\template\Headers.jsx                             | JavaScript JSX |         97 |          8 |          5 |        110 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\template\SideBar.jsx                             | JavaScript JSX |        135 |          1 |         12 |        148 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\template\SideContent.jsx                         | JavaScript JSX |         37 |          0 |          7 |         44 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\template\Template.jsx                            | JavaScript JSX |         43 |          0 |          7 |         50 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\template\headers.css                             | PostCSS        |        165 |          0 |         33 |        198 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\template\sideBar.css                             | PostCSS        |         93 |          0 |         17 |        110 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\template\sideContent.css                         | PostCSS        |         12 |          0 |          2 |         14 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\components\template\template.css                            | PostCSS        |         50 |          0 |          9 |         59 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\globalStyles\colorStyle.css                                 | PostCSS        |         10 |          0 |          0 |         10 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\globalStyles\themeAntd.js                                   | JavaScript     |         44 |          0 |          1 |         45 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\index.css                                                   | PostCSS        |         20 |          0 |          3 |         23 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\main.jsx                                                    | JavaScript JSX |         70 |          6 |          5 |         81 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\page\createNewPost\CreateNewPost.jsx                        | JavaScript JSX |        119 |          0 |          8 |        127 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\page\editingPageDiary\EditingNewDiary.jsx                   | JavaScript JSX |        138 |          0 |         19 |        157 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\page\errorPage\ErrorPage.jsx                                | JavaScript JSX |         17 |          0 |          2 |         19 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\page\errorPage\errorPage.css                                | PostCSS        |         32 |          0 |          7 |         39 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\page\loginPage\LoginPage.jsx                                | JavaScript JSX |        129 |          0 |         10 |        139 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\page\loginPage\loginStyle.css                               | PostCSS        |          4 |          0 |          0 |          4 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\page\pagesDiary\PagesDiary.jsx                              | JavaScript JSX |         59 |          0 |         12 |         71 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\page\pagesDiary\pagesDiary.css                              | PostCSS        |        110 |          0 |         28 |        138 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\page\passwordRecoveryPage\PasswordRecoveryPage.jsx          | JavaScript JSX |        213 |          0 |         24 |        237 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\page\passwordRecoveryPage\passwordRecoveryPage.css          | PostCSS        |          6 |          0 |          1 |          7 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\page\profilePage\ProfilePage.jsx                            | JavaScript JSX |        114 |          0 |          9 |        123 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\page\profilePage\profilePage.css                            | PostCSS        |          6 |          0 |          2 |          8 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\page\registrationPage\RegistrationPage.jsx                  | JavaScript JSX |        206 |          0 |         17 |        223 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\page\registrationPage\registrationPage.css                  | PostCSS        |         96 |          0 |         21 |        117 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\page\securityPage\SecurityAdminPage.jsx                     | JavaScript JSX |         16 |          0 |          3 |         19 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\page\securityPage\SecurityPage.jsx                          | JavaScript JSX |         44 |          0 |          7 |         51 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\page\settingPage\SettingPage.jsx                            | JavaScript JSX |         62 |          5 |          7 |         74 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\page\settingPage\settingpage.css                            | PostCSS        |         37 |          0 |          3 |         40 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\page\statisticPage\StatisticPage.jsx                        | JavaScript JSX |         64 |          0 |         12 |         76 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\utils\axios.js                                              | JavaScript     |          9 |          0 |          3 |         12 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\utils\dataProcessing.js                                     | JavaScript     |          6 |          5 |          0 |         11 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\utils\dataTransformer.js                                    | JavaScript     |         16 |          0 |          1 |         17 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\utils\dateConvertor.js                                      | JavaScript     |         43 |         10 |          5 |         58 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\utils\emotion.js                                            | JavaScript     |         47 |          0 |          0 |         47 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\utils\markdown\MarkdownField.tsx                            | TypeScript JSX |         15 |          0 |          1 |         16 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\utils\markdown\Pattern.ts                                   | TypeScript     |         11 |          0 |          1 |         12 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\utils\markdown\Rule.ts                                      | TypeScript     |         15 |          0 |          2 |         17 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\utils\markdown\render.ts                                    | TypeScript     |         60 |          0 |          4 |         64 |
+| c:\Users\New\Desktop\Personal Diary\frontend\src\utils\tagsHelper.js                                         | JavaScript     |          3 |          0 |          0 |          3 |
+| c:\Users\New\Desktop\Personal Diary\frontend\vite.config.js                                                  | JavaScript     |          5 |          1 |          2 |          8 |
+| c:\Users\New\Desktop\Personal Diary\package-lock.json                                                        | JSON           |         38 |          0 |          1 |         39 |
+| c:\Users\New\Desktop\Personal Diary\package.json                                                             | JSON           |          5 |          0 |          1 |          6 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\assets\css\animated.css                     | PostCSS        |      2,655 |         10 |        494 |      3,159 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\assets\css\fontawesome.css                  | PostCSS        |      2,327 |         10 |          1 |      2,338 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\assets\css\owl.css                          | PostCSS        |        146 |         26 |         14 |        186 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\assets\css\templatemo-chain-app-dev.css     | PostCSS        |      1,832 |        100 |        287 |      2,219 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\assets\fonts\flexslider-icon.svg            | XML            |         19 |          0 |          0 |         19 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\assets\fonts\fontawesome-webfont.svg        | XML            |        565 |          0 |          0 |        565 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\assets\fonts\slick.svg                      | XML            |         13 |          0 |          2 |         15 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\assets\images\logo.svg                      | XML            |         14 |          0 |          1 |         15 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\assets\images\slider-dec.svg                | XML            |         58 |          0 |          1 |         59 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\assets\js\animation.js                      | JavaScript     |        168 |          0 |         26 |        194 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\assets\js\custom.js                         | JavaScript     |        152 |         11 |         38 |        201 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\assets\js\imagesloaded.js                   | JavaScript     |        318 |         95 |         84 |        497 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\assets\js\isotope.js                        | JavaScript     |          2 |          9 |          1 |         12 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\assets\js\owl-carousel.js                   | JavaScript     |      2,002 |        958 |        488 |      3,448 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\assets\js\popup.js                          | JavaScript     |          2 |          2 |          1 |          5 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\assets\js\tabs.js                           | JavaScript     |     12,597 |      1,598 |      2,387 |     16,582 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\index.html                                  | HTML           |        165 |         90 |         20 |        275 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\vendor\bootstrap\css\bootstrap.min.css      | PostCSS        |          6 |          1 |          0 |          7 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\vendor\bootstrap\js\bootstrap.bundle.min.js | JavaScript     |          1 |          6 |          0 |          7 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\vendor\bootstrap\js\bootstrap.min.js        | JavaScript     |          1 |          6 |          0 |          7 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\vendor\jquery\jquery.js                     | JavaScript     |      6,689 |      1,725 |      1,951 |     10,365 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\vendor\jquery\jquery.min.js                 | JavaScript     |          1 |          1 |          0 |          2 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\vendor\jquery\jquery.slim.js                | JavaScript     |      5,306 |      1,396 |      1,568 |      8,270 |
+| c:\Users\New\Desktop\Personal Diary\templatemo_570_chain_app_dev\vendor\jquery\jquery.slim.min.js            | JavaScript     |          1 |          1 |          1 |          3 |
+| Total                                                                                                        |                |     60,841 |      6,102 |      8,002 |     74,945 |
++--------------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+

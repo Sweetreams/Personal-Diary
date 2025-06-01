@@ -21,6 +21,7 @@
 
 .listItemNoteDateTitle {
     font-size: 16px;
+    cursor: default;
 }
 
 .listItemNoteDateTitleContainer {
@@ -33,10 +34,29 @@
     gap: 7px;
 }
 
+.listItemNoteDateIconTags {
+    position: relative;
+    display: flex;
+    align-items: center;
+    right: 10px;
+}
+
+.listItemNoteDateIconTags>span {
+    cursor: pointer;
+}
+
 .listItemNoteDateTagsList {
+    max-width: 500px;
+    overflow-x: scroll;
+    cursor: default;
     display: flex;
     align-items: center;
     gap: 7px;
+}
+
+.listItemNoteDateTagsList::-webkit-scrollbar {
+    width: 0;
+    height: 0;
 }
 
 .listItemNoteDateTag {
@@ -44,9 +64,11 @@
     padding: 3px 15px;
     border-radius: 4px;
     gap: 5px;
+    box-shadow: inset 0px -1px 1px 0px rgba(51, 51, 51, 0.4);
 }
 
 .noteDateTitle {
+    cursor: default;
     font-size: 24px;
     margin-bottom: 20px;
 }
@@ -70,6 +92,19 @@
 
 .ant-card-body ol {
     padding-left: 30px;
+}
+
+.noteDateTitleItem{
+    color: #333333;
+    width: 20px;
+    margin-left: 10px;
+    position: relative;
+    top: -2px
+}
+
+.noteDateTitleItem:hover{
+    cursor: pointer;
+    color: #595959;
 }
 
 table {
@@ -96,3 +131,20 @@ th,
 td {
     padding: 10px;
 }
+
+.listItemNoteDateTagsMore{
+    display: none;
+}
+
+@media (width < 576px) {
+    .listItemNoteDateTagsList {
+        display: none;
+    }
+
+    .listItemNoteDateTagsMore{
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+}
+

@@ -3,7 +3,6 @@ import { Button, Checkbox, ConfigProvider, Form, Input, Modal, notification, Spi
 import ImageContainer from '../../components/imageContainer/ImageContainer'
 import "../../globalStyles/colorStyle.css"
 import "./passwordRecoveryPage.css"
-import { useNavigate } from 'react-router-dom'
 import userService from '../../api/service/userService'
 import { mailService } from '../../api/service/mailService'
 
@@ -13,17 +12,13 @@ const PasswordRecoveryPage = () => {
     const [isModalCodeOpen, setIsModalCodeOpen] = useState(false)
     const [dataFieldCode, setDataFieldCode] = useState("")
     const [dataFromRequest, setDataFromRequest] = useState([])
-    const navigate = useNavigate()
 
     useEffect(() => {
         document.title = "Восстановление доступа"
     }, [])
 
     const onFinish = async (values) => {
-
-        console.log(values.email, values.password, values.login)
-
-
+        setLoading(true)
         if (values.email == undefined || values.password.length < 8 || values.password.length > 16 || values.login == undefined) {
             api.error({
                 message: "Ошибка!",
@@ -69,15 +64,15 @@ const PasswordRecoveryPage = () => {
 
         if (resultCheckMail.httpState === "success") {
             const resultRequest = await userService.passwordRecoveryRequest({ login: dataFromRequest.login, password: dataFromRequest.password, email: dataFromRequest.mail })
-
+            console.log(resultCheckMail)
             if (resultRequest.httpState == "success") {
                 setLoading(false)
                 api.success({
                     message: "Успешно!",
                     description: resultRequest.apiMessage,
                     showProgress: true,
-                });
-                navigate("/main", { replace: true })
+                })
+                setIsModalCodeOpen(false)
             } else {
                 setLoading(false)
                 api.error({
@@ -85,14 +80,17 @@ const PasswordRecoveryPage = () => {
                     description: resultRequest.apiMessage,
                     showProgress: true,
                 });
+                setIsModalCodeOpen(false)
             }
 
         } else {
+            setLoading(false)
             api.error({
                 message: "Ошибка!",
                 description: resultCheckMail.apiMessage,
                 showProgress: true,
             });
+            setIsModalCodeOpen(false)
             return;
         }
     }

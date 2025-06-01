@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Form, Input, notification, Row, Select, Splitter } from 'antd'
+import { Button, Col, Form, Input, Modal, notification, Row, Select, Splitter, Tooltip, Typography } from 'antd'
 import axios from "axios"
 import { dateProcessing, dateTimeProcessing } from '../../utils/dateConvertor'
 import { RMark } from '../../utils/markdown/render'
 import DOMPurify from 'dompurify';
 import { marked } from 'marked'
+import { QuestionCircleOutlined } from '@ant-design/icons'
 
 const axiosRequest = async (values) => {
   return axios({
@@ -28,7 +29,7 @@ const CreateNewPost = () => {
   const [api, contextHolder] = notification.useNotification()
   const [tags, setTags] = useState()
   const [textAreaText, setTextAreaText] = useState("")
-
+  const [openModal, isModalOpen] = useState(false)
   useEffect(() => {
     document.title = "Создание поста"
     axios({
@@ -66,8 +67,188 @@ const CreateNewPost = () => {
 
     <>
       {contextHolder}
+      <Modal
+        className="modalCreate"
+        title="О редакторе"
+        open={openModal}
+        onCancel={() => { isModalOpen(false) }}
+        cancelText="Назад"
+        footer={(_, { OkBtn, CancelBtn }) => (
+          <>
+            <CancelBtn></CancelBtn>
+          </>)
+        }>
+        <div style={{ maxHeight: 450, overflowY: "scroll", marginBottom: "15px", marginTop: "15px", scrollbarWidth: "thin" }}>
+          <Typography.Title level={3}>Что такое Markdown?</Typography.Title>
+          <Typography.Text>Markdown — это облегчённый и универсальный язык разметки текста. Его используют для создания веб-страниц, документов, презентаций, заметок, книг и технической документации. Он не зависим от платформы и конкретного приложения.</Typography.Text>
+          <br />
+          <br />
+          <Typography.Text>Для эффективного использования редактора ознакомьтесь с основами синтаксиса Markdown, это не займет много времени. Как только вы научитесь оформлять текст на этом языке, вы обязательно его полюбите и сможете использовать практически везде.</Typography.Text>
+          <Typography.Title level={3}>Базовый синтаксис</Typography.Title>
+          <table>
+            <thead>
+              <th>Markdown</th>
+              <th>Результат</th>
+            </thead>
+            <tbody>
+              <th colSpan={2}>Заголовки и параграф</th>
+              <tr>
+                <td># Заголовок 1</td>
+                <td><h1>Заголовок 1</h1></td>
+              </tr>
+              <tr>
+                <td>## Заголовок 2</td>
+                <td><h2>Заголовок 2</h2></td>
+              </tr>
+              <tr>
+                <td>### Заголовок 3</td>
+                <td><h3>Заголовок 3</h3></td>
+              </tr>
+              <tr>
+                <td>#### Заголовок 4</td>
+                <td><h4>Заголовок 4</h4></td>
+              </tr>
+              <tr>
+                <td>##### Заголовок 5</td>
+                <td><h5>Заголовок 5</h5></td>
+              </tr>
+              <tr>
+                <td>###### Заголовок 6</td>
+                <td><h6>Заголовок 6</h6></td>
+              </tr>
+              <tr>
+                <td>Просто параграф, блок текста без оформления</td>
+                <td><p>Просто параграф, блок текста без оформления</p></td>
+              </tr>
+
+              <th colSpan={2}>Списки, цитаты и код</th>
+
+              <tr>
+                <td>
+                  <p>- Пример</p>
+                  <p>- Маркированного</p>
+                  <p>- Списка</p>
+                </td>
+                <td>
+                  <ul>
+                    <li>Пример</li>
+                    <li>Маркированного</li>
+                    <li>Списка</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>+ Пример</p>
+                  <p>+ Маркированного</p>
+                  <p>+ Списка</p>
+                </td>
+                <td>
+                  <ul>
+                    <li>Пример</li>
+                    <li>Маркированного</li>
+                    <li>Списка</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>* Пример</p>
+                  <p>* Маркированного</p>
+                  <p>* Списка</p>
+                </td>
+                <td>
+                  <ul>
+                    <li>Пример</li>
+                    <li>Маркированного</li>
+                    <li>Списка</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>1. Пример</p>
+                  <p>2. Нумерованного</p>
+                  <p>3. Списка</p>
+                </td>
+                <td>
+                  <ol>
+                    <li>Пример</li>
+                    <li>Маркированного</li>
+                    <li>Списка</li>
+                  </ol>
+                </td>
+              </tr>
+              <tr>
+                <td> &#62; Цитата является блочным элементом</td>
+                <td><blockquote><p>Цитата является блочным элементом</p></blockquote></td>
+              </tr>
+              <tr>
+                <td>
+                  <p>```</p>
+                  <p>Блок кода</p>
+                  <p>```</p>
+                </td>
+                <td>
+                  <pre>
+                    <code>Блок кода</code>
+                  </pre>
+                </td>
+              </tr>
+
+              <th colSpan={2}>Выделение текста</th>
+
+              <tr>
+                <td>
+                  <p>**Полужирный текст**</p>
+                  <p>__Другой Вариант__</p>
+                </td>
+                <td>
+                  <strong>**Полужирный текст**</strong>
+                  <br />
+                  <strong>__Другой Вариант__</strong>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <p>*Выделение курсивом*</p>
+                </td>
+                <td>
+                  <i>*Выделение курсивом*</i>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <p>~Зачекнутый текст~</p>
+                </td>
+                <td>
+                  <del>*Выделение курсивом*</del>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <p>`Значение`</p>
+                </td>
+                <td>
+                  <code>Значение</code>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </Modal>
       <div style={{ maxWidth: "1000px", margin: "auto" }}>
-        <p className="noteDateTitle">{dateProcessing(date)}</p>
+        <Row className="noteDateTitle" style={{ display: "flex", alignItems: "center" }}>
+          <span >{dateProcessing(date)}</span>
+          <Tooltip title="О редакторе">
+            <QuestionCircleOutlined className="noteDateTitleItem" onClick={() => {
+              isModalOpen(true)
+            }} />
+          </Tooltip>
+        </Row>
         <div className="listItemNote">
           <div className="listItemNoteDate">
             <div className="listItemNoteDateTitleContainer">

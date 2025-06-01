@@ -20,7 +20,7 @@ const RegistrationPage = () => {
     }, [])
 
     const onFinish = async (values) => {
-
+        setLoading(true)
         const resultMailUserCheck = await userService.mailUserCheckRequest({ mail: values.email })
 
         if (resultMailUserCheck.httpState == "error") {
@@ -74,6 +74,7 @@ const RegistrationPage = () => {
                 return;
             }
         } else {
+            setLoading(false)
             api.error({
                 message: "Ошибка!",
                 description: resultCheckMail.apiMessage,
@@ -89,6 +90,8 @@ const RegistrationPage = () => {
             <Modal
                 title="Подтверждение E-mail"
                 open={isModalCodeOpen}
+                okText="Отправить"
+                cancelText="Отмена"
                 onOk={handleOk}
                 onCancel={handleCancel}
             >

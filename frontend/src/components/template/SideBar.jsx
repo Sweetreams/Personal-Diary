@@ -1,71 +1,71 @@
-import React, { useState } from 'react'
-import { Button, Input, Modal } from "antd"
+import { useState } from 'react'
+import { Button, Input, Modal, notification, Typography } from "antd"
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import "./sideBar.css"
 import SideContent from './SideContent'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import ListSearch from '../customList/ListSearch'
 import postService from '../../api/service/postService'
+import axios from 'axios'
 
 const SideBar = ({ collapse }) => {
     const [modalOpen, setModalOpen] = useState(false)
     const [dataRequest, setDataRequest] = useState([])
-    const [search, setSearch] = useState(false)
-    const [tagSearch, setTagSearch] = useState(false)
+    const [api, contextHolder] = notification.useNotification()
+    const [modal, contextHolderModalPost] = Modal.useModal()
     const navigate = useNavigate()
 
     const onCancel = () => {
         setModalOpen(false)
     }
 
-    const onSearch = (text) => {
-        setDataRequest([])
-        setTagSearch(true)
-        if(text.target.value == ""){
-            setDataRequest([])
-        }
-        postService.searchPost({ text: text.target.value }).then((res) => {
-            setDataRequest(res)
+    const logOutRequest = () => {
+        axios({
+            method: "get",
+            url: "http://localhost:8000/user/logout",
+            withCredentials: true
         })
-        // axiosRequest({ text: text.target.value })
-        //     .then((res) => {
-        //         setDataRequest(res.data)
-        //     })
+            .then((res) => {
+                if (res.statusText === "OK") {
+                    api.success({
+                        message: "Успешно!",
+                        description: "Вы успешно вышли их аккаунта",
+                        showProgress: true,
+                    })
+                }
+                navigate(0)
+            })
+            .catch(() => {
+                api.error({
+                    message: "Ошибка!",
+                    description: "Произошла ошибка!",
+                    showProgress: true,
+                })
+            })
     }
 
-    const onSearchTag = (tag) => {
+    const onSearch = (text) => {
+        const textReq = text.target.value
         setDataRequest([])
-        setSearch(true)
-        console.log(tag.target.value)
-        postService.searchPost("", String(tag.target.value)).then((res) => {
-            console.log(res)
-        })
+        if (text.target.value == "") {
+            setDataRequest([])
+        }
+        if (textReq.length > 0) {
+            postService.searchPost({ text: textReq }).then((res) => {
+                setDataRequest(res)
+            })
+        }
+
     }
 
     return (
         <>
+            {contextHolder}
             <Modal className="modalSearch" title="Поиск" open={modalOpen} footer={null} onCancel={onCancel}>
-
                 <Input
                     onChange={onSearch}
-                    onBlur={() => setTagSearch(false)}
-                    disabled={search}
                     style={{ marginBottom: 20 }}
                 />
-                <label>
-                    <span>По тэгам: </span>
-                    <Input
-                        style={{ width: 150 }}
-                        onChange={onSearchTag}
-                        onBlur={(e) => {
-                            setSearch(false)
-                        }}
-
-                        disabled={tagSearch}
-                    ></Input>
-                </label>
-
                 <div style={{ marginTop: 14 }}>
                     <ListSearch cancel={onCancel} props={dataRequest ? dataRequest : []} />
                 </div>
@@ -77,6 +77,33 @@ const SideBar = ({ collapse }) => {
                     </div>
                     <div className="containerContent">
                         <div className="containerAdvancedFeature">
+                            <div className="containerButtonFieldMobile">
+                                <Typography.Link href="/profilePage" className="buttonFieldLink">
+                                    <span>Профиль</span>
+                                </Typography.Link>
+                                <Typography.Link to="/settingPage" className="buttonFieldLink" >
+                                    <span>Настройки</span>
+                                </Typography.Link >
+                                <Typography.Link href="/statistica" className="buttonFieldLink">
+                                    <span>Статистика</span>
+                                </Typography.Link>
+                                <Typography.Link className="buttonFieldLink" onClick={() => {
+                                    
+                                    modal.confirm({
+                                        title: "Вы правда хотите выйти из аккаунта?",
+                                        content: (
+                                            <span>Позже вы сможете вернуться!</span>
+                                        ),
+                                        className: "listItemNoteDateDeletePost",
+                                        okText: "Выйти",
+                                        cancelText: "Назад",
+                                        onOk: () => logOutRequest()
+                                    })
+                                }}>
+                                    <span>Выйти</span>
+                                </Typography.Link >
+
+                            </div>
                             <div className={`containerSearchField${collapse ? "-collapse" : ""}`}>
                                 {collapse
                                     ? ((<Button
@@ -99,7 +126,6 @@ const SideBar = ({ collapse }) => {
                                         icon={<PlusOutlined />}
                                         onClick={() => { navigate("/createPost") }}
                                     >Добавить</Button>)}
-
                             </div>
                         </div>
 
@@ -111,6 +137,7 @@ const SideBar = ({ collapse }) => {
                     </div>
                 </div>
             </div>
+            {contextHolderModalPost}
         </>
 
     )

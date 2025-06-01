@@ -13,3 +13,19 @@ li[role="menuitem"]{
 ul.ant-menu{
     border: 0px !important;
 }
+
+.listItemNoteDateDeletePost > div > .ant-modal-content > .ant-modal-body{
+    margin-bottom: 0px;
+}
+
+.formTagNameInput{
+    height: 25px !important;
+}
+
+.formTagName, .formTagColorPicker{
+    margin-bottom: 10px;
+}
+
+.ant-popover-inner{
+    padding: 15px 45px !important;
+}

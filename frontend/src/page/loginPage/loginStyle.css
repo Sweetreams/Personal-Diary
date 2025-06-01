@@ -2,3 +2,7 @@
     margin-top: 5px;
     margin-bottom: 15px;
 }
+
+.modalCreate > div > .ant-modal-content > .ant-modal-body{
+    margin: 0px
+}

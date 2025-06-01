@@ -1,5 +1,4 @@
 import { useEffect, useState, memo } from 'react'
-import axiosCache from "../../utils/axios.js"
 import { useLocation, useParams } from 'react-router-dom'
 import { notification, Spin } from 'antd'
 import "./pagesDiary.css"
@@ -51,33 +50,6 @@ const PagesDiary = () => {
       .finally(() => {
         setLoading(false)
       })
-
-    // const noteDiary = () => {
-    //   setLoading(true)
-    //   axiosCache({
-    //     method: "get",
-    //     url: `post/getPosts/${params.date}`,
-    //     withCredentials: true,
-    //     signal: controller.signal
-    //   })
-    //     .then((data) => {
-    //       setCardNote(data.data)
-    //     })
-    //     .catch((err) => {
-    //       if (err.message != "canceled") {
-    //         api.error({
-    //           message: "Ошибка!",
-    //           description: "Произошла ошибка!",
-    //           showProgress: true,
-    //         })
-    //       }
-    //     })
-    //     .finally(() => {
-    //       setLoading(false)
-    //     })
-    // }
-
-    // noteDiary()
 
     return () => controller.abort()
   }, [params.date])

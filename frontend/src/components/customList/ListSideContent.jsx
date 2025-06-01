@@ -17,6 +17,8 @@ const mountDate = {
     "12": "Декарь",
 }
 
+
+
 const ListSideContent = ({ props }) => {
     const gropedData = props.reduce((acc, [year, month, day]) => {
         if (!acc[year]) acc[year] = {}
@@ -39,8 +41,12 @@ const ListSideContent = ({ props }) => {
                         .sort(([a], [b]) => b.localeCompare(a))
                         .map(day => ({
                             key: `${year} - ${month} - ${day}`,
-                            label: <Link to={`/pagesdiary/${year + month + day}}`}><span>{day}.{month}.{year}</span></Link>
+                            label: <Link to={`/pagesdiary/${year + month + day}}`} onClick={() => {
+                                document.querySelector(".layoutSider--open").className = "layoutSider"
+                                document.querySelector(".menuOutline--open").className = "menuOutline"
+                            }}><span>{day}.{month}.{year}</span></Link>
                         }))
+                        
                 }))
 
         }))

@@ -39,10 +39,10 @@ const router = createBrowserRouter([
         path: "/profilePage",
         element: <ProfilePage />,
       },
-      {
-        path: "/settingPage",
-        element: <SettingPage />,
-      },
+      // {
+      //   path: "/settingPage",
+      //   element: <SettingPage />,
+      // },
       {
         path: "/editingPost/:id",
         element: <EditingNewDiary />,

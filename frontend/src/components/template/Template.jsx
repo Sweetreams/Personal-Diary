@@ -13,7 +13,7 @@ import ModalNotNew from '../component/ModalNotNew'
 const Template = () => {
   const [collapse, isCollapse] = useState(false)
   const [openModal, isOpenModal] = useState(!localStorage.getItem("NotNew"))
-  
+
   useEffect(() => {
     document.title = "SoulTrack"
   }, [])
@@ -26,18 +26,18 @@ const Template = () => {
       <SecurityPage>
         {localStorage.getItem("NotNew")
           ? <></>
-          : <ModalNotNew isOpenModal={isOpenModal} openModal={openModal}/>}
+          : <ModalNotNew isOpenModal={isOpenModal} openModal={openModal} />}
 
         <Layout>
-          <Layout.Sider trigger={null} collapsedWidth={80} collapsible collapsed={collapse} style={{ height: '100vh', minWidth: "200px", width: "18vw", maxWidth: "18vw", position: 'sticky', insetInlineStart: 0, top: 0, bottom: 0 }}>
+          <Layout.Sider className="layoutSider" trigger={null} collapsedWidth={80} collapsible collapsed={collapse} style={{ height: '100vh', minWidth: "200px", width: "18vw", maxWidth: "18vw", position: 'sticky', insetInlineStart: 0, top: 0, bottom: 0 }}>
             <SideBar collapse={collapse} isCollapse={isCollapse} />
           </Layout.Sider>
 
           <Layout>
-            <Layout.Header style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <Layout.Header className="header">
               <Headers collapse={collapse} isCollapse={isCollapse} />
             </Layout.Header>
-            <Layout.Content style={{ margin: "20px" }}>
+            <Layout.Content style={{ margin: "20px 20px 70px 20px" }}>
               <Outlet />
             </Layout.Content>
           </Layout>

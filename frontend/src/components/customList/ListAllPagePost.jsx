@@ -1,9 +1,9 @@
-import { Card, notification, Tooltip, Typography } from 'antd'
+import { Button, Card, ColorPicker, Form, Input, Modal, notification, Popconfirm, Tooltip, Typography } from 'antd'
 import { useEffect, useState } from 'react'
 import DOMPurify from "dompurify"
 import { dateTimeProcessingForRequest } from '../../utils/dateConvertor'
 import "./rowNoteCard.css"
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, EllipsisOutlined, PlusOutlined } from '@ant-design/icons'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import ListTags from "./ListTags.jsx"
@@ -24,17 +24,34 @@ const axiosRequest = async (values) => {
     })
 }
 
+const axiosRequestTag = async (values) => {
+    return axios({
+        method: "post",
+        url: "http://localhost:8000/tag/tagcreate",
+        withCredentials: true,
+        data: values
+    }).then((req) => {
+        return req
+    }).catch((req) => {
+        return req.response
+    })
+}
+
 const ListAllPagePost = ({ data }) => {
     const navigate = useNavigate()
     const [api, contextHolder] = notification.useNotification()
     const [open, isOpen] = useState(false)
     const [emotionSelect, setEmotionSelect] = useState({})
     const [dataList, setDataList] = useState(data)
+    const [modal, contextHolderModalPost] = Modal.useModal()
+    const [form] = Form.useForm()
+    const nameValue = Form.useWatch("Name", form)
+    const colorValue = Form.useWatch("Color", form)
+    const currentColorValue = colorValue == undefined ? "#FBEECE" : colorValue
 
     useEffect(() => {
         setDataList(data)
     }, [data])
-
 
     const onDelete = (values) => {
         axios({
@@ -72,62 +89,133 @@ const ListAllPagePost = ({ data }) => {
         axiosRequest({ id_post: id_post, emotions: key.engName })
     }
 
+    const tagsNameForTooltip = (name) => {
+        let nameReturn =
+            <>
+                {name.map((el, index) => {
+                    return <p key={index + 100 + index + 100}>{el.tags.tag}</p>
+                })}
+            </>
+        if (name.length == 0) {
+            return <><span>Тэгов нет</span></>
+        }
+
+        return nameReturn
+    }
+
+    const onFinish = () => {
+        axiosRequestTag({ "tag": nameValue, "color": currentColorValue.toHexString() })
+    }
+
+
+
     return dataList.map((el) => {
         const dateCurrent = dateTimeProcessingForRequest(el)
         const emotions = el.emotions
         const currentEmotion = emotion[emotions] != undefined ? emotion[emotions]["img"] : emotion[emotions]
         const displayedEmotion = emotionSelect[el.id] || currentEmotion;
         return (
-            <div key={el.id + 100} className="rowNoteCard">
-                {contextHolder}
-                <div className="row" style={{ display: "flex", flexDirection: "row", gap: 20, marginBottom: 10 }}>
-                    <div className="listItemNoteDateTitleContainer">
-                        <Typography.Text className="listItemNoteDateTitle">{dateCurrent}</Typography.Text>
-                    </div>
-                    <div className="listItemNoteDateIcon">
-                        <Link className="listItemNoteDateIconIcon" to={"/editingPost/" + el.id}><EditOutlined /></Link>
-                        <DeleteOutlined className="listItemNoteDateIconIcon" onClick={() => {
-                            onDelete(el.id, navigate)
-                        }} />
-                    </div>
-                    <div className="listItemNoteDateTagsList">
-                        <ListTags props={el.TagsAndPost} />
-                    </div >
-                    
-                </div>
-                <Card style={{ wordBreak: "break-all", position: "relative" }}>
-                    <Typography.Title level={4}>{el.title}</Typography.Title>
-                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(el.desc)) }} />
-                    <div className="dropdown" key={el.id}>
-                        <button
-                            className="dropdown__face"
-                            onClick={() => {
-                                isOpen((prev) => ({
-                                    ...prev,
-                                    [el.id]: !prev[el.id]
-                                }))
-                            }}
-                        >
-                            <img style={{ width: 25 }} src={displayedEmotion || emotionSelect} className="dropdown__text" />
-                        </button>
-                        <ul className={`dropdown__items ${open[el.id] ? 'dropdown__items--open' : ''}`}>
-                            {[emotion].map((ell) => {
-                                return Object.values(ell).map((elll, index) => {
-                                    return (
-                                        <Tooltip key={index + 1000} title={elll.desc}>
-                                            <li key={index} style={{ display: "flex" }} onClick={() => {
-                                                emotionClick(elll, el.id)
-                                            }}>
-                                                <img style={{ width: 25 }} src={elll.img} alt={elll.desc} />
-                                            </li>
-                                        </Tooltip>
-                                    )
+            <>
+                <div key={el.id + 100} className="rowNoteCard">
+                    {contextHolder}
+                    <div className="row" style={{ display: "flex", flexDirection: "row", gap: 20, marginBottom: 10 }}>
+                        <div className="listItemNoteDateTitleContainer">
+                            <Typography.Text className="listItemNoteDateTitle">{dateCurrent}</Typography.Text>
+                        </div>
+                        <div className="listItemNoteDateIcon">
+                            <Link className="listItemNoteDateIconIcon" to={"/editingPost/" + el.id}><EditOutlined /></Link>
+                            <DeleteOutlined className="listItemNoteDateIconIcon" onClick={() => {
+                                modal.confirm({
+                                    title: "Вы правда хотите удалить запись?",
+                                    content: (
+                                        <span>Вы не сможете восстановить эту запись!</span>
+                                    ),
+                                    className: "listItemNoteDateDeletePost",
+                                    okText: "Удалить",
+                                    cancelText: "Назад",
+                                    onOk: () => onDelete(el.id, navigate)
                                 })
-                            })}
-                        </ul>
+                            }} />
+                        </div>
+                        <div className="listItemNoteDateTagsList">
+                            <ListTags props={el.TagsAndPost} />
+                        </div >
+                        <div className="listItemNoteDateTagsMore">
+                            <Tooltip key={el.id + 10000000} title={tagsNameForTooltip(el.TagsAndPost, el.id)}>
+                                <EllipsisOutlined />
+                            </Tooltip>
+
+                        </div>
+                        <div className="listItemNoteDateIconTags">
+                            <Popconfirm
+                                className="popconfirmMe"
+                                title="Добавление Тега"
+                                icon={null}
+                                description={
+                                    <>
+                                        <Form
+                                            form={form}
+                                            className="formTag">
+                                            <Form.Item
+                                                name="Name"
+                                                label="Название"
+                                                className="formTagName"
+                                                rules={[
+                                                    { required: true, message: "Поле обязательно для заполения!" },
+                                                    { type: "string", message: "Поле должно быть текстовым" },]}>
+                                                <Input className="formTagNameInput" />
+                                            </Form.Item>
+                                            <Form.Item
+                                                name="Color"
+                                                label="Цвет фона"
+                                                className="formTagColorPicker">
+                                                <ColorPicker format="hex" defaultValue="#FBEECE" className="formTagColorPickerInput" />
+                                            </Form.Item>
+                                        </Form>
+                                    </>}
+                                okText="Создать"
+                                cancelText="Отмена"
+                                onConfirm={() => onFinish(el.id)}>
+                                <PlusOutlined />
+                            </Popconfirm>
+                        </div>
+
                     </div>
-                </Card>
-            </div>
+                    <Card style={{ wordBreak: "break-all", position: "relative" }}>
+                        <Typography.Title style={{ cursor: "default" }} level={4}>{el.title}</Typography.Title>
+                        <div style={{ cursor: "default" }} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(el.desc)) }} />
+                        <div className="dropdown" key={el.id}>
+                            <button
+                                className="dropdown__face"
+                                onClick={() => {
+                                    isOpen((prev) => ({
+                                        ...prev,
+                                        [el.id]: !prev[el.id]
+                                    }))
+                                }}
+                            >
+                                <img style={{ width: 25, cursor: "pointer" }} src={displayedEmotion || emotionSelect} className="dropdown__text" />
+                            </button>
+                            <ul className={`dropdown__items ${open[el.id] ? 'dropdown__items--open' : ''}`}>
+                                {[emotion].map((ell) => {
+                                    return Object.values(ell).map((elll, index) => {
+                                        return (
+                                            <Tooltip key={index + 1000} title={elll.desc}>
+                                                <li key={index} style={{ display: "flex" }} onClick={() => {
+                                                    emotionClick(elll, el.id)
+                                                }}>
+                                                    <img style={{ width: 25, cursor: "pointer" }} src={elll.img} alt={elll.desc} />
+                                                </li>
+                                            </Tooltip>
+                                        )
+                                    })
+                                })}
+                            </ul>
+                        </div>
+                    </Card>
+                </div>
+                {contextHolderModalPost}
+            </>
         )
     })
 }

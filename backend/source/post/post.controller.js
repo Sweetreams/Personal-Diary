@@ -29,7 +29,6 @@ router.post("/searchPost", jwtVerefite, async (req, res) => {
         }
         return res.status(200).json(search);
     } catch (err) {
-        console.log(err);
         return res.status(400).json({
             httpState: HTTPState.ERROR,
             message: {
