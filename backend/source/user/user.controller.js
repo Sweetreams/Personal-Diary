@@ -102,7 +102,6 @@ router.post("/loginUser", async (req, res) => {
             httpOnly: true,
             sameSite: "none",
             secure: true,
-            domain: ".onrender.com"
         });
 
         return res.status(200).json({
@@ -282,8 +281,6 @@ router.get(("/logout"), (req, res) => {
             httpOnly: true,
             secure: true,
             sameSite: "none",
-            domain: ".onrender.com",
-            path: "/"
         });
         return res.status(200).json("user logout");
     } catch (err) {
