@@ -39,10 +39,12 @@ router.post("/createUser", async (req, res) => {
                 });
                 const token = jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 30), id: user.id, role: user.role }, process.env.SECRETKEYJWT);
                 res.cookie("token", token, {
-                    maxAge: Math.floor(Date.now() / 1000) + (60 * 30),
+                    maxAge: Math.floor(Date.now() / 1000) + (60 * 3000),
                     httpOnly: true,
-                    sameSite: "strict"
+                    sameSite: "none",
+                    secure: true,
                 });
+
 
                 return res.status(200).json({
                     httpState: HTTPState.SUCCESS,
@@ -258,7 +260,12 @@ router.delete("/deleteUser", jwtVerefite, async (req, res) => {
                 message: "Аккаунт не был удалён"
             });
         }
-        res.clearCookie("token");
+        res.cookie("token", "", {
+            expires: new Date(0),
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+        });
         return res.status(200).json({
             httpState: HTTPState.ERROR,
             message: "Аккаунт успешно удалён!"
