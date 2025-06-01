@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import axios from "axios"
 import { useNavigate } from 'react-router-dom'
 import { Spin } from 'antd'
-import ProfileContext from '../../components/context/ProfileContext'
-import OpenMenuContext from '../../components/context/OpenMenuContext'
+import ProfileContext from '../../components/context/ProfileContext.jsx'
+import OpenMenuContext from '../../components/context/OpenMenuContext.jsx'
 
 const SecurityPage = ({ children }) => {
   const navigate = useNavigate()
