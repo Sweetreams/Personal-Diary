@@ -1,0 +1,29 @@
+"filename", "language", "JavaScript", "Prisma", "MS SQL", "JSON", "comment", "blank", "total"
+"c:\Users\New\Desktop\Personal Diary\backend\babel.config.js", "JavaScript", 5, 0, 0, 0, 0, 0, 5
+"c:\Users\New\Desktop\Personal Diary\backend\eslint.config.js", "JavaScript", 19, 0, 0, 0, 0, 4, 23
+"c:\Users\New\Desktop\Personal Diary\backend\jest.config.js", "JavaScript", 5, 0, 0, 0, 1, 1, 7
+"c:\Users\New\Desktop\Personal Diary\backend\package-lock.json", "JSON", 0, 0, 0, 11660, 0, 1, 11661
+"c:\Users\New\Desktop\Personal Diary\backend\package.json", "JSON", 0, 0, 0, 43, 0, 1, 44
+"c:\Users\New\Desktop\Personal Diary\backend\prisma\migrations\20250520091417_init\migration.sql", "MS SQL", 0, 0, 48, 0, 15, 19, 82
+"c:\Users\New\Desktop\Personal Diary\backend\prisma\migrations\20250520093635_init\migration.sql", "MS SQL", 0, 0, 1, 0, 1, 1, 3
+"c:\Users\New\Desktop\Personal Diary\backend\prisma\schema.prisma", "Prisma", 0, 66, 0, 0, 0, 15, 81
+"c:\Users\New\Desktop\Personal Diary\backend\server.js", "JavaScript", 38, 0, 0, 0, 2, 12, 52
+"c:\Users\New\Desktop\Personal Diary\backend\source\__tests__\post.test.js", "JavaScript", 189, 0, 0, 0, 0, 45, 234
+"c:\Users\New\Desktop\Personal Diary\backend\source\mail\mail.controller.js", "JavaScript", 90, 0, 0, 0, 0, 11, 101
+"c:\Users\New\Desktop\Personal Diary\backend\source\mail\mail.service.js", "JavaScript", 42, 0, 0, 0, 0, 7, 49
+"c:\Users\New\Desktop\Personal Diary\backend\source\middleware\adminVerefite.js", "JavaScript", 7, 0, 0, 0, 0, 2, 9
+"c:\Users\New\Desktop\Personal Diary\backend\source\middleware\errorHandling.js", "JavaScript", 11, 0, 0, 0, 0, 1, 12
+"c:\Users\New\Desktop\Personal Diary\backend\source\middleware\jwtVerefite.js", "JavaScript", 33, 0, 0, 0, 0, 4, 37
+"c:\Users\New\Desktop\Personal Diary\backend\source\post\post.controller.js", "JavaScript", 210, 0, 0, 0, 0, 23, 233
+"c:\Users\New\Desktop\Personal Diary\backend\source\post\post.service.js", "JavaScript", 193, 0, 0, 0, 0, 15, 208
+"c:\Users\New\Desktop\Personal Diary\backend\source\statistic\statistic.controller.js", "JavaScript", 24, 0, 0, 0, 0, 5, 29
+"c:\Users\New\Desktop\Personal Diary\backend\source\statistic\statistic.service.js", "JavaScript", 16, 0, 0, 0, 0, 3, 19
+"c:\Users\New\Desktop\Personal Diary\backend\source\tag\tag.controller.js", "JavaScript", 39, 0, 0, 0, 0, 4, 43
+"c:\Users\New\Desktop\Personal Diary\backend\source\tag\tag.service.js", "JavaScript", 20, 0, 0, 0, 0, 5, 25
+"c:\Users\New\Desktop\Personal Diary\backend\source\user\user.controller.js", "JavaScript", 265, 0, 0, 0, 0, 28, 293
+"c:\Users\New\Desktop\Personal Diary\backend\source\user\user.service.js", "JavaScript", 85, 0, 0, 0, 0, 10, 95
+"c:\Users\New\Desktop\Personal Diary\backend\source\utils\HTTPState.js", "JavaScript", 5, 0, 0, 0, 0, 0, 5
+"c:\Users\New\Desktop\Personal Diary\backend\source\utils\supabase.js", "JavaScript", 4, 0, 0, 0, 0, 2, 6
+"c:\Users\New\Desktop\Personal Diary\backend\source\utils\supabaseHepler.js", "JavaScript", 15, 0, 0, 0, 0, 3, 18
+"c:\Users\New\Desktop\Personal Diary\backend\source\utils\validator\schemaValidation.js", "JavaScript", 36, 0, 0, 0, 2, 9, 47
+"Total", "-", 1351, 66, 49, 11703, 21, 231, 13421

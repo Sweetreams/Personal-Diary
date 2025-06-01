@@ -16,7 +16,7 @@ async function main() {
     app.use(express.json({ limit: "5mb" }));
 
     app.use(cors({
-        origin: "https://cozy-bubblegum-d84f4e.netlify.app",
+        origin: ["https://cozy-bubblegum-d84f4e.netlify.app", "http://localhost:5173/"],
         methods: "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS",
         credentials: true,
         allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "cache-control", "Authorization", "pragma", "expires"],
