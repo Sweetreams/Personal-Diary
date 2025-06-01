@@ -95,12 +95,13 @@ router.post("/loginUser", async (req, res) => {
             }
         });
 
-        const token = jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 30), id: user[0].id, role: user[0].role }, process.env.SECRETKEYJWT);
+        const token = jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 3000), id: user[0].id, role: user[0].role }, process.env.SECRETKEYJWT);
 
         res.cookie("token", token, {
-            maxAge: Math.floor(Date.now() / 1000) + (60 * 30),
+            maxAge: Math.floor(Date.now() / 1000) + (60 * 3000),
             httpOnly: true,
-            sameSite: "strict"
+            sameSite: "none",
+            secure: true
         });
 
         return res.status(200).json({
