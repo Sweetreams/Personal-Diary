@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Menu, Spin } from "antd"
 import "./sideContent.css"
 import "../../globalStyles/colorStyle.css"
-import ListSideContent from '../customList/listSideContent.jsx'
+import ListSideContent from '../customList/ListSideContent.jsx'
 import postService from '../../api/service/postService.js'
 import { dataProcessing } from '../../utils/dataProcessing.js'
 import ListSideBarTags from '../customList/ListSideBarTags.jsx'
