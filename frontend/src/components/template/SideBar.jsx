@@ -22,7 +22,7 @@ const SideBar = ({ collapse }) => {
     const logOutRequest = () => {
         axios({
             method: "get",
-            url: "http://localhost:8000/user/logout",
+            url: "https://personal-diary-s9tr.onrender.com/user/logout",
             withCredentials: true
         })
             .then((res) => {

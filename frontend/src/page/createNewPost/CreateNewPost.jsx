@@ -10,7 +10,7 @@ import { QuestionCircleOutlined } from '@ant-design/icons'
 const axiosRequest = async (values) => {
   return axios({
     method: "post",
-    url: "http://localhost:8000/post/createPost",
+    url: "https://personal-diary-s9tr.onrender.com/post/createPost",
     withCredentials: true,
     data: {
       title: values.title,
@@ -34,7 +34,7 @@ const CreateNewPost = () => {
     document.title = "Создание поста"
     axios({
       method: "get",
-      url: "http://localhost:8000/tag/tagGet",
+      url: "https://personal-diary-s9tr.onrender.com/tag/tagGet",
       withCredentials: true,
     }).then((req) => {
       let tag = []

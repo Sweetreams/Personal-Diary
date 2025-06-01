@@ -10,7 +10,7 @@ import { marked } from 'marked';
 const axiosRequest = async (values) => {
     return axios({
         method: "put",
-        url: "http://localhost:8000/post/changePost",
+        url: "https://personal-diary-s9tr.onrender.com/post/changePost",
         withCredentials: true,
         data: values
     }).then((req) => {
@@ -50,7 +50,7 @@ const EditingNewDiary = () => {
 
         axios({
             method: "get",
-            url: "http://localhost:8000/tag/tagGet",
+            url: "https://personal-diary-s9tr.onrender.com/tag/tagGet",
             withCredentials: true,
         }).then((req) => {
             let tag = []

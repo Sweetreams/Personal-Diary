@@ -14,7 +14,7 @@ import { emotion } from '../../utils/emotion.js'
 const axiosRequest = async (values) => {
     return axios({
         method: "put",
-        url: "http://localhost:8000/post/changePostEmotions",
+        url: "https://personal-diary-s9tr.onrender.com/post/changePostEmotions",
         withCredentials: true,
         data: values
     }).then((req) => {
@@ -27,7 +27,7 @@ const axiosRequest = async (values) => {
 const axiosRequestTag = async (values) => {
     return axios({
         method: "post",
-        url: "http://localhost:8000/tag/tagcreate",
+        url: "https://personal-diary-s9tr.onrender.com/tag/tagcreate",
         withCredentials: true,
         data: values
     }).then((req) => {
@@ -56,7 +56,7 @@ const ListAllPagePost = ({ data }) => {
     const onDelete = (values) => {
         axios({
             method: "delete",
-            url: "http://localhost:8000/post/deletePost",
+            url: "https://personal-diary-s9tr.onrender.com/post/deletePost",
             data: {
                 "id": values
             },

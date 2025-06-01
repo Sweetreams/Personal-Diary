@@ -9,7 +9,7 @@ import "./profilePage.css"
 const axiosRequest = async (data) => {
   axios({
     method: "put",
-    url: "http://localhost:8000/user/changeUser",
+    url: "https://personal-diary-s9tr.onrender.com/user/changeUser",
     withCredentials: true,
     data: data
   })
@@ -20,7 +20,7 @@ const axiosRequest = async (data) => {
 const axiosRequestDeleteUser = async () => {
   axios({
     method: "delete",
-    url: "http://localhost:8000/user/deleteUser",
+    url: "https://personal-diary-s9tr.onrender.com/user/deleteUser",
     withCredentials: true,
   })
     .then((req) => { return req })

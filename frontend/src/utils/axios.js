@@ -2,7 +2,7 @@ import axios from "axios";
 import { setupCache } from 'axios-cache-interceptor';
 
 const instance = axios.create({
-    baseURL: "http://localhost:8000",
+    baseURL: "https://personal-diary-s9tr.onrender.com",
 })
 
 const axiosCache = setupCache(instance, {

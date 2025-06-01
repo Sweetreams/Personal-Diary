@@ -22,7 +22,7 @@ const StatisticPage = () => {
 
     axios({
       method: "get",
-      url: "http://localhost:8000/stat/statisticCount",
+      url: "https://personal-diary-s9tr.onrender.com/stat/statisticCount",
       withCredentials: true,
       signal: controller.signal
     }).then((req) => {

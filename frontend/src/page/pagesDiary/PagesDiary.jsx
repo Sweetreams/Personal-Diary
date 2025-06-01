@@ -32,7 +32,7 @@ const PagesDiary = () => {
 
     axios({
       method: "get",
-      url: `http://localhost:8000/post/getPosts/${params.date}`,
+      url: `https://personal-diary-s9tr.onrender.com/post/getPosts/${params.date}`,
       withCredentials: true,
       signal: controller.signal
     }).then((data) => {
