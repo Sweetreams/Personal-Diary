@@ -17,7 +17,7 @@ const SecurityPage = ({ children }) => {
 
     const authResponse = () => axios({
       method: "get",
-      url: "http://localhost:8000/user/profileUser",
+      url: "https://personal-diary-s9tr.onrender.com/user/profileUser",
       headers: {
         "Content-Type": "application/json"
       },
