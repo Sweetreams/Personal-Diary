@@ -184,7 +184,11 @@ const ListAllPagePost = ({ data }) => {
                     <Card style={{ wordBreak: "break-all", position: "relative" }}>
                         <Typography.Title style={{ cursor: "default" }} level={4}>{el.title}</Typography.Title>
                         <div style={{ cursor: "default" }} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(el.desc)) }} />
-                        <div className="dropdown" key={el.id}>
+                        <div
+                            onMouseLeave={() => {
+                                isOpen(false)
+                            }}
+                            className="dropdown" key={el.id}>
                             <button
                                 className="dropdown__face"
                                 onClick={() => {

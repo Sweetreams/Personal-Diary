@@ -101,7 +101,8 @@ router.post("/loginUser", async (req, res) => {
             maxAge: Math.floor(Date.now() / 1000) + (60 * 3000),
             httpOnly: true,
             sameSite: "none",
-            secure: true
+            secure: true,
+            domain: ".onrender.com"
         });
 
         return res.status(200).json({
@@ -110,7 +111,7 @@ router.post("/loginUser", async (req, res) => {
         });
 
     } catch (err) {
-        
+
         return res.status(400).json({
             httpState: HTTPState.ERROR,
             message: {
@@ -276,7 +277,14 @@ router.delete("/deleteUser", jwtVerefite, async (req, res) => {
 
 router.get(("/logout"), (req, res) => {
     try {
-        res.clearCookie("token");
+        res.cookie("token", "", {
+            expires: new Date(0),
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+            domain: ".onrender.com",
+            path: "/"
+        });
         return res.status(200).json("user logout");
     } catch (err) {
         return res.status(401).json({

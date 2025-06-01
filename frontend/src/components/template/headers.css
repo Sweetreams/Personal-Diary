@@ -43,7 +43,15 @@
     display: none;
 }
 
+.headersContainerName{
+    cursor: default;
+}
+
 @media (width < 576px) {
+
+.containerImg{
+    display: none;
+}
 
     .layoutSider {
         display: none;
@@ -67,8 +75,8 @@
 
     }
 
-    .containerImg {
-        display: none;
+    .dropDownProfile {
+        display: none !important;
     }
 
     .headersContainerLogo {

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Form, Input, Row, Select, Splitter } from 'antd'
+import { Button, Col, Form, Input, notification, Row, Select, Splitter } from 'antd'
 import axiosCache from "../../utils/axios.js"
 import { useParams } from 'react-router-dom'
 import DOMPurify from 'dompurify';
 import { RMark } from '../../utils/markdown/render.js';
 import axios from "axios"
 import { marked } from 'marked';
+import { dateProcessing, dateTimeProcessing } from '../../utils/dateConvertor.js';
 
 const axiosRequest = async (values) => {
     return axios({
@@ -21,13 +22,15 @@ const axiosRequest = async (values) => {
 }
 
 const EditingNewDiary = () => {
+     const date = new Date()
     const [dataFromResponse, setDataFromResponse] = useState([])
     const [textAreaText, setTextAreaText] = useState("")
     const [tags, setTags] = useState([])
     const [form] = Form.useForm()
     const params = useParams()
+    const [api, contextHolder] = notification.useNotification()
 
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         const tagsId = []
         const valuesTags = values.tags
 
@@ -38,12 +41,29 @@ const EditingNewDiary = () => {
                 }
             }
         }
-        axiosRequest({ id_post: params.id, title: values.title, tags: tagsId, desc: values.desc })
+
+        const axiosResult = await axiosRequest({ id_post: params.id, title: values.title, tags: tagsId, desc: values.desc })
+
+        if (axiosResult.status === 400) {
+            api.error({
+                message: "Ошибка",
+                description: axiosResult.data.message.errorMessage,
+                showProgress: true,
+            })
+        }
+        if (axiosResult.status === 200) {
+            api.success({
+                message: "Успешно",
+                description: "Пост успешно обновлен!",
+                showProgress: true,
+            })
+            window.location.pathname = "/main"
+        }
     }
 
     useEffect(() => {
         document.title = "Редактирование поста"
-      }, [])
+    }, [])
 
     useEffect(() => {
         const controller = new AbortController()
@@ -87,67 +107,78 @@ const EditingNewDiary = () => {
 
     return (
         <>
+        {console.log(dataFromResponse.createdAt)}
+            {contextHolder}
+            <div style={{ maxWidth: "1000px", margin: "auto" }}>
+                <Row className="noteDateTitle" style={{ display: "flex", alignItems: "center" }}>
+                    <span >{dateProcessing(date)}</span>
+                </Row>
+                <div className="listItemNote">
+                    <div className="listItemNoteDate">
+                        <div className="listItemNoteDateTitleContainer">
+                            <p className="listItemNoteDateTitle">{dateTimeProcessing(date)}</p>
+                        </div>
+                    </div>
+                    <div className="diaryFieldEditing">
+                        <Form
+                            form={form}
+                            layout="vertical"
+                            onFinish={onFinish}
+                            initialValues={{
+                                ["title"]: dataFromResponse?.title,
+                                ["tags"]: dataFromResponse?.tags,
+                                ["desc"]: dataFromResponse?.desc
+                            }}>
+                            <Row>
+                                <Col span={12}>
+                                    <Form.Item
+                                        name="title"
+                                        label="Заголовок"
+                                    >
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                                <Col span={8}></Col>
+                                <Col span={4}>
+                                    <Form.Item
+                                        name="tags"
+                                        label="Тэги">
+                                        <Select
+                                            notFoundContent="Не найдено"
+                                            mode="multiple"
+                                            options={tags}
+                                        />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
 
-            <div className="listItemNote">
-
-                <div className="diaryFieldEditing">
-                    <Form
-                        form={form}
-                        layout="vertical"
-                        onFinish={onFinish}
-                        initialValues={{
-                            ["title"]: dataFromResponse?.title,
-                            ["tags"]: dataFromResponse?.tags,
-                            ["desc"]: dataFromResponse?.desc
-                        }}>
-                        <Row>
-                            <Col span={12}>
-                                <Form.Item
-                                    name="title"
-                                    label="Заголовок"
-                                >
-                                    <Input />
-                                </Form.Item>
-                            </Col>
-                            <Col span={8}></Col>
-                            <Col span={4}>
-                                <Form.Item
-                                    name="tags"
-                                    label="Тэги">
-                                    <Select
-                                        mode="multiple"
-                                        options={tags}
-                                    />
-                                </Form.Item>
-                            </Col>
-                        </Row>
 
 
+                            <Splitter lazy>
+                                <Splitter.Panel defaultSize="50%" min="30%" max="70%">
+                                    <Form.Item
+                                        name="desc"
+                                        label="Описание">
+                                        <Input.TextArea
+                                            onChange={(text) => setTextAreaText(text.target.value)}
 
-                        <Splitter lazy>
-                            <Splitter.Panel defaultSize="50%" min="30%" max="70%">
-                                <Form.Item
-                                    name="desc"
-                                    label="Описание">
-                                    <Input.TextArea
-                                        onChange={(text) => setTextAreaText(text.target.value)}
-                                        
-                                        style={{ minHeight: "600px" }} />
-                                </Form.Item>
-                            </Splitter.Panel>
-                            <Splitter.Panel defaultSize="50%" min="30%" max="70%">
-                                <Form.Item
-                                    label="Предпросмотр">
-                                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(textAreaText)) }}></div>
-                                </Form.Item>
+                                            style={{ minHeight: "600px" }} />
+                                    </Form.Item>
+                                </Splitter.Panel>
+                                <Splitter.Panel defaultSize="50%" min="30%" max="70%">
+                                    <Form.Item
+                                        label="Предпросмотр">
+                                        <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(textAreaText)) }}></div>
+                                    </Form.Item>
 
-                            </Splitter.Panel>
-                        </Splitter>
+                                </Splitter.Panel>
+                            </Splitter>
 
-                        <Form.Item>
-                            <Button htmlType="submit">Отправить</Button>
-                        </Form.Item>
-                    </Form>
+                            <Form.Item>
+                                <Button htmlType="submit">Отправить</Button>
+                            </Form.Item>
+                        </Form>
+                    </div>
                 </div>
             </div>
         </>

@@ -45,7 +45,7 @@ const SideBar = ({ collapse }) => {
     }
 
     const onSearch = (text) => {
-        const textReq = text.target.value
+        const textReq = text.target.value.trim()
         setDataRequest([])
         if (text.target.value == "") {
             setDataRequest([])
@@ -81,9 +81,9 @@ const SideBar = ({ collapse }) => {
                                 <Typography.Link href="/profilePage" className="buttonFieldLink">
                                     <span>Профиль</span>
                                 </Typography.Link>
-                                <Typography.Link to="/settingPage" className="buttonFieldLink" >
+                                {/* <Typography.Link to="/settingPage" className="buttonFieldLink" >
                                     <span>Настройки</span>
-                                </Typography.Link >
+                                </Typography.Link > */}
                                 <Typography.Link href="/statistica" className="buttonFieldLink">
                                     <span>Статистика</span>
                                 </Typography.Link>

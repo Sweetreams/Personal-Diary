@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, Col, Form, Input, Modal, notification, Row, Select, Splitter, Tooltip, Typography } from 'antd'
 import axios from "axios"
 import { dateProcessing, dateTimeProcessing } from '../../utils/dateConvertor'
-import { RMark } from '../../utils/markdown/render'
 import DOMPurify from 'dompurify';
 import { marked } from 'marked'
 import { QuestionCircleOutlined } from '@ant-design/icons'
+import { useNavigate } from 'react-router-dom'
 
 const axiosRequest = async (values) => {
   return axios({
@@ -30,6 +30,8 @@ const CreateNewPost = () => {
   const [tags, setTags] = useState()
   const [textAreaText, setTextAreaText] = useState("")
   const [openModal, isModalOpen] = useState(false)
+  const navigate = useNavigate()
+
   useEffect(() => {
     document.title = "Создание поста"
     axios({
@@ -60,6 +62,7 @@ const CreateNewPost = () => {
         description: "Пост успешно добавлен!",
         showProgress: true,
       })
+      window.location.pathname = "/main"
     }
   }
 
@@ -271,6 +274,7 @@ const CreateNewPost = () => {
                   name="tags"
                   label="Тэги">
                   <Select
+                    notFoundContent="Не найдено"
                     mode="multiple"
                     options={tags ? tags : ""}
                   />

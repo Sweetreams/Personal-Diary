@@ -1,5 +1,5 @@
 import { MenuFoldOutlined, SearchOutlined } from '@ant-design/icons'
-import { Dropdown, Input, notification, Select, Typography,Modal } from "antd"
+import { Dropdown, Input, notification, Select, Typography, Modal } from "antd"
 import React, { useContext } from 'react'
 import "./headers.css"
 import ProfileContext from '../context/ProfileContext'
@@ -97,10 +97,13 @@ const Headers = ({ isCollapse }) => {
       <span className="MenuFoldOutlined"><MenuFoldOutlined onClick={() => isCollapse((a) => !a)} /></span>
       <div className="headersContainer">
         <Dropdown className="dropDownProfile" menu={{ items }} placement="bottomLeft">
-          <Typography.Text className="headersContainerName">{userName}</Typography.Text>
+          <div style={{display: "flex", alignItems: "center", gap: 12}}>
+            <Typography.Text className="headersContainerName">{userName}</Typography.Text>
+            <img className="headersContainerImg" src={userImg} />
+          </div>
         </Dropdown>
-        <a href="/main"><img className="headersContainerLogo" src="/logo.svg"/></a>
-        <img className="headersContainerImg" src={userImg} />
+
+        <a href="/main"><img className="headersContainerLogo" src="/logo.svg" /></a>
         <div className={`menuOutline${openBurgerMenu ? "--open" : ""}`} onClick={() => {
           let layoutSider = document.getElementsByClassName("layoutSider--open")
           isOpenBurgerMenu((pv) => !pv)
