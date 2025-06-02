@@ -10,7 +10,7 @@
 
 .titleSecondContainer {
     font-weight: 400 !important;
-    font-size: 38px; 
+    font-size: 38px;
     margin-bottom: 20px !important
 }
 
@@ -32,7 +32,7 @@
     align-items: flex-start
 }
 
-.buttonField{
+.buttonField {
     margin-bottom: 0;
 }
 
@@ -55,7 +55,7 @@
 .loginField,
 .passwordField,
 .checkboxField,
-.emailField{
+.emailField {
     width: 25vw;
     margin-bottom: 20px;
 }
@@ -68,18 +68,19 @@
     justify-content: center
 }
 
-.descAcc{
+.descAcc {
     margin-bottom: 5px;
 }
 
 .buttonSend {
     min-width: 150px;
-    width: 10vw;
 }
 
 @media (width < 768px) {
 
-    .loginField, .passwordField, .emailField {
+    .loginField,
+    .passwordField,
+    .emailField {
         width: 40vw;
     }
 
@@ -113,5 +114,14 @@
         width: 100%;
         display: flex;
         justify-content: center
+    }
+}
+
+@media (width < 576px) {
+
+    .loginField,
+    .passwordField,
+    .emailField {
+        width: 100%;
     }
 }

@@ -107,10 +107,9 @@ const EditingNewDiary = () => {
 
     return (
         <>
-        {console.log(dataFromResponse.createdAt)}
             {contextHolder}
             <div style={{ maxWidth: "1000px", margin: "auto" }}>
-                <Row className="noteDateTitle" style={{ display: "flex", alignItems: "center" }}>
+                <Row className="noteDateTitle">
                     <span >{dateProcessing(date)}</span>
                 </Row>
                 <div className="listItemNote">
@@ -129,7 +128,7 @@ const EditingNewDiary = () => {
                                 ["tags"]: dataFromResponse?.tags,
                                 ["desc"]: dataFromResponse?.desc
                             }}>
-                            <Row>
+                            <Row className="formRow">
                                 <Col span={12}>
                                     <Form.Item
                                         name="title"
@@ -167,6 +166,7 @@ const EditingNewDiary = () => {
                                 </Splitter.Panel>
                                 <Splitter.Panel defaultSize="50%" min="30%" max="70%">
                                     <Form.Item
+                                    className="previows"
                                         label="Предпросмотр">
                                         <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(textAreaText)) }}></div>
                                     </Form.Item>

@@ -263,7 +263,7 @@ const CreateNewPost = () => {
               onFinish={(values) => onFinish(values)}
               layout="vertical"
             >
-              <Row>
+              <Row className="formRow">
                 <Col span={12}><Form.Item
                   name="title"
                   label="Заголовок">
@@ -292,6 +292,7 @@ const CreateNewPost = () => {
                 </Splitter.Panel>
                 <Splitter.Panel defaultSize="50%" min="30%" max="70%">
                   <Form.Item
+                    className="previows"
                     label="Предпросмотр">
                     <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(textAreaText)) }}></div>
                   </Form.Item>

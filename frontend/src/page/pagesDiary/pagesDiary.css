@@ -68,6 +68,8 @@
 }
 
 .noteDateTitle {
+    display: flex;
+    justify-content: left;
     cursor: default;
     font-size: 24px;
     margin-bottom: 20px;
@@ -94,7 +96,7 @@
     padding-left: 30px;
 }
 
-.noteDateTitleItem{
+.noteDateTitleItem {
     color: #333333;
     width: 20px;
     margin-left: 10px;
@@ -102,7 +104,7 @@
     top: -2px
 }
 
-.noteDateTitleItem:hover{
+.noteDateTitleItem:hover {
     cursor: pointer;
     color: #595959;
 }
@@ -132,19 +134,35 @@ td {
     padding: 10px;
 }
 
-.listItemNoteDateTagsMore{
+.listItemNoteDateTagsMore {
     display: none;
 }
+
+
 
 @media (width < 576px) {
     .listItemNoteDateTagsList {
         display: none;
     }
 
-    .listItemNoteDateTagsMore{
+    .listItemNoteDateTagsMore {
         display: flex;
         align-items: center;
         cursor: pointer;
     }
-}
 
+    .diaryFieldEditing>form>div:nth-child(1)>div:nth-child(1) {
+        max-width: 100% !important;
+    }
+
+    .diaryFieldEditing>form>div:nth-child(1)>div:nth-child(3) {
+        max-width: 100% !important;
+    }
+    .formRow{
+        flex-direction: column-reverse;
+    }
+
+    .ant-splitter-panel > .previows > div > div{
+        padding-left: 25px;
+    }
+}
