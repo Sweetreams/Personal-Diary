@@ -12,7 +12,7 @@ export class Statistic {
                     id_user: Number(id)
                 },
             });
-            const countEmotions = await prisma.$queryRaw`SELECT emotions, COUNT(*)::int FROM public."Post" where id_user=${id} GROUP BY emotions ORDER BY count DESC`;
+            const countEmotions = await prisma.$queryRaw`SELECT emotions, COUNT(*)::int FROM public."Post" where id_user=${id} AND emotions <> 'none' GROUP BY emotions ORDER BY count DESC`;
             return [countPost, countEmotions];
         });
     };
