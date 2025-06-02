@@ -10,8 +10,8 @@
         border: 1px solid #f0f0f0;
         background-color: #ffffff;
         border-radius: 100px;
-        width: 25px;
-        height: 25px;
+        width: 35px;
+        height: 35px;
         left: 270px;
     }
     
@@ -43,7 +43,7 @@
         transition: all 0.4s cubic-bezier(0.93, 0.88, 0.1, 0.8);
 
         &--open {
-            top: calc(100% - 45px);
+            top: calc(100% - 35px);
             visibility: visible;
             opacity: 1;
         }

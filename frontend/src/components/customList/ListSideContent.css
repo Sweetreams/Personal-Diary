@@ -61,6 +61,86 @@ ul.ant-menu {
     top: 1px,
 }
 
+.markdownPages{
+    position: relative;
+    top: -25px;
+}
+
+.markdownPages > h1{
+    margin: 20px 0px 10px 0px;
+    font-size: 36px;
+}
+
+.markdownPages > h2{
+    margin: 18px 0px 9px 0px;
+    font-size: 30px;
+}
+
+.markdownPages > h3{
+    margin: 15px 0px 7px 0px;
+    font-size: 24px;
+}
+
+.markdownPages > h4{
+    margin: 12px 0px 6px 0px;
+    font-size: 20px;
+}
+
+.markdownPages > h5{
+    margin: 10px 0px 5px 0px;
+    font-size: 18px;
+}
+
+.markdownPages > h6{
+    margin: 8px 0px 4px 0px;
+    font-size: 16px;
+}
+
+.markdownPages > p{
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.markdownPages > blockquote{
+    margin: 5px 0;
+    padding-left: 20px;
+    font-size: 17.6px;
+}
+
+.markdownPages > ul{
+    margin: 5px 0;
+    padding-left: 20px;
+}
+
+.markdownPages > ol{
+    margin: 5px 0;
+    padding-left: 20px;
+}
+
+.markdownPages > ul > li{
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.markdownPages > ol > li{
+    margin: 5px 0;
+    padding-left: 20px;
+    font-size: 16px;
+}
+
+.markdownPages > pre{
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.markdownPages > code {
+    padding: 2px 4px;
+}
+
+.markdownPages > hr{
+    margin: 20px 0;
+}
+
 @media (width < 576px) {
     .listSideBarTagsLink {
         width: 30%;

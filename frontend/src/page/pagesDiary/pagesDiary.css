@@ -24,6 +24,31 @@
     cursor: default;
 }
 
+.titleCardTitle {
+    width: max-content;
+    max-width: 40vw;
+    height: 30px;
+    overflow: hidden;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    bottom: 30px;
+    border: 1px solid #f0f0f0;
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 2px 20px;
+    /* margin-bottom: 25px !important; */
+}
+
+.containerLineTitle{
+    position: absolute;
+    top: 53px;
+    width: 15vw;
+    height: 1px;
+    background-color: rgba(51, 51, 51, 0.1);
+    border-radius: 6px;
+}
+
 .listItemNoteDateTitleContainer {
     display: flex;
     align-items: center;

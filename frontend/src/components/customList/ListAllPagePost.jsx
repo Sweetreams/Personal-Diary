@@ -118,24 +118,28 @@ const ListAllPagePost = ({ data }) => {
             <>
                 <div key={el.id + 100} className="rowNoteCard">
                     {contextHolder}
-                    <div className="row" style={{ display: "flex", flexDirection: "row", gap: 20, marginBottom: 10 }}>
+                    <div className="row" style={{ display: "flex", flexDirection: "row", gap: 20, marginBottom: 20 }}>
                         <div className="listItemNoteDateTitleContainer">
                             <Typography.Text className="listItemNoteDateTitle">{dateCurrent}</Typography.Text>
                         </div>
                         <div className="listItemNoteDateIcon">
-                            <Link className="listItemNoteDateIconIcon" to={"/editingPost/" + el.id}><EditOutlined /></Link>
-                            <DeleteOutlined className="listItemNoteDateIconIcon" onClick={() => {
-                                modal.confirm({
-                                    title: "Вы правда хотите удалить запись?",
-                                    content: (
-                                        <span>Вы не сможете восстановить эту запись!</span>
-                                    ),
-                                    className: "listItemNoteDateDeletePost",
-                                    okText: "Удалить",
-                                    cancelText: "Назад",
-                                    onOk: () => onDelete(el.id, navigate)
-                                })
-                            }} />
+                            <Tooltip title="Редактировать">
+                                <Link className="listItemNoteDateIconIcon" to={"/editingPost/" + el.id}><EditOutlined /></Link>
+                            </Tooltip>
+                            <Tooltip title="Удалить">
+                                <DeleteOutlined className="listItemNoteDateIconIcon" onClick={() => {
+                                    modal.confirm({
+                                        title: "Вы правда хотите удалить запись?",
+                                        content: (
+                                            <span>Вы не сможете восстановить эту запись!</span>
+                                        ),
+                                        className: "listItemNoteDateDeletePost",
+                                        okText: "Удалить",
+                                        cancelText: "Назад",
+                                        onOk: () => onDelete(el.id, navigate)
+                                    })
+                                }} />
+                            </Tooltip>
                         </div>
                         <div className="listItemNoteDateTagsList">
                             <ListTags props={el.TagsAndPost} />
@@ -182,8 +186,11 @@ const ListAllPagePost = ({ data }) => {
 
                     </div>
                     <Card style={{ wordBreak: "break-all", position: "relative" }}>
-                        <Typography.Title style={{ cursor: "default" }} level={4}>{el.title}</Typography.Title>
-                        <div style={{ cursor: "default" }} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(el.desc)) }} />
+                        <Tooltip title={el.title}>
+                            <Typography.Title className="titleCardTitle" style={{ cursor: "default" }} level={4}>{el.title}</Typography.Title>
+                        </Tooltip>
+                        <div className="markdownPages" style={{ cursor: "default" }} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(el.desc)) }} />
+
                         <div
                             onMouseLeave={() => {
                                 isOpen(false)
@@ -198,7 +205,7 @@ const ListAllPagePost = ({ data }) => {
                                     }))
                                 }}
                             >
-                                <img style={{ width: 25, cursor: "pointer" }} src={displayedEmotion || emotionSelect} className="dropdown__text" />
+                                <img style={{ width: 35, cursor: "pointer" }} src={displayedEmotion || emotionSelect} className="dropdown__text" />
                             </button>
                             <ul className={`dropdown__items ${open[el.id] ? 'dropdown__items--open' : ''}`}>
                                 {[emotion].map((ell) => {
@@ -208,7 +215,7 @@ const ListAllPagePost = ({ data }) => {
                                                 <li key={index} style={{ display: "flex" }} onClick={() => {
                                                     emotionClick(elll, el.id)
                                                 }}>
-                                                    <img style={{ width: 25, cursor: "pointer" }} src={elll.img} alt={elll.desc} />
+                                                    <img style={{ width: 35, cursor: "pointer" }} src={elll.img} alt={elll.desc} />
                                                 </li>
                                             </Tooltip>
                                         )
