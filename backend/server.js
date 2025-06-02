@@ -24,8 +24,15 @@ async function main() {
         maxAge: 86400
     }));
 
+    app.use((req, res, next) => {
+        if (req.url.endsWith(".js")) {
+            res.setHeader("Content-Type", "application/javascript");
+        }
+        next();
+    });
+
     // app.use(errorHandling);
-    
+
     // app.use(helmet());
 
     app.use("/user", userRouter);
