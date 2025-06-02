@@ -64,7 +64,6 @@ const PasswordRecoveryPage = () => {
 
         if (resultCheckMail.httpState === "success") {
             const resultRequest = await userService.passwordRecoveryRequest({ login: dataFromRequest.login, password: dataFromRequest.password, email: dataFromRequest.mail })
-            console.log(resultCheckMail)
             if (resultRequest.httpState == "success") {
                 setLoading(false)
                 api.success({

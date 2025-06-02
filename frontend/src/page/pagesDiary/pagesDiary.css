@@ -138,7 +138,9 @@ td {
     display: none;
 }
 
-
+.ant-splitter-panel > .previows > div > div{
+        padding-left: 25px;
+    }
 
 @media (width < 576px) {
     .listItemNoteDateTagsList {
@@ -162,7 +164,5 @@ td {
         flex-direction: column-reverse;
     }
 
-    .ant-splitter-panel > .previows > div > div{
-        padding-left: 25px;
-    }
+    
 }

@@ -88,7 +88,7 @@ const SideBar = ({ collapse }) => {
                                     <span>Статистика</span>
                                 </Typography.Link>
                                 <Typography.Link className="buttonFieldLink" onClick={() => {
-                                    
+
                                     modal.confirm({
                                         title: "Вы правда хотите выйти из аккаунта?",
                                         content: (
@@ -107,6 +107,7 @@ const SideBar = ({ collapse }) => {
                             <div className={`containerSearchField${collapse ? "-collapse" : ""}`}>
                                 {collapse
                                     ? ((<Button
+                                        onClick={() => setModalOpen(true)}
                                         className={`searchField${collapse ? "-collapse" : ""}`}
                                     ><SearchOutlined /></Button>))
                                     : (<Button

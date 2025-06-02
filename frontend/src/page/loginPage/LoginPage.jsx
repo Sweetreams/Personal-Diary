@@ -113,7 +113,7 @@ const LoginPage = () => {
                                             valuePropName="checkbox"
                                             className="checkboxField"
                                         >
-                                            <Checkbox>Запомнить меня?</Checkbox>
+                                            <Checkbox>Запомнить меня</Checkbox>
                                         </Form.Item>
                                         <p className="descAcc">У меня нет аккаунта, <a className="link_typeClass" href="/registration">зарегистрироваться?</a></p>
 

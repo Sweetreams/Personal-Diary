@@ -26,10 +26,8 @@ const StatisticPage = () => {
       withCredentials: true,
       signal: controller.signal
     }).then((req) => {
-      console.log(req.data.data)
       setStatistic(req.data.data)
     }).catch((req) => {
-      console.log(req.response.data)
     })
 
     return () => { controller.abort() }
@@ -37,8 +35,8 @@ const StatisticPage = () => {
 
   const config = {
     data: statistic[1],
-    xField: 'count',
-    yField: 'emotions'
+    xField: 'emotions',
+    yField: 'count',
   }
 
   return (
@@ -55,17 +53,17 @@ const StatisticPage = () => {
         </Col>
       </Row>
       <Row>
-        <Typography.Title level={3}>Статистика постов</Typography.Title>
+        <Typography.Title level={3}>Статистика использованных эмоций</Typography.Title>
       </Row>
       <Row>
-        <Col span={6} style={{ minWidth: 150 }}>
+        <Row span={24} style={{gap: 15, width: "100%"}}>
           <ListFormEmotionsStatistic emotions={statistic[1]} />
-        </Col>
-        <Col span={18} style={{ display: "flex", alignItems: "center" }}>
+        </Row>
+        {/* <Col span={18} style={{ display: "flex", alignItems: "center" }}>
           <Column
             {...config}
           />
-        </Col>
+        </Col> */}
 
       </Row>
 

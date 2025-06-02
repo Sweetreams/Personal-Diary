@@ -7,7 +7,6 @@ const SettingPage = () => {
 
   useEffect(() => {
     document.title = "Настройки"
-    console.log(localStorage.getItem("NotNew"))
   }, [])
 
   const onClickResetTheme = () => {

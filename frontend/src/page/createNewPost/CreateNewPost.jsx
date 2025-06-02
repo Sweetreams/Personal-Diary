@@ -269,8 +269,8 @@ const CreateNewPost = () => {
                   label="Заголовок">
                   <Input />
                 </Form.Item></Col>
-                <Col span={8}></Col>
-                <Col span={4}><Form.Item
+                <Col span={3}></Col>
+                <Col span={9}><Form.Item
                   name="tags"
                   label="Тэги">
                   <Select

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, Col, Form, Input, notification, Row, Select, Splitter } from 'antd'
 import axiosCache from "../../utils/axios.js"
 import { useParams } from 'react-router-dom'
 import DOMPurify from 'dompurify';
-import { RMark } from '../../utils/markdown/render.js';
 import axios from "axios"
 import { marked } from 'marked';
 import { dateProcessing, dateTimeProcessing } from '../../utils/dateConvertor.js';
@@ -22,7 +21,7 @@ const axiosRequest = async (values) => {
 }
 
 const EditingNewDiary = () => {
-     const date = new Date()
+    const date = new Date()
     const [dataFromResponse, setDataFromResponse] = useState([])
     const [textAreaText, setTextAreaText] = useState("")
     const [tags, setTags] = useState([])
@@ -137,11 +136,13 @@ const EditingNewDiary = () => {
                                         <Input />
                                     </Form.Item>
                                 </Col>
-                                <Col span={8}></Col>
-                                <Col span={4}>
+                                <Col span={3}></Col>
+                                <Col span={9}>
                                     <Form.Item
                                         name="tags"
-                                        label="Тэги">
+                                        label="Тэги"
+                                        style={{ position: "relative" }}>
+
                                         <Select
                                             notFoundContent="Не найдено"
                                             mode="multiple"
@@ -166,7 +167,7 @@ const EditingNewDiary = () => {
                                 </Splitter.Panel>
                                 <Splitter.Panel defaultSize="50%" min="30%" max="70%">
                                     <Form.Item
-                                    className="previows"
+                                        className="previows"
                                         label="Предпросмотр">
                                         <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(textAreaText)) }}></div>
                                     </Form.Item>

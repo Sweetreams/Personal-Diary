@@ -1,4 +1,4 @@
-import { MenuFoldOutlined, SearchOutlined } from '@ant-design/icons'
+import { MenuFoldOutlined, MenuUnfoldOutlined, SearchOutlined } from '@ant-design/icons'
 import { Dropdown, Input, notification, Select, Typography, Modal } from "antd"
 import React, { useContext } from 'react'
 import "./headers.css"
@@ -7,7 +7,7 @@ import axios from "axios"
 import { Link, useNavigate } from 'react-router-dom'
 import OpenMenuContext from '../context/OpenMenuContext'
 
-const Headers = ({ isCollapse }) => {
+const Headers = ({ isCollapse, collapse }) => {
   const profileData = useContext(ProfileContext)
   const { openBurgerMenu, isOpenBurgerMenu } = useContext(OpenMenuContext)
   const userName = profileData.name;
@@ -94,10 +94,12 @@ const Headers = ({ isCollapse }) => {
   return (
     <>
       {contextHolder}
-      <span className="MenuFoldOutlined"><MenuFoldOutlined onClick={() => isCollapse((a) => !a)} /></span>
+      <span className="MenuFoldOutlined">
+        {collapse ? <MenuUnfoldOutlined onClick={() => isCollapse((a) => !a)} /> : <MenuFoldOutlined onClick={() => isCollapse((a) => !a)} />}
+      </span>
       <div className="headersContainer">
         <Dropdown className="dropDownProfile" menu={{ items }} placement="bottomLeft">
-          <div style={{display: "flex", alignItems: "center", gap: 12}}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <Typography.Text className="headersContainerName">{userName}</Typography.Text>
             <img className="headersContainerImg" src={userImg} />
           </div>

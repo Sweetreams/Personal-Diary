@@ -11,7 +11,7 @@ const ListFormEmotionsStatistic = ({ emotions = [] }) => {
         return (
             <Card
                 variant="borderless"
-                style={{marginBottom: 16}}
+                style={{marginBottom: 16, width: "23%"}}
             >
                 <Statistic title={emot.desc} value={el.count} precision={2} formatter={formatter} />
             </Card>
