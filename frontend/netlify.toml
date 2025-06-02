@@ -1,35 +1,50 @@
 [build]
-command = "npm run build"
-publish = "dist"
+  command = "npm run build"
+  publish = "dist"
 
-# Сначала обрабатываем статические файлы
+# Явные заголовки для MIME-типов
 [[headers]]
-  for = "/*.js"
+  for = "/assets/*"
   [headers.values]
     Content-Type = "application/javascript"
+    Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
-  for = "/*.css"
+  for = "/assets/*.css"
   [headers.values]
     Content-Type = "text/css"
+    Cache-Control = "public, max-age=31536000, immutable"
 
-# Затем добавляем исключения в редиректы
-[[redirects]]
-  from = "/_image"  # Исключение 1: внутренние пути
-  to = "/index.html"
-  status = 200
-  force = false
+[[headers]]
+  for = "/fonts/*.ttf"
+  [headers.values]
+    Content-Type = "font/ttf"
+    Cache-Control = "public, max-age=31536000, immutable"
 
-[[redirects]]
-  from = "/something/*"  # Исключение 2: специфичные маршруты
-  to = "/index.html"
-  status = 200
-  force = false
+[[headers]]
+  for = "/*.svg"
+  [headers.values]
+    Content-Type = "image/svg+xml"
 
-# Основное правило SPA (должно быть ПОСЛЕДНИМ)
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Content-Type = "image/png"
+
+# SPA-редирект с исключениями
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-  # Добавляем условия для игнорирования файлов
-  conditions = {Path = ["!/*.js", "!/*.css", "!/*.ico", "!/*.png", "!/*.jpg", "!/*.svg"]}
+  force = false
+  conditions = {Path = [
+    "!/assets/*",
+    "!/fonts/*",
+    "!/*.js",
+    "!/*.css",
+    "!/*.ttf",
+    "!/*.png",
+    "!/*.jpg",
+    "!/*.svg",
+    "!/*.ico"
+  ]}
