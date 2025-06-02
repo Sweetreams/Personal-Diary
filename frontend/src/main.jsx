@@ -51,9 +51,6 @@ const router = createBrowserRouter([
         path: "/statistica",
         element: (
           <StatisticPage />
-          // <SecurityAdminPage>
-            
-          // </SecurityAdminPage>
         ),
       }
     ]
