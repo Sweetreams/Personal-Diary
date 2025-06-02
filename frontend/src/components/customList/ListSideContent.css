@@ -6,26 +6,63 @@
     scrollbar-color: var(--color-eaee) var(--color-white);
 }
 
-li[role="menuitem"]{
+li[role="menuitem"] {
     padding: 0px 24px 0px 34px !important;
 }
 
-ul.ant-menu{
+ul.ant-menu {
     border: 0px !important;
 }
 
-.listItemNoteDateDeletePost > div > .ant-modal-content > .ant-modal-body{
+.listItemNoteDateDeletePost>div>.ant-modal-content>.ant-modal-body {
     margin-bottom: 0px;
 }
 
-.formTagNameInput{
+.formTagNameInput {
     height: 25px !important;
 }
 
-.formTagName, .formTagColorPicker{
+.formTagName,
+.formTagColorPicker {
     margin-bottom: 10px;
 }
 
-.ant-popover-inner{
+.ant-popover-inner {
     padding: 15px 45px !important;
+}
+
+.listSideBarTagsLink {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 2px 5px;
+    border-radius: 8px;
+    min-width: 60px;
+    max-width: 50%;
+    font-size: 14px;
+    color: #333333
+}
+
+.listSideBarTagsLinkContainer {
+    background: #fff;
+    position: relative;
+    border-radius: 20px;
+    width: 17px;
+    height: 17px;
+    margin-right: 7px
+}
+
+.listSideBarTagsLinkName {
+    width: 50%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    top: 1px,
+}
+
+@media (width < 576px) {
+    .listSideBarTagsLink {
+        width: 30%;
+    }
 }
