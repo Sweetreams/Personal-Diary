@@ -30,9 +30,6 @@ async function main() {
         }
         next();
     });
-
-    // app.use(errorHandling);
-
     // app.use(helmet());
 
     app.use("/user", userRouter);
