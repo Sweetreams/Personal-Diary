@@ -9,12 +9,15 @@ const ListFormEmotionsStatistic = ({ emotions = [] }) => {
     return emotions.map((el) => {
         const emot = emotion[el.emotions]
         return (
+
             <Card
+                className="ListFormEmotionsStatistic"
                 variant="borderless"
-                style={{marginBottom: 16, width: "23%"}}
+                style={{ width: "200px", height: "120px" }}
             >
                 <Statistic title={emot.desc} value={el.count} precision={2} formatter={formatter} />
             </Card>
+
         )
     })
 }

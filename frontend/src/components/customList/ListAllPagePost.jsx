@@ -189,7 +189,7 @@ const ListAllPagePost = ({ data }) => {
                         <Tooltip title={el.title}>
                             <Typography.Title className="titleCardTitle" style={{ cursor: "default" }} level={4}>{el.title}</Typography.Title>
                         </Tooltip>
-                        <div className="markdownPages" style={{ cursor: "default" }} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(el.desc)) }} />
+                        <div className="markdownPages" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(el.desc)) }} />
 
                         <div
                             onMouseLeave={() => {

@@ -58,10 +58,11 @@ ul.ant-menu {
     white-space: nowrap;
     overflow: hidden;
     position: relative;
-    top: 1px,
+    top: 1px;
 }
 
 .markdownPages {
+    cursor: default;
     position: relative;
     top: -25px;
 }
@@ -141,7 +142,38 @@ ul.ant-menu {
     margin: 20px 0;
 }
 
+@media (width < 1156px) {
+
+    .cardStatistic {
+        flex-direction: column;
+    }
+
+    .cardStatisticLeft {
+        width: 100% !important;
+        margin-bottom: 20px;
+    }
+
+    .cardStatisticRight {
+        width: 100% !important;
+    }
+
+    .ListFormEmotionsStatistic {
+        width: 24vw !important;
+        min-width: 150px;
+    }
+
+    .cardStatisticUser {
+        width: 24vw !important;
+        min-width: 150px;
+    }
+
+}
+
 @media (width < 576px) {
+    .rowNoteCard {
+        margin-left: 0px;
+    }
+
     .listSideBarTagsLink {
         width: 30%;
     }
