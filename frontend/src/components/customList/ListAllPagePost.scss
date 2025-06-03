@@ -6,7 +6,11 @@
     filter: url(#goo);
     z-index: 100;
 
+
+
     &__face {
+        display: block;
+        position: relative;
         border: 1px solid #f0f0f0;
         background-color: #ffffff;
         border-radius: 100px;
@@ -14,19 +18,11 @@
         height: 35px;
         left: 270px;
     }
-    
+
     &__items {
         background-color: #fff;
         padding: 7px !important;
         border-radius: 20px;
-    }
-
-    &__face {
-        display: block;
-        position: relative;
-    }
-
-    &__items {
         gap: 7px;
         margin: 0;
         position: absolute;
@@ -48,5 +44,64 @@
             opacity: 1;
         }
     }
+
+
 }
 
+@media (width < 576px) {
+    .dropdown {
+        position: absolute;
+        right: 20px;
+        width: 300px;
+        height: 80px;
+        filter: url(#goo);
+        z-index: 100;
+
+        &__face {
+            display: block;
+            position: relative;
+            border: 1px solid #f0f0f0;
+            background-color: #ffffff;
+            border-radius: 100px;
+            width: 20px;
+            height: 20px;
+            left: 280px;
+            top: 6px;
+        }
+
+        &__face > img {
+            width: 20px !important;
+        }
+
+        &__items {
+            background-color: #fff;
+            padding: 7px !important;
+            border-radius: 20px;
+            gap: 7px;
+            margin: 0;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            width: max-content;
+            list-style: none;
+            list-style-type: none;
+            display: flex;
+            justify-content: space-between;
+            visibility: hidden;
+            z-index: -1;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.93, 0.88, 0.1, 0.8);
+
+            &--open {
+                top: calc(100% - 50px);
+                left: 70px;
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+
+        &__items > li > img{
+            width: 20px !important;
+        }
+    }
+}
