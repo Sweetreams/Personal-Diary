@@ -1,28 +1,47 @@
+
+
 .inputFileBase64 > input{
     display: none;
 }
 
 .inputFileBase64{
-    position: relative;
-    bottom: 20px;
-    background-color: #fff;
-    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
     border: 1px solid #d9d9d9;
     padding: 9px 15px;
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
 }
 
-.inputFileBase64:hover{
-    cursor: pointer;
-    border: 1px solid #c7c7c7;
-    color: #595959;
+.inputFileBase64 > span{
+    display: none;
 }
 
+.inputFileBase64:hover{
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.1);
+    border: 1px solid #c7c7c7;
+}
 
+.inputFileBase64:hover > span{
+    display: block;
+    color:#fff;
+}
 
 @media (width < 900px) {
     .profileImg{
         width: 7em !important;
         height: 7em !important;
     }
+
+    .inputFileBase64{
+    width: 7em;
+    height: 7em;
+}
 }

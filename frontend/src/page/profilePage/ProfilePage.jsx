@@ -70,8 +70,12 @@ const ProfilePage = () => {
         <div style={{ background: "#FFFFFF", width: "100%", height: "100%", padding: "30px 70px 30px 70px", borderRadius: "0px 0px 30px 30px" }}>
           <div className="row" style={{ display: "flex", alignItems: "center", flexWrap: "wrap", justifyContent: "space-between", gap: 15, marginBottom: 50 }}>
             <div className="col" style={{ display: "flex", alignItems: "center", gap: 40, flexWrap: "wrap" }}>
-              <div className="row">
+              <div className="row" style={{position: "relative"}}>
                 <img className="profileImg" style={{ width: "200px", height: "200px", borderRadius: "50%", objectFit: "cover" }} src={profileData.imgURL} alt="" />
+                <label className="inputFileBase64">
+                  <span>Изменить изображение</span>
+                  <input type="file" onChange={(f) => { onChange(f.target.files[0]) }}></input>
+                </label>
               </div>
               <div className="row">
                 <p>{profileData.name}</p>
@@ -84,10 +88,7 @@ const ProfilePage = () => {
               </Button>
             </div>
           </div>
-          <label className="inputFileBase64">
-            <span>Изменить изображение</span>
-            <input type="file" onChange={(f) => { onChange(f.target.files[0]) }}></input>
-          </label>
+
           <div>
             <Form
               form={form}
