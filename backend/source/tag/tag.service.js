@@ -24,24 +24,18 @@ export class TagService {
     };
 
     deleteTag = async (id_user, data) => {
-        console.log(data);
         return await this.prisma.$transaction(async (prisma) => {
-            const tagandpost = await prisma.tagsAndPost.deleteMany({
+            await prisma.tagsAndPost.deleteMany({
                 where: {
                     id_tags: Number(data.id_tags)
                 }
             });
-
-            console.log(tagandpost);
-
-            const tag = await prisma.tags.deleteMany({
+            await prisma.tags.deleteMany({
                 where: {
                     id_user: Number(id_user),
                     id: Number(data.id_tags)
                 }
             });
-
-            console.log(tag);
         });
     };
 }

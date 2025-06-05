@@ -47,7 +47,6 @@ router.delete("/tagdelete", jwtVerefite, async(req, res) => {
             message: "Тэг удалён!"
         });
     } catch (err) {
-        console.log(err);
         return res.status(400).json({
             httpState: HTTPState.ERROR,
             message: {

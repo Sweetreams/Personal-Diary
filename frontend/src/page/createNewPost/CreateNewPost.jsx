@@ -115,9 +115,17 @@ const CreateNewPost = () => {
     return (
       <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <span>{data.label}</span>
-        <DeleteOutlined onClick={(el => {
-          axiosRequestTagDelete({id_tags: data.key})
-        })} />
+        <Popconfirm
+          title="Удалить тэг?"
+          description="Удалёный тэг невозможно будет восстановить!"
+          placement="left"
+          okText="Удалить"
+          cancelText="Отмена"
+          onConfirm={() => {
+            axiosRequestTagDelete({ id_tags: data.key })
+          }}>
+          <DeleteOutlined />
+        </Popconfirm>
       </div>
     )
   }
