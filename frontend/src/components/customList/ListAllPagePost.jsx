@@ -24,19 +24,6 @@ const axiosRequest = async (values) => {
     })
 }
 
-const axiosRequestTag = async (values) => {
-    return axios({
-        method: "post",
-        url: "https://personal-diary-s9tr.onrender.com/tag/tagcreate",
-        withCredentials: true,
-        data: values
-    }).then((req) => {
-        return req
-    }).catch((req) => {
-        return req.response
-    })
-}
-
 const ListAllPagePost = ({ data }) => {
     const navigate = useNavigate()
     const [api, contextHolder] = notification.useNotification()
@@ -45,9 +32,6 @@ const ListAllPagePost = ({ data }) => {
     const [dataList, setDataList] = useState(data)
     const [modal, contextHolderModalPost] = Modal.useModal()
     const [form] = Form.useForm()
-    const nameValue = Form.useWatch("Name", form)
-    const colorValue = Form.useWatch("Color", form)
-    const currentColorValue = colorValue == undefined ? "#FBEECE" : colorValue
 
     useEffect(() => {
         setDataList(data)
@@ -103,11 +87,6 @@ const ListAllPagePost = ({ data }) => {
         return nameReturn
     }
 
-    const onFinish = () => {
-        axiosRequestTag({ "tag": nameValue, "color": currentColorValue.toHexString() })
-    }
-
-
 
     return dataList.map((el) => {
         const dateCurrent = dateTimeProcessingForRequest(el)
@@ -149,39 +128,6 @@ const ListAllPagePost = ({ data }) => {
                                 <EllipsisOutlined />
                             </Tooltip>
 
-                        </div>
-                        <div className="listItemNoteDateIconTags">
-                            <Popconfirm
-                                className="popconfirmMe"
-                                title="Добавление Тега"
-                                icon={null}
-                                description={
-                                    <>
-                                        <Form
-                                            form={form}
-                                            className="formTag">
-                                            <Form.Item
-                                                name="Name"
-                                                label="Название"
-                                                className="formTagName"
-                                                rules={[
-                                                    { required: true, message: "Поле обязательно для заполения!" },
-                                                    { type: "string", message: "Поле должно быть текстовым" },]}>
-                                                <Input className="formTagNameInput" />
-                                            </Form.Item>
-                                            <Form.Item
-                                                name="Color"
-                                                label="Цвет фона"
-                                                className="formTagColorPicker">
-                                                <ColorPicker format="hex" defaultValue="#FBEECE" className="formTagColorPickerInput" />
-                                            </Form.Item>
-                                        </Form>
-                                    </>}
-                                okText="Создать"
-                                cancelText="Отмена"
-                                onConfirm={() => onFinish(el.id)}>
-                                <PlusOutlined />
-                            </Popconfirm>
                         </div>
 
                     </div>

@@ -1,11 +1,38 @@
 import { useEffect, useState } from 'react'
-import { Button, Col, Form, Input, Modal, notification, Row, Select, Splitter, Tooltip, Typography } from 'antd'
+import { Button, Col, ColorPicker, Form, Input, Modal, notification, Popconfirm, Row, Select, Splitter, Tooltip, Typography } from 'antd'
 import axios from "axios"
 import { dateProcessing, dateTimeProcessing } from '../../utils/dateConvertor'
 import DOMPurify from 'dompurify';
 import { marked } from 'marked'
-import { QuestionCircleOutlined } from '@ant-design/icons'
+import { DeleteOutlined, PlusOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
+import { HexConverterRgb, HEXtoRGB, RGBtoHEX } from '../../utils/LumaColor';
+
+const axiosRequestTagDelete = async (values) => {
+  return axios({
+    method: "delete",
+    url: "http://localhost:8000/tag/tagdelete",
+    withCredentials: true,
+    data: values
+  }).then((req) => {
+    return req
+  }).catch((req) => {
+    return req.response
+  })
+}
+
+const axiosRequestTag = async (values) => {
+  return axios({
+    method: "post",
+    url: "https://personal-diary-s9tr.onrender.com/tag/tagcreate",
+    withCredentials: true,
+    data: values
+  }).then((req) => {
+    return req
+  }).catch((req) => {
+    return req.response
+  })
+}
 
 const axiosRequest = async (values) => {
   return axios({
@@ -27,10 +54,19 @@ const axiosRequest = async (values) => {
 const CreateNewPost = () => {
   const date = new Date()
   const [api, contextHolder] = notification.useNotification()
-  const [tags, setTags] = useState()
+  const [tags, setTags] = useState([])
   const [textAreaText, setTextAreaText] = useState("")
   const [openModal, isModalOpen] = useState(false)
   const navigate = useNavigate()
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     const options = document.getElementsByClassName("ant-select-item-option")
+  //     for (let index = 0; index < options.length; index++) {
+  //       options[index].insertAdjacentHTML("beforeend", <DeleteOutlined/>)
+  //     }
+  //   }, 2000);
+  // }, [])
 
   useEffect(() => {
     document.title = "Создание поста"
@@ -43,9 +79,17 @@ const CreateNewPost = () => {
       req.data.map((el) => {
         tag.push({ label: el.tag, value: el.id, key: el.id })
       })
+
       setTags(tag)
     })
   }, [])
+
+  const onFinishTag = () => {
+    const name = document.getElementsByClassName("formTagNameInput")[0].value
+    const color = document.getElementsByClassName("ant-color-picker-color-block-inner")[0].style.background.match(/rgb\((\d*), (\d*), (\d*)\)/)
+    const colorConvert = HexConverterRgb([color[1], color[2], color[3]])
+    return axiosRequestTag({ "tag": name, "color": colorConvert })
+  }
 
   const onFinish = async (values) => {
     const axiosResult = await axiosRequest(values)
@@ -64,6 +108,18 @@ const CreateNewPost = () => {
       })
       window.location.pathname = "/main"
     }
+  }
+
+  const optionRender = (props) => {
+    const data = props.data
+    return (
+      <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+        <span>{data.label}</span>
+        <DeleteOutlined onClick={(el => {
+          axiosRequestTagDelete({id_tags: data.key})
+        })} />
+      </div>
+    )
   }
 
   return (
@@ -272,12 +328,47 @@ const CreateNewPost = () => {
                 <Col span={3}></Col>
                 <Col span={9}><Form.Item
                   name="tags"
-                  label="Тэги">
+                  label={
+                    <div style={{ display: "flex", flexDirection: "flex", alignItems: "center", gap: 10 }}>
+                      <span>Тэги</span>
+                      <Popconfirm
+                        className="popconfirmMe"
+                        title="Добавление Тега"
+                        icon={null}
+                        description={
+                          <>
+                            <Form.Item
+                              name="Name"
+                              label="Название"
+                              className="formTagName"
+                              rules={[
+                                { required: true, message: "Поле обязательно для заполения!" },
+                                { type: "string", message: "Поле должно быть текстовым" },]}>
+                              <Input className="formTagNameInput" />
+                            </Form.Item>
+                            <Form.Item
+                              name="Color"
+                              label="Цвет фона"
+                              className="formTagColorPicker">
+                              <ColorPicker format="hex" defaultValue="#FBEECE" className="formTagColorPickerInput" />
+                            </Form.Item>
+                          </>}
+                        okText="Создать"
+                        cancelText="Отмена"
+                        onConfirm={() => onFinishTag()}
+                      >
+                        <PlusOutlined />
+                      </Popconfirm>
+                    </div>
+                  }>
                   <Select
                     notFoundContent="Не найдено"
                     mode="multiple"
+                    optionRender={optionRender}
                     options={tags ? tags : ""}
-                  />
+                  >
+
+                  </Select>
                 </Form.Item></Col>
               </Row>
               <Splitter lazy>

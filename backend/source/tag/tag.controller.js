@@ -29,6 +29,24 @@ router.post("/tagcreate", jwtVerefite, async(req, res) => {
             message: "Тэг создан!"
         });
     } catch (err) {
+        return res.status(400).json({
+            httpState: HTTPState.ERROR,
+            message: {
+                errorName: err.name,
+                errorMessage: "Ошибка создания тэгов",
+            }
+        });
+    }
+});
+
+router.delete("/tagdelete", jwtVerefite, async(req, res) => {
+    try {
+        await tagService.deleteTag(req.dataFromMiddlewareJwtVerefite, req.body);
+        res.status(200).json({
+            httpState: HTTPState.SUCCESS,
+            message: "Тэг удалён!"
+        });
+    } catch (err) {
         console.log(err);
         return res.status(400).json({
             httpState: HTTPState.ERROR,

@@ -22,4 +22,21 @@ export class TagService {
             }
         });
     };
+
+    deleteTag = async (id_user, data) => {
+        return await this.prisma.$transaction(async (prisma) => {
+            prisma.tagsAndPost.delete({
+                where: {
+                    id_tags: data.id_tags
+                }
+            });
+
+            prisma.tags.delete({
+                where: {
+                    id_user: Number(id_user),
+                    id: data.id_tags
+                }
+            });
+        });
+    };
 }

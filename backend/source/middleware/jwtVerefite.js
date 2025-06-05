@@ -5,6 +5,7 @@ import { HTTPState } from "../utils/HTTPState.js";
 dotenv.config();
 
 export const jwtVerefite = (req, res, next) => {
+    console.log(req.headers.cookie);
     try {
         const tokenRegExp = req.headers.cookie.match(/=([^\n]+)/);
         const cookie = tokenRegExp?.[1];
@@ -26,6 +27,7 @@ export const jwtVerefite = (req, res, next) => {
             });
         });
     } catch (err) {
+        console.log(err);
         return res.status(401).json({
             httpState: HTTPState.ERROR,
             message: {
