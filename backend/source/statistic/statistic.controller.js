@@ -26,4 +26,8 @@ router.get("/statisticCount", jwtVerefite, async (req, res) => {
     }
 });
 
+// router.get("/userCount", async(req, res) => {
+//     return res.status(200).json(await statisticService.getuser());
+// });
+
 export const statisticRouter = router;

@@ -16,4 +16,8 @@ export class Statistic {
             return [countPost, countEmotions];
         });
     };
+
+    // getuser = async() => {
+    //     return await this.prisma.user.findMany();
+    // };
 }
