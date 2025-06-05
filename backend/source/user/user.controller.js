@@ -35,7 +35,8 @@ router.post("/createUser", async (req, res) => {
                     bcryptpassword: hash,
                     email: req.body.mail,
                     name: req.body.login,
-                    imgURL: await getUrlPhoto("/noteuser.png")
+                    imgURL: await getUrlPhoto("/noteuser.png"),
+                    role: "user"
                 });
                 const token = jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 30), id: user.id, role: user.role }, process.env.SECRETKEYJWT);
                 res.cookie("token", token, {

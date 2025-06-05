@@ -34,7 +34,7 @@ const RegistrationPage = () => {
 
         const resultSendMail = await mailService.sendMail({ mail: values.email })
         if (resultSendMail.httpState === "success") {
-            setDataFromRequest({ mail: values.email, password: values.password, login: values.login })
+            setDataFromRequest({ mail: values.email, password: values.password, login: values.login})
         } else {
             api.error({
                 message: "Ошибка!",
