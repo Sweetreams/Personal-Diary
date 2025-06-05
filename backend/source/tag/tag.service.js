@@ -27,7 +27,7 @@ export class TagService {
         return await this.prisma.$transaction(async (prisma) => {
             const tagandpost = await prisma.tagsAndPost.delete({
                 where: {
-                    id_tags: data.id_tags
+                    id_tags: Number(data.id_tags)
                 }
             });
 
@@ -36,7 +36,7 @@ export class TagService {
             const tag = await prisma.tags.delete({
                 where: {
                     id_user: Number(id_user),
-                    id: data.id_tags
+                    id: Number(data.id_tags)
                 }
             });
 
