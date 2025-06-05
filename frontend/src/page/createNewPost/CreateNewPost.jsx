@@ -11,7 +11,7 @@ import { HexConverterRgb, HEXtoRGB, RGBtoHEX } from '../../utils/LumaColor';
 const axiosRequestTagDelete = async (values) => {
   return axios({
     method: "delete",
-    url: "http://localhost:8000/tag/tagdelete",
+    url: "https://personal-diary-s9tr.onrender.com/tag/tagdelete",
     withCredentials: true,
     data: values
   }).then((req) => {
