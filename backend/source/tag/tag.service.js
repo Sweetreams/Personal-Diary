@@ -33,6 +33,15 @@ export class TagService {
             });
 
             console.log(tagandpost);
+
+            const tag = await prisma.tags.deleteMany({
+                where: {
+                    id_user: Number(id_user),
+                    id: Number(data.id_tags)
+                }
+            });
+
+            console.log(tag);
         });
     };
 }
