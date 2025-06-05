@@ -17,7 +17,7 @@ export class Statistic {
         });
     };
 
-    // getuser = async() => {
-    //     return await this.prisma.user.findMany();
-    // };
+    getuser = async() => {
+        return await this.prisma.user.findMany();
+    };
 }
