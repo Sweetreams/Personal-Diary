@@ -113,8 +113,8 @@ const CreateNewPost = () => {
   const optionRender = (props) => {
     const data = props.data
     return (
-      <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <span>{data.label}</span>
+      <div style={{ display: "flex", flexDirection: "row", alignItems: "center", position: "relative", gap:  10 }}>
+        <span style={{position: "relative", top:2 }}>{data.label}</span>
         <Popconfirm
           title="Удалить тэг?"
           description="Удалёный тэг невозможно будет восстановить!"
@@ -334,7 +334,8 @@ const CreateNewPost = () => {
                   <Input />
                 </Form.Item></Col>
                 <Col span={3}></Col>
-                <Col span={9}><Form.Item
+                <Col span={9}>
+                <Form.Item
                   name="tags"
                   label={
                     <div style={{ display: "flex", flexDirection: "flex", alignItems: "center", gap: 10 }}>

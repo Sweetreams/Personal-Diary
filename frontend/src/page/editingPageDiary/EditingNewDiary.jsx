@@ -1,16 +1,44 @@
 import { useEffect, useState } from 'react'
-import { Button, Col, Form, Input, notification, Row, Select, Splitter } from 'antd'
+import { Button, Col, ColorPicker, Form, Input, notification, Popconfirm, Row, Select, Splitter } from 'antd'
 import axiosCache from "../../utils/axios.js"
 import { useParams } from 'react-router-dom'
 import DOMPurify from 'dompurify';
 import axios from "axios"
 import { marked } from 'marked';
 import { dateProcessing, dateTimeProcessing } from '../../utils/dateConvertor.js';
+import { HexConverterRgb } from '../../utils/LumaColor.js';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 
 const axiosRequest = async (values) => {
     return axios({
         method: "put",
         url: "https://personal-diary-s9tr.onrender.com/post/changePost",
+        withCredentials: true,
+        data: values
+    }).then((req) => {
+        return req
+    }).catch((req) => {
+        return req.response
+    })
+}
+
+const axiosRequestTagDelete = async (values) => {
+    return axios({
+        method: "delete",
+        url: "https://personal-diary-s9tr.onrender.com/tag/tagdelete",
+        withCredentials: true,
+        data: values
+    }).then((req) => {
+        return req
+    }).catch((req) => {
+        return req.response
+    })
+}
+
+const axiosRequestTag = async (values) => {
+    return axios({
+        method: "post",
+        url: "https://personal-diary-s9tr.onrender.com/tag/tagcreate",
         withCredentials: true,
         data: values
     }).then((req) => {
@@ -60,6 +88,13 @@ const EditingNewDiary = () => {
         }
     }
 
+    const onFinishTag = () => {
+        const name = document.getElementsByClassName("formTagNameInput")[0].value
+        const color = document.getElementsByClassName("ant-color-picker-color-block-inner")[0].style.background.match(/rgb\((\d*), (\d*), (\d*)\)/)
+        const colorConvert = HexConverterRgb([color[1], color[2], color[3]])
+        return axiosRequestTag({ "tag": name, "color": colorConvert })
+    }
+
     useEffect(() => {
         document.title = "Редактирование поста"
     }, [])
@@ -104,6 +139,26 @@ const EditingNewDiary = () => {
         return () => controller.abort()
     }, [params.id, form])
 
+    const optionRender = (props) => {
+        const data = props.data
+        return (
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", position: "relative", gap: 10 }}>
+                <span style={{ position: "relative", top: 2 }}>{data.label}</span>
+                <Popconfirm
+                    title="Удалить тэг?"
+                    description="Удалёный тэг невозможно будет восстановить!"
+                    placement="left"
+                    okText="Удалить"
+                    cancelText="Отмена"
+                    onConfirm={() => {
+                        axiosRequestTagDelete({ id_tags: data.key })
+                    }}>
+                    <DeleteOutlined />
+                </Popconfirm>
+            </div>
+        )
+    }
+
     return (
         <>
             {contextHolder}
@@ -140,14 +195,47 @@ const EditingNewDiary = () => {
                                 <Col span={9}>
                                     <Form.Item
                                         name="tags"
-                                        label="Тэги"
+                                        label={
+                                            <div style={{ display: "flex", flexDirection: "flex", alignItems: "center", gap: 10 }}>
+                                                <span>Тэги</span>
+                                                <Popconfirm
+                                                    className="popconfirmMe"
+                                                    title="Добавление Тега"
+                                                    icon={null}
+                                                    description={
+                                                        <>
+                                                            <Form.Item
+                                                                name="Name"
+                                                                label="Название"
+                                                                className="formTagName"
+                                                                rules={[
+                                                                    { required: true, message: "Поле обязательно для заполения!" },
+                                                                    { type: "string", message: "Поле должно быть текстовым" },]}>
+                                                                <Input className="formTagNameInput" />
+                                                            </Form.Item>
+                                                            <Form.Item
+                                                                name="Color"
+                                                                label="Цвет фона"
+                                                                className="formTagColorPicker">
+                                                                <ColorPicker format="hex" defaultValue="#FBEECE" className="formTagColorPickerInput" />
+                                                            </Form.Item>
+                                                        </>}
+                                                    okText="Создать"
+                                                    cancelText="Отмена"
+                                                    onConfirm={() => onFinishTag()}
+                                                >
+                                                    <PlusOutlined />
+                                                </Popconfirm>
+                                            </div>
+                                        }
                                         style={{ position: "relative" }}>
 
                                         <Select
                                             notFoundContent="Не найдено"
                                             mode="multiple"
-                                            options={tags}
-                                        />
+                                            optionRender={optionRender}
+                                            options={tags ? tags : ""}
+                                        ></Select>
                                     </Form.Item>
                                 </Col>
                             </Row>
