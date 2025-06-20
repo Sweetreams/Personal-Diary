@@ -10,7 +10,7 @@ const dateProccesing = (date) => {
 const ListSearch = ({ props, cancel }) => {
     return props.map((item, index) => {
         return (
-        <Typography.Link style={{fontFamily: "TT Commons"}} key={index} onClick={(v) => cancel(v)} href={"https://personal-diary-s9tr.onrender.com/pagesdiary/" + dateProccesing(new Date(item.updatedAt)) + "#post_" + item.id}>
+        <Typography.Link style={{fontFamily: "TT Commons"}} key={index} onClick={(v) => cancel(v)} href={"https://soultrackserver.ru/pagesdiary/pagesdiary/" + dateProccesing(new Date(item.updatedAt)) + "#post_" + item.id}>
             <div style={{ display: "flex", gap: "30px" }}>
                 <div>{dateTimeProcessingForRequest(item)}</div>
                 <div>{item?.title}</div>

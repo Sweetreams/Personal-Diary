@@ -2,12 +2,11 @@ import express from "express";
 import { userRouter } from "./source/user/user.controller.js";
 import { PrismaClient } from "@prisma/client";
 import { postRouter } from "./source/post/post.controller.js";
-import { errorHandling } from "./source/middleware/errorHandling.js";
 import { mailRouter } from "./source/mail/mail.controller.js";
 import { tagRouter } from "./source/tag/tag.controller.js";
-import helmet from "helmet";
 import cors from "cors";
 import { statisticRouter } from "./source/statistic/statistic.controller.js";
+import { adminRouter } from "./source/admin/admin.controller.js";
 
 export const app = express();
 const prisma = new PrismaClient();
@@ -41,6 +40,8 @@ async function main() {
     app.use("/tag", tagRouter);
 
     app.use("/stat", statisticRouter);
+
+    app.use("/admin", adminRouter);
 
     app.listen(8000, () => {
         console.log("8000");

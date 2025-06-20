@@ -16,6 +16,7 @@ import SettingPage from './page/settingPage/SettingPage.jsx';
 import StatisticPage from './page/statisticPage/StatisticPage.jsx';
 import App from "./App.jsx"
 import SecurityAdminPage from './page/securityPage/SecurityAdminPage.jsx';
+import AdminPage from './page/adminPage/AdminPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,12 @@ const router = createBrowserRouter([
         path: "/statistica",
         element: (
           <StatisticPage />
+        ),
+      },
+      {
+        path: "/admin",
+        element: (
+          <AdminPage />
         ),
       }
     ]

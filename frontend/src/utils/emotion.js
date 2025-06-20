@@ -45,3 +45,14 @@ export const emotion = {
         engName: "other"
     },
 }
+
+export const emotions = {
+  happiness: "Радость",
+  anticipation: "Предвкушение",
+  sadness: "Грусть",
+  anger: "Гнев",
+  excitement: "Волнение",
+  boredom: "Скука",
+  embarrassment: "Смущение",
+  other: "Другое"
+}

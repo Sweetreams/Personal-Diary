@@ -15,12 +15,12 @@ const Headers = ({ isCollapse, collapse }) => {
   const [modal, contextHolderModalPost] = Modal.useModal()
   const [api, contextHolder] = notification.useNotification()
   const navigate = useNavigate()
-  const itemAdmin = profileData.role === "user" || profileData.role === "admin" ?
+  const itemAdmin = profileData.role === "admin" ?
     {
-      key: '3',
+      key: '5',
       label: (
-        <Typography.Link href="/statistica" className="headersContainerDropDownProfile">
-          Статистика
+        <Typography.Link href="/admin" className="headersContainerDropDownProfile">
+          Админ панель
         </Typography.Link>
       ),
     }
@@ -57,6 +57,14 @@ const Headers = ({ isCollapse, collapse }) => {
       label: (
         <Typography.Link href="/profilePage" className="headersContainerDropDownProfile">
           Профиль
+        </Typography.Link>
+      ),
+    },
+    {
+      key: '3',
+      label: (
+        <Typography.Link href="/statistica" className="headersContainerDropDownProfile">
+          Статистика
         </Typography.Link>
       ),
     },

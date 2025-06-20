@@ -1,31 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Button, Form, Input, Modal, Upload } from "antd"
+import { useContext, useEffect, useState } from 'react'
+import { Button, Form, Input, Modal, Spin } from "antd"
 import ProfileContext from '../../components/context/ProfileContext'
-import axios from "axios"
 import { useForm } from 'antd/es/form/Form'
 import { useNavigate } from 'react-router-dom'
 import "./profilePage.css"
-
-const axiosRequest = async (data) => {
-  axios({
-    method: "put",
-    url: "https://personal-diary-s9tr.onrender.com/user/changeUser",
-    withCredentials: true,
-    data: data
-  })
-    .then((req) => { return req })
-    .catch((req) => { return req.response })
-}
-
-const axiosRequestDeleteUser = async () => {
-  axios({
-    method: "delete",
-    url: "https://personal-diary-s9tr.onrender.com/user/deleteUser",
-    withCredentials: true,
-  })
-    .then((req) => { return req })
-    .catch((req) => { return req.response })
-}
+import userService from '../../api/service/userService'
 
 const ProfilePage = () => {
   const profileData = useContext(ProfileContext)
@@ -33,6 +12,7 @@ const ProfilePage = () => {
   const [modal, contextHolder] = Modal.useModal()
   const navigate = useNavigate()
   const [form] = useForm()
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     document.title = "Профиль"
@@ -42,14 +22,17 @@ const ProfilePage = () => {
     const textButton = e.target.outerText
     if (textButton === "Сохранить") {
       const formChange = form.getFieldValue()
-      axiosRequest(formChange)
+      setLoading(true)
+      userService.changeUserRequest(formChange)
+        .then(() => { setLoading(false) })
+        .catch(() => { setLoading(false) })
     }
     setDisable((prev) => !prev)
   }
 
   const deleteUser = () => {
     navigate("/login")
-    axiosRequestDeleteUser()
+    userService.deleteUserRequest()
   }
 
   const onChange = (file) => {
@@ -58,31 +41,33 @@ const ProfilePage = () => {
     reader.onload = () => {
       const readerresult = reader.result
       const match = readerresult.match(/data:image\/(png|jpeg);base64,([^\n]+)/)
-      axiosRequest({ imgURL: match[2] })
+      userService.changeUserRequest({ imgURL: match[2] })
     }
     reader.readAsDataURL(file)
   }
 
   return (
     <>
-      <div style={{ flexDirection: "column" }}>
-        <div style={{ background: "linear-gradient(135deg, #E9EDC9, #FAEDCD)", width: "100%", height: "150px", borderRadius: "30px 30px 0px 0px" }} />
-        <div style={{ background: "#FFFFFF", width: "100%", height: "100%", padding: "30px 70px 30px 70px", borderRadius: "0px 0px 30px 30px" }}>
-          <div className="row" style={{ display: "flex", alignItems: "center", flexWrap: "wrap", justifyContent: "space-between", gap: 15, marginBottom: 50 }}>
-            <div className="col" style={{ display: "flex", alignItems: "center", gap: 40, flexWrap: "wrap" }}>
-              <div className="row" style={{position: "relative"}}>
-                <img className="profileImg" style={{ width: "200px", height: "200px", borderRadius: "50%", objectFit: "cover" }} src={profileData.imgURL} alt="" />
-                <label className="inputFileBase64">
-                  <span>Изменить изображение</span>
-                  <input type="file" onChange={(f) => { onChange(f.target.files[0]) }}></input>
-                </label>
-              </div>
-              <div className="row">
+      <div className="profileContainer">
+        <div className="profileContainerLineUp" />
+        <div className="profileContainerContent">
+          <div className="row profileContainerContentUp">
+            <div className="col profileContainerContentUpLeft">
+              <Spin percent="auto" spinning={loading}>
+                <div className="row profileContainerContentUpLeftImage">
+                  <img className="profileImg" src={profileData.imgURL} alt="profileImg" />
+                  <label className="inputFileBase64">
+                    <span>Изменить изображение</span>
+                    <input type="file" onChange={(f) => { onChange(f.target.files[0]) }}></input>
+                  </label>
+                </div>
+              </Spin>
+              <div className="row profileContainerContentUpLeftDesc">
                 <p>{profileData.name}</p>
-                <p style={{ color: "#C7C7C7" }}>{profileData.email}</p>
+                <p className="profileContainerContentUpLeftDescEMail">{profileData.email}</p>
               </div>
             </div>
-            <div className="col">
+            <div className="col profileContainerContentUpRight">
               <Button onClick={(e) => onClick(e)}>
                 {disable ? "Изменить" : "Сохранить"}
               </Button>

@@ -41,8 +41,8 @@ const SecurityPage = ({ children }) => {
 
   return security
     ? <ProfileContext.Provider value={content}>
-      <OpenMenuContext.Provider value={{openBurgerMenu, isOpenBurgerMenu}}>
-        {children }
+      <OpenMenuContext.Provider value={{ openBurgerMenu, isOpenBurgerMenu }}>
+        {children}
       </OpenMenuContext.Provider>
     </ProfileContext.Provider>
     : <Spin spinning={security}></Spin>

@@ -59,15 +59,6 @@ const CreateNewPost = () => {
   const [openModal, isModalOpen] = useState(false)
   const navigate = useNavigate()
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     const options = document.getElementsByClassName("ant-select-item-option")
-  //     for (let index = 0; index < options.length; index++) {
-  //       options[index].insertAdjacentHTML("beforeend", <DeleteOutlined/>)
-  //     }
-  //   }, 2000);
-  // }, [])
-
   useEffect(() => {
     document.title = "Создание поста"
     axios({
